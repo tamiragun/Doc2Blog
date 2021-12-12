@@ -1,4 +1,4 @@
-package com.ProjTeam.Doc2Blog;
+package com.ProjTeam.Doc2Blog.conversion;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;

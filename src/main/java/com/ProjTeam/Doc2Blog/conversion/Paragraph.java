@@ -1,4 +1,4 @@
-package com.ProjTeam.Doc2Blog;
+package com.ProjTeam.Doc2Blog.conversion;
 
 public class Paragraph {
 
