@@ -43,9 +43,12 @@ public class DocControllers {
 	 @PostMapping
 	public ResponseEntity<String> uploadFile(@RequestPart("file") MultipartFile file) {
 		//Return a bad request if the file is null
-		 if (null == file.getOriginalFilename()) {
+		if (null == file.getOriginalFilename()) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
+
+		//Set default string to return as error; this should be overridden with the filename if successful
+		 String title = "Error";
 		try {
 			//Storing the file in a byte array
 			byte[] bytes = file.getBytes();
@@ -57,7 +60,7 @@ public class DocControllers {
 			System.out.println(path.getFileName());
 			
 			//Extracting the document title from the file name
-			String title = path.toString().substring(0,path.toString().length()-5);
+			title = path.toString().substring(0,path.toString().length()-5);
 			
 			//Creating the document class object
 			Document doc = new Document(title);		
@@ -74,7 +77,8 @@ public class DocControllers {
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
-		return new ResponseEntity<>("File Recieved", HttpStatus.OK);
+		// Send the doc title along with the body of the response
+		return new ResponseEntity<>(title, HttpStatus.OK);
 	}
 	
 	
