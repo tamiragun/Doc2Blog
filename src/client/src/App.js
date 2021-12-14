@@ -75,7 +75,8 @@ function App() {
           }}
           onFileSelectError={({ error }) => alert(error)}
         ></FileUpload>
-        <button onClick={submitForm}>Submit</button>
+        {/* Only display upload button once a validated file is selected */}
+        {selectedFile && <button onClick={submitForm}>Submit</button>}
         {/* Only display link to blog once published */}
         {selectedFileName && (
           <PublishSuccess fileName={selectedFileName}></PublishSuccess>
