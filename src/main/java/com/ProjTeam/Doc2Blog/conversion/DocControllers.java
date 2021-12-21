@@ -9,8 +9,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/convert")
 public class DocControllers {
 	
 	@GetMapping
@@ -40,15 +38,13 @@ public class DocControllers {
 		
 	}
 		
-	 @PostMapping
-	public ResponseEntity<String> uploadFile(@RequestPart("file") MultipartFile file) {
-		//Return a bad request if the file is null
-		if (null == file.getOriginalFilename()) {
+	@PostMapping
+	public void uploadFile(@RequestPart("file") MultipartFile file) {
+		/*Return a bad request if the file is null
+		 if (null == file.getOriginalFilename()) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
+		}*/
 
-		//Set default string to return as error; this should be overridden with the filename if successful
-		 String title = "Error";
 		try {
 			//Storing the file in a byte array
 			byte[] bytes = file.getBytes();
@@ -60,7 +56,7 @@ public class DocControllers {
 			System.out.println(path.getFileName());
 			
 			//Extracting the document title from the file name
-			title = path.toString().substring(0,path.toString().length()-5);
+			String title = path.toString().substring(0,path.toString().length()-5);
 			
 			//Creating the document class object
 			Document doc = new Document(title);		
@@ -77,8 +73,8 @@ public class DocControllers {
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
-		// Send the doc title along with the body of the response
-		return new ResponseEntity<>(title, HttpStatus.OK);
+
+		//return new ResponseEntity<>("File Received", HttpStatus.OK);
 	}
 	
 	

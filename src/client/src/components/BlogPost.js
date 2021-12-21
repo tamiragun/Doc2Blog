@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import FileUpload from "./FileUpload";
 import PublishSuccess from "./PublishSuccess";
+import UploadSuccess from "./UploadSuccess";
 
 const BlogPost = () => {
   // Keep track of the uploaded file
   const [selectedFile, setSelectedFile] = useState(null);
   const [selectedFileName, setSelectedFileName] = useState(null);
+  const [uploaded, setUploaded] = useState(false);
+  const [published, setPublished] = useState(false);
 
   // Handler for when the submit button is clicked
   const submitForm = (e) => {
@@ -15,69 +18,77 @@ const BlogPost = () => {
     // Add the file from the component's state into the request body
     const formData = new FormData();
     formData.append("file", selectedFile);
-    // Set this empty variable so we can inspect the response stream in the event of a parsing error
-    // Courtesy of https://support.stripe.com/questions/how-to-fix-syntaxerror-unexpected-token-in-json-at-position-0
-    let responseClone;
+
     // Send the POST request to the server
-    fetch("/api", {
+    fetch("/convert", {
       method: "POST",
       body: formData,
     })
-      .then((response) => {
-        // Clone the response object because response can only be read once
-        responseClone = response.clone();
-        return response.json();
+      .then(() => {
+        setUploaded(true);
       })
-      // Obtain the filename and store it in state, so we can redirect to that endpoint later
-      .then((data) => {
-        responseClone.text().then(function (bodyText) {
-          setSelectedFileName(bodyText);
-        });
-        return data;
-      })
-      .then(
-        // Print the response if it can be parsed from JSON
-        function (data) {
-          console.log("Successfully uploaded: ", data);
-        },
-        // If not, print the error message and display the readable stream of teh response
-        function (rejectionReason) {
-          console.log(
-            "Error parsing JSON from response:",
-            rejectionReason,
-            responseClone
-          );
-          responseClone.text().then(function (bodyText) {
-            console.log(
-              "Received the following instead of valid JSON:",
-              bodyText
-            );
-            setSelectedFileName(bodyText);
-          });
-        }
-      )
       .catch((error) => {
         console.error(error);
       });
   };
 
+  // Handler for when the file is selected (but not yet uploaded)
+  const setFileAndName = (file) => {
+    // Store the file in state
+    setSelectedFile(file);
+
+    // Store the name in state
+    // To do so, find out which of the 3 extensions it has and truncate the filename accordingly
+    let extension = file.name.slice(-3);
+    if (extension === "doc" || extension === "odt") {
+      setSelectedFileName(file.name.slice(0, -4));
+    } else if (extension === "ocx") {
+      setSelectedFileName(file.name.slice(0, -5));
+    }
+  };
+
+  // Handler for when the user wants to upload a new file. Resets everything to null.
+  const uploadNewFile = () => {
+    setUploaded(false);
+    setSelectedFile(null);
+    setSelectedFileName(null);
+  };
+
+  // Handler for when the user publishes their post.
+  // This removes the upload and spellcheck from display and now only displays the final link
+  const publishBlog = () => {
+    setPublished(true);
+    setUploaded(false);
+  };
+
   return (
     <div className="App">
-      <form>
-        <label htmlFor="myfile">Select a file:</label>
-        <FileUpload
-          id="myfile"
-          onFileSelectSuccess={(file) => {
-            setSelectedFile(file);
-          }}
-          onFileSelectError={({ error }) => alert(error)}
-        ></FileUpload>
-        <button onClick={submitForm}>Submit</button>
-        {/* Only display link to blog once published */}
-        {selectedFileName && (
-          <PublishSuccess fileName={selectedFileName}></PublishSuccess>
-        )}
-      </form>
+      {/* Only display form when no doc is uploaded or published*/}
+      {!uploaded && !published && (
+        <form>
+          <label htmlFor="my-file">Select a file:</label>
+          <FileUpload
+            id="my-file"
+            onFileSelectSuccess={setFileAndName}
+            onFileSelectError={({ error }) => alert(error)}
+          ></FileUpload>
+          <button onClick={submitForm}>Upload</button>
+        </form>
+      )}
+
+      {/* Only display link to draft once uploaded */}
+      {uploaded && (
+        <UploadSuccess
+          fileName={selectedFileName}
+          onUploadNew={uploadNewFile}
+          onPublish={publishBlog}
+        ></UploadSuccess>
+      )}
+
+      {/* Only display link to blog once published */}
+      {published && (
+        <PublishSuccess fileName={selectedFileName}></PublishSuccess>
+      )}
     </div>
   );
 };
