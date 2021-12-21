@@ -45,10 +45,6 @@ public class DocControllers {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}*/
 
-		//Set default string to return as error; this should be overridden with the filename if successful
- 		//String title = "Error";
-
-		 
 		try {
 			//Storing the file in a byte array
 			byte[] bytes = file.getBytes();

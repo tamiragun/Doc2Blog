@@ -18,7 +18,6 @@ export const FileUpload = ({ onFileSelectError, onFileSelectSuccess }) => {
     } else if (!supportedFileTypes.includes(file.type)) {
       onFileSelectError({ error: "File type should be .doc, .docx, or .odt" });
     } else {
-      console.log(file.type);
       onFileSelectSuccess(file);
     }
   };
