@@ -9,6 +9,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,9 +21,10 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping("/convert")
 public class DocControllers {
-	
+
+	@ApiOperation(value = "Given a valid filename, this API endpoint displays the corresponding file as HTML.", notes="", nickname = "Display converted document")
 	@GetMapping
-	public String getDoc(String fileName) throws FileNotFoundException {
+	public String getDoc(@ApiParam(value = "The name of the file - as saved in the file directory but excluding its extension - that you want displayed as HTML.", required = true, defaultValue = "") String fileName) throws FileNotFoundException {
 		
 		// pass the path to the file as a parameter
 	    File file = new File(String.format("src/main/resources/static/%s.txt", fileName));
@@ -37,9 +40,10 @@ public class DocControllers {
 	    return doc;
 		
 	}
-		
+
+	@ApiOperation(value = "This API endpoint takes a file in the request body, converts it to HTML, and saves it to the file directory.", notes="", nickname = "Upload document to convert")
 	@PostMapping
-	public void uploadFile(@RequestPart("file") MultipartFile file) {
+	public void uploadFile(@ApiParam(value = "A file of type .doc, .docx, or .odt.", required = true, defaultValue = "") @RequestPart("file") MultipartFile file) {
 		/*Return a bad request if the file is null
 		 if (null == file.getOriginalFilename()) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
