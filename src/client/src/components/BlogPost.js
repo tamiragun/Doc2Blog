@@ -19,7 +19,7 @@ const BlogPost = () => {
     // Courtesy of https://support.stripe.com/questions/how-to-fix-syntaxerror-unexpected-token-in-json-at-position-0
     let responseClone;
     // Send the POST request to the server
-    fetch("/api", {
+    fetch("/convert", {
       method: "POST",
       body: formData,
     })
@@ -52,7 +52,7 @@ const BlogPost = () => {
               "Received the following instead of valid JSON:",
               bodyText
             );
-            setSelectedFileName(bodyText);
+            //setSelectedFileName(bodyText);
           });
         }
       )
@@ -61,15 +61,26 @@ const BlogPost = () => {
       });
   };
 
+  const setFileAndName = (file) => {
+    setSelectedFile(file);
+    let extension = file.name.slice(-3);
+    console.log(extension);
+    if (extension === "doc" || extension === "odt") {
+      setSelectedFileName(file.name.slice(0, -4));
+      console.log(file.name.slice(0, -4));
+    } else if (extension === "ocx") {
+      setSelectedFileName(file.name.slice(0, -5));
+      console.log(file.name.slice(0, -5));
+    }
+  };
+
   return (
     <div className="App">
       <form>
-        <label htmlFor="myfile">Select a file:</label>
+        <label htmlFor="my-file">Select a file:</label>
         <FileUpload
-          id="myfile"
-          onFileSelectSuccess={(file) => {
-            setSelectedFile(file);
-          }}
+          id="my-file"
+          onFileSelectSuccess={setFileAndName}
           onFileSelectError={({ error }) => alert(error)}
         ></FileUpload>
         <button onClick={submitForm}>Submit</button>

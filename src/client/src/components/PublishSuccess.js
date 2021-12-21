@@ -3,7 +3,7 @@ import React from "react";
 export const PublishSuccess = (fileName) => {
   // TODO generate button using routes instead of anchor link
 
-  const blogUrl = `http://localhost:8080/api?fileName=${fileName.fileName}`;
+  const blogUrl = `http://localhost:8080/convert?fileName=${fileName.fileName}`;
 
   return (
     <div className="publish-success">

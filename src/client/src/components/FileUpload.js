@@ -16,7 +16,7 @@ export const FileUpload = ({ onFileSelectError, onFileSelectSuccess }) => {
     } else if (file.size > 1024000) {
       onFileSelectError({ error: "File size cannot exceed 1MB" });
     } else if (!supportedFileTypes.includes(file.type)) {
-      onFileSelectError({ error: "File type should be .doc, .docx, or odt" });
+      onFileSelectError({ error: "File type should be .doc, .docx, or .odt" });
     } else {
       console.log(file.type);
       onFileSelectSuccess(file);
