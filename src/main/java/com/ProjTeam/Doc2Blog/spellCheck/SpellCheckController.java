@@ -1,4 +1,4 @@
-package com.ProjTeam.Doc2Blog.SpellCheck;
+package com.ProjTeam.Doc2Blog.spellCheck;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,9 +19,9 @@ import org.languagetool.rules.RuleMatch;
 @RequestMapping("/check")
 public class SpellCheckController {
 
-	@ApiOperation(value = "Given a valid filename, this API endpoint displays the corresponding file with any spelling or grammar mistakes highlighted.", notes="", nickname = "Display spell checked document")
+	@ApiOperation(value = "Given a valid filename, displays the corresponding file with any spelling or grammar mistakes highlighted.", nickname = "Display spell checked document")
 	@GetMapping
-	public String checkDoc(@ApiParam(value = "The name of the file - as saved in the file directory but excluding its extension - that you want spell checked.", required = true, defaultValue = "") String fileName) throws IOException {
+	public String checkDoc(@ApiParam(value = "The name of the file - as saved in the file directory but excluding its extension - that you want spell checked.", required = true) String fileName) throws IOException {
 
 		JLanguageTool langTool = new JLanguageTool(new BritishEnglish());
 

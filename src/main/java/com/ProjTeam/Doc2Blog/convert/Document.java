@@ -1,4 +1,4 @@
-package com.ProjTeam.Doc2Blog.conversion;
+package com.ProjTeam.Doc2Blog.convert;
 
 import java.util.ArrayList;
 

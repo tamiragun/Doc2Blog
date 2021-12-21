@@ -1,4 +1,4 @@
-package com.ProjTeam.Doc2Blog.SpellCheck;
+package com.ProjTeam.Doc2Blog.spellCheck;
 
 import java.util.ArrayList;
 import java.util.Arrays;
