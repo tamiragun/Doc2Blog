@@ -2,10 +2,16 @@
 
 import React from "react";
 import BlogPost from "./components/BlogPost";
+import Deadlines from "./components/Deadlines";
 import "./App.css";
 
 function App() {
-  return <BlogPost></BlogPost>;
+  return (
+    <div>
+      <Deadlines></Deadlines>
+      <BlogPost></BlogPost>
+    </div>
+  );
 }
 
 export default App;
