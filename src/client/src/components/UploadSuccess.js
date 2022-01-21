@@ -3,7 +3,7 @@ import React from "react";
 export const UploadSuccess = ({ fileName, onUploadNew, onPublish }) => {
   // TODO generate button using routes instead of anchor link
 
-  const blogUrl = `http://localhost:8080/check?fileName=${fileName.fileName}`;
+  const blogUrl = `http://localhost:8080/check?fileName=${fileName}`;
 
   const handleUploadClick = () => {
     onUploadNew();
