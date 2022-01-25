@@ -1,9 +1,13 @@
+package com.ProjTeam.Doc2Blog.Reminders;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 /**
  * Projects <br>
@@ -15,6 +19,8 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "Projects")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Projects {
 
 	//Attributes
@@ -40,21 +46,29 @@ public class Projects {
 	
 	//Constructor
 	
-	public Projects(Integer id, String topic, String postDate, String remPeriod, boolean published, String lastRem) {
+	public Projects() {
 		
-		this.id = id;
+	}
+	
+	public Projects(String topic, String postDate, String remPeriod) {
+		
+		
 		this.topic = topic;
 		this.postDate = postDate;
 		this.remPeriod = remPeriod;
-		this.published = published;
-		this.lastRem = lastRem;
+		this.published = false;
+		this.lastRem = "none";
 	}	
 		
 	//Getters	
 
+	public Integer getId() {
+		return id;
+	}
+	
 	public String getTopic() {
 		return topic;
-	}	
+	}		
 
 	public String getPostDate() {
 		return postDate;
@@ -94,6 +108,13 @@ public class Projects {
 		this.lastRem = lastRem;
 	}
 
+	@Override
+	public String toString() {
+		return "Projects [id=" + id + ", topic=" + topic + ", postDate=" + postDate + ", remPeriod=" + remPeriod
+				+ ", published=" + published + ", lastRem=" + lastRem + "]";
+	}
+
+	
 	
 	
 }
