@@ -10,7 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 /**
- * Projects <br>
+ * Projects Class<br>
  * This class manages the project object and its placement in the SQL table.
  *
  * @author Warren Bradley
@@ -46,6 +46,7 @@ public class Projects {
 	
 	//Constructor
 	
+	//
 	public Projects() {
 		
 	}
@@ -108,6 +109,7 @@ public class Projects {
 		this.lastRem = lastRem;
 	}
 
+	//ToString
 	@Override
 	public String toString() {
 		return "Projects [id=" + id + ", topic=" + topic + ", postDate=" + postDate + ", remPeriod=" + remPeriod

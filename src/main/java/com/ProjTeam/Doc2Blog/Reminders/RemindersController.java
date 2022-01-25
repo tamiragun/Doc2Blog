@@ -1,13 +1,24 @@
 package com.ProjTeam.Doc2Blog.Reminders;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+/**
+ * RemindersController Class<br>
+ * This class manages the controller endpoint methods to interact with from the
+ * server.
+ *
+ * @author Warren Bradley
+ * @version 1.00, 21 Jan 2022
+ */
 
 @RestController
 @RequestMapping("/reminders")
@@ -19,9 +30,19 @@ public class RemindersController {
 	@Autowired
 	private ProjectCrudRep projectsRepository;
 
-	//Method to allow for the creating of a new project with its reminder
+	/**
+	 *
+	 * saveProject Method. <br>
+	 * This method is to save a new project to the database using a Post command
+	 *
+	 * @param topic     String representing the topic of the blog to be posted
+	 * @param postDate  String depicting the date the blog post is due
+	 * @param remPeriod String depicting how often the user wants to be reminded.
+	 * 
+	 * @since version 1.00
+	 */
 	@PostMapping
-	public void saveProject(String topic, String postDate, String remPeriod) {
+	public void saveProject(@RequestBody String topic,@RequestBody String postDate, @RequestBody String remPeriod) {
 
 		Projects project = new Projects(topic, postDate, remPeriod);
 		Reminders reminder = new Reminders(project);
@@ -30,53 +51,122 @@ public class RemindersController {
 
 	}
 
-	//Method to fetch the active reminders 
+	/**
+	 *
+	 * getReminders Method. <br>
+	 * This method is used to pull a list of all the unacknowledged reminders for
+	 * all the unpublished projects using a Get command.
+	 *
+	 * @return methodOutput A List<List<String>> of individual lists containing the
+	 *         reminderId and the actual reminder both in string format.
+	 * 
+	 * @since version 1.00
+	 */
 	@GetMapping
-	public String getReminders() {
+	public List<List<String>> getReminders() {
 
-		//Finding all projects that have not been published
+		// Finding all projects that have not been published
 		List<Projects> projects = projectsRepository.findByPublished(false);
 
-		//Creating the output string
-		String outputString = "";
+		// Creating the output string
+		ArrayList<List<String>> methodOutput = new ArrayList<List<String>>();
 
-		//Searching for reminders that match the project
+		// Searching for reminders that match the project
 		for (Projects project : projects) {
-				
+
+			ArrayList<String> reminderInfo = new ArrayList<String>();
+
 			Reminders reminder = remindersRepository.findByProject(project);
 
+			// If the reminder exists add it to the list
 			if (reminder != null) {
 
 				if (reminder.isAcknowledged() == false) {
-					outputString += reminder.toString() + "\n";
+					reminderInfo.add(String.format("%s", reminder.getReminderId()));
+					reminderInfo.add(reminder.toString());
 				}
 			}
-		}		
-		return outputString;
+
+			methodOutput.add(reminderInfo);
+		}
+		return methodOutput;
 	}
-	
-	//Method to set the reminder to acknowledged
+
+	/**
+	 *
+	 * getProjects Method. <br>
+	 * This method is used to pull a list of all the unpublished projects.
+	 *
+	 * @return methodOutput A List<List<String>> of individual lists containing the
+	 *         Id and project topic both in string format using a Get command with
+	 *         extra mapping of "/project".
+	 * 
+	 * @since version 1.00
+	 */
+	@GetMapping("/project")
+	public List<List<String>> getProjects() {
+
+		// Finding all projects that have not been published
+		List<Projects> projects = projectsRepository.findByPublished(false);
+
+		// Creating the output string
+		ArrayList<List<String>> methodOutput = new ArrayList<List<String>>();
+
+		// iterating through unpublished projects to add them to the list
+		for (Projects project : projects) {
+
+			ArrayList<String> projectInfo = new ArrayList<String>();
+
+			int projId = project.getId();
+			String topic = project.getTopic();
+
+			projectInfo.add(String.format("%s", projId));
+			projectInfo.add(topic);
+
+			methodOutput.add(projectInfo);
+		}
+		return methodOutput;
+	}
+
+	/**
+	 *
+	 * acknowledgeReminder Method. <br>
+	 * This method is to change the acknowledge value of a reminder to true using a
+	 * Put command
+	 *
+	 * @param reminderId Integer representing the unique reminderId of the reminder.
+	 * 
+	 * @since version 1.00
+	 */
 	@PutMapping
-	public void acknowledgeReminder (int reminderId) {
-		
+	public void acknowledgeReminder(@RequestBody int reminderId) {
+
 		Reminders reminder = remindersRepository.findByReminderId(reminderId);
-		
+
 		reminder.setAcknowledged(true);
-		
+
 		remindersRepository.save(reminder);
-		
 	}
-	
-	//Method to set the project to published
+
+	/**
+	 *
+	 * publishProject Method. <br>
+	 * This method is to change the publish value of a project to true using a Put
+	 * command with extra mapping of "/project".
+	 *
+	 * @param projectId Integer representing the unique Id of the project.
+	 * 
+	 * @since version 1.00
+	 */
+	// Method to set the project to published
 	@PutMapping("/project")
-	public void publishProject (int projectId) {
-		
+	public void publishProject(@RequestBody int projectId) {
+
 		Projects project = projectsRepository.findById(projectId);
-		
+
 		project.setPublished(true);
-		
+
 		projectsRepository.save(project);
-		
 	}
 
 }
