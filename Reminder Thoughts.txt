@@ -8,6 +8,7 @@ dateToPost: string
 published: bool
 remPeriod: String ("D or W or M")
 dateOfLastRem: String
+Acknoledged bool
 
 Methods:
 
@@ -17,5 +18,9 @@ checkRem() - Calls remPeriod, dateToPost, Topic dateOfLastRem, remPeriod
 - if time for reminder is true then check current date against due date to get numberOfDays.
 - set dateOfLastRem to current date
 - returns string "Blog Post (Topic) is due in (numberOfDays) on the (dateToPost)."
+
+checkDealine()
+
+Reminders 
 
 
