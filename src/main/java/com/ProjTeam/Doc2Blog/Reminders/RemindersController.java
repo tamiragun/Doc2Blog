@@ -104,7 +104,7 @@ public class RemindersController {
 	 * 
 	 * @since version 1.00
 	 */
-	@GetMapping("/project")
+	@GetMapping(value = "/project", produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<List<String>> getProjects() {
 
 		// Finding all projects that have not been published
@@ -120,9 +120,11 @@ public class RemindersController {
 
 			int projId = project.getId();
 			String topic = project.getTopic();
+			String postDate = project.getPostDate();
 
 			projectInfo.add(String.format("%s", projId));
 			projectInfo.add(topic);
+			projectInfo.add(postDate);
 
 			methodOutput.add(projectInfo);
 		}
