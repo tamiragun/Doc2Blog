@@ -9,10 +9,39 @@ const DeadlineForm = (props) => {
   const handleSubmit = (event) => {
     // Prevent the browser from re-loading the page
     event.preventDefault();
-    // Toggle so the form disappears
-    props.onComplete();
 
-    // TODO Add API call here or on parent component?
+    // API IIFE call to server to save the project
+    (async () => {
+      let requestedFields = {
+        topic: topic,
+        postDate: dueDate,
+        remPeriod: reminderTime,
+      };
+      const url = "/reminders";
+      try {
+        const response = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+            //Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(requestedFields),
+        });
+        // If there has been an error, set the error state hook to the arror
+        // message, which will then be displayed on the page.
+        if (response.status !== 200) {
+          console.log(response.statusText);
+          //setIsError(jsonResponse.message);
+        } else {
+          // If successful, print message and make the form disappear
+          console.log("Successfully added project");
+          props.onComplete();
+        }
+      } catch (error) {
+        console.log(error);
+        //setIsError(error);
+      }
+    })();
   };
 
   // Single handler for all controlled form elements, updates the corresponding

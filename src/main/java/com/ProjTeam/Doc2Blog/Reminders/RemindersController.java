@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -41,14 +42,14 @@ public class RemindersController {
 	 * 
 	 * @since version 1.00
 	 */
-	@PostMapping
-	public void saveProject(@RequestBody String topic,@RequestBody String postDate, @RequestBody String remPeriod) {
+	@PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+	public void saveProject(@RequestBody Projects body) {
 
-		Projects project = new Projects(topic, postDate, remPeriod);
+		// TODO: find better way to do this?
+		Projects project = new Projects(body.getTopic(), body.getPostDate(), body.getRemPeriod());
 		Reminders reminder = new Reminders(project);
 
 		remindersRepository.save(reminder);
-
 	}
 
 	/**
