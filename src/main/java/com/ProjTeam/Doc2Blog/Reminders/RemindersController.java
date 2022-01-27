@@ -1,6 +1,7 @@
 package com.ProjTeam.Doc2Blog.Reminders;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,18 +65,15 @@ public class RemindersController {
 	 * @since version 1.00
 	 */
 	@GetMapping
-	public List<List<String>> getReminders() {
+	public List<Reminders> getReminders() {
 
 		// Finding all projects that have not been published
 		List<Projects> projects = projectsRepository.findByPublished(false);
 
-		// Creating the output string
-		ArrayList<List<String>> methodOutput = new ArrayList<List<String>>();
+		List<Reminders> reminders = new ArrayList<>();
 
 		// Searching for reminders that match the project
 		for (Projects project : projects) {
-
-			ArrayList<String> reminderInfo = new ArrayList<String>();
 
 			Reminders reminder = remindersRepository.findByProject(project);
 
@@ -83,14 +81,11 @@ public class RemindersController {
 			if (reminder != null) {
 
 				if (reminder.isAcknowledged() == false) {
-					reminderInfo.add(String.format("%s", reminder.getReminderId()));
-					reminderInfo.add(reminder.toString());
+					reminders.add(reminder);
 				}
 			}
-
-			methodOutput.add(reminderInfo);
 		}
-		return methodOutput;
+		return reminders;
 	}
 
 	/**
