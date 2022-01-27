@@ -105,30 +105,12 @@ public class RemindersController {
 	 * @since version 1.00
 	 */
 	@GetMapping(value = "/project", produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<List<String>> getProjects() {
+	public List<Projects> getProjects() {
 
 		// Finding all projects that have not been published
 		List<Projects> projects = projectsRepository.findByPublished(false);
 
-		// Creating the output string
-		ArrayList<List<String>> methodOutput = new ArrayList<List<String>>();
-
-		// iterating through unpublished projects to add them to the list
-		for (Projects project : projects) {
-
-			ArrayList<String> projectInfo = new ArrayList<String>();
-
-			int projId = project.getId();
-			String topic = project.getTopic();
-			String postDate = project.getPostDate();
-
-			projectInfo.add(String.format("%s", projId));
-			projectInfo.add(topic);
-			projectInfo.add(postDate);
-
-			methodOutput.add(projectInfo);
-		}
-		return methodOutput;
+		return projects;
 	}
 
 	/**
