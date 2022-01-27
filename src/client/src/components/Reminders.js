@@ -1,17 +1,11 @@
 import React, { useState, useEffect } from "react";
-import DeadlineForm from "./DeadlineForm";
 
-const Deadlines = () => {
-  const [addingDeadline, setAddingDeadline] = useState(false);
-  const [deadlines, setDeadlines] = useState([]);
+const Reminders = () => {
+  const [reminders, setReminders] = useState([]);
 
-  const toggleAddingDeadline = () => {
-    setAddingDeadline(!addingDeadline);
-  };
-
-  // Helper function to get the deadlines from the server and set the state accordingly
-  const getDeadlines = async () => {
-    const url = "/reminders/project";
+  // Helper function to get the reminders from the server and set the state accordingly
+  const getReminders = async () => {
+    const url = "/reminders";
     try {
       const response = await fetch(url, {
         method: "GET",
@@ -27,9 +21,9 @@ const Deadlines = () => {
         console.log(response.statusText);
         //setIsError(jsonResponse.message);
       } else {
-        // If successful, update the state with the list of deadlines
+        // If successful, update the state with the list of reminders
         const jsonResponse = await response.json();
-        setDeadlines(jsonResponse);
+        setReminders(jsonResponse);
       }
     } catch (error) {
       console.log(error);
@@ -39,13 +33,13 @@ const Deadlines = () => {
 
   // Upon first render, call the helper functions to obtain the deadlines
   useEffect(() => {
-    getDeadlines();
+    getReminders();
   }, []);
 
-  // When the user clicks "mark as complete" on one of the deadlines
-  const markPublished = async (event) => {
+  // When the user acknowledges one of the reminders
+  const markAcknowledged = async (event) => {
     const id = event.target.name;
-    const url = "/reminders/project";
+    const url = "/reminders";
     try {
       const response = await fetch(url, {
         method: "PUT",
@@ -62,7 +56,7 @@ const Deadlines = () => {
         //setIsError(jsonResponse.message);
       } else {
         // If successful, reload list of deadlines
-        getDeadlines();
+        getReminders();
       }
     } catch (error) {
       console.log(error);
@@ -70,15 +64,18 @@ const Deadlines = () => {
     }
   };
 
-  // Once deadlines are set by the useEfect hook, generate a JSX list of those deadlines with buttons each.
-  const deadlineList = deadlines.map((deadline) => {
+  // Once reminders are set by the useEfect hook, generate a JSX list of those reminders with buttons each.
+  const reminderList = reminders.map((reminder) => {
     return (
-      <tr key={deadline.id}>
-        <td>{deadline.topic}</td>
-        <td>{deadline.postDate}</td>
+      <tr key={reminder.reminderId}>
+        <td>{reminder.reminder}</td>
         <td>
-          <button className="button" name={deadline.id} onClick={markPublished}>
-            Mark as published
+          <button
+            className="button"
+            name={reminder.reminderId}
+            onClick={markAcknowledged}
+          >
+            OK, got it
           </button>
         </td>
       </tr>
@@ -88,30 +85,23 @@ const Deadlines = () => {
   return (
     <div>
       {
-        /* If the deadlines haven't updated yet, display a holding message. */
-        !deadlines ? (
+        /* If the reminders haven't updated yet, display a holding message. */
+        !reminders ? (
           "loading..."
         ) : (
           <table>
             <thead>
               <tr>
-                <th>Topic</th>
-                <th>Due date</th>
-                <th>Publish</th>
+                <th>Reminder</th>
+                <th>Acknowledge</th>
               </tr>
             </thead>
-            <tbody>{deadlineList}</tbody>
+            <tbody>{reminderList}</tbody>
           </table>
         )
       }
-      {!addingDeadline && (
-        <button onClick={() => toggleAddingDeadline()}>Add new deadline</button>
-      )}
-      {addingDeadline && (
-        <DeadlineForm onComplete={toggleAddingDeadline}></DeadlineForm>
-      )}
     </div>
   );
 };
 
-export default Deadlines;
+export default Reminders;

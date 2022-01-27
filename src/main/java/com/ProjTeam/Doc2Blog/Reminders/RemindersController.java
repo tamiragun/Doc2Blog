@@ -37,9 +37,9 @@ public class RemindersController {
 	 * saveProject Method. <br>
 	 * This method is to save a new project to the database using a Post command
 	 *
-	 * @param topic     String representing the topic of the blog to be posted
-	 * @param postDate  String depicting the date the blog post is due
-	 * @param remPeriod String depicting how often the user wants to be reminded.
+	 * @param body     Object representing the topic of the blog to be posted, the
+	 *                 date the blog post is due, and how often the user wants to be
+	 *                 reminded.
 	 * 
 	 * @since version 1.00
 	 */
@@ -59,8 +59,8 @@ public class RemindersController {
 	 * This method is used to pull a list of all the unacknowledged reminders for
 	 * all the unpublished projects using a Get command.
 	 *
-	 * @return methodOutput A List<List<String>> of individual lists containing the
-	 *         reminderId and the actual reminder both in string format.
+	 * @return reminders A List<Reminders> of individual Reminders with their
+	 *         reminderId and the actual reminder text in string format.
 	 * 
 	 * @since version 1.00
 	 */
@@ -93,8 +93,8 @@ public class RemindersController {
 	 * getProjects Method. <br>
 	 * This method is used to pull a list of all the unpublished projects.
 	 *
-	 * @return methodOutput A List<List<String>> of individual lists containing the
-	 *         Id and project topic both in string format using a Get command with
+	 * @return A List<Projects> of individual Projects with their due date,
+	 *         Id and project topic using a Get command with
 	 *         extra mapping of "/project".
 	 * 
 	 * @since version 1.00
