@@ -1,7 +1,6 @@
 package com.ProjTeam.Doc2Blog.Reminders;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +11,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.ProjTeam.Doc2Blog.blogPosts.BlogPost;
+import com.ProjTeam.Doc2Blog.blogPosts.BlogPostRepository;
+
+import io.swagger.annotations.ApiOperation;
 
 /**
  * RemindersController Class<br>
@@ -30,7 +34,7 @@ public class RemindersController {
 	private RemindersCrudRep remindersRepository;
 
 	@Autowired
-	private ProjectCrudRep projectsRepository;
+	private BlogPostRepository blogPostRepository;
 
 	/**
 	 *
@@ -43,12 +47,12 @@ public class RemindersController {
 	 * 
 	 * @since version 1.00
 	 */
+	
 	@PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public void saveProject(@RequestBody Projects body) {
-
-		// TODO: find better way to do this?
-		Projects project = new Projects(body.getTopic(), body.getPostDate(), body.getRemPeriod());
-		Reminders reminder = new Reminders(project);
+	public void saveProject(@RequestBody BlogPost body) {
+		
+		BlogPost blogPost = new BlogPost(body.getTopic(), body.getPostDate(), body.getRemPeriod());
+		Reminders reminder = new Reminders(blogPost);
 
 		remindersRepository.save(reminder);
 	}
@@ -64,18 +68,20 @@ public class RemindersController {
 	 * 
 	 * @since version 1.00
 	 */
+	
+	@ApiOperation(value = "Provides a list of all the reminders that need to be displayed", nickname = "Request reminders")	
 	@GetMapping
 	public List<Reminders> getReminders() {
 
 		// Finding all projects that have not been published
-		List<Projects> projects = projectsRepository.findByPublished(false);
+		List<BlogPost> blogPosts = blogPostRepository.findByPublished(false);
 
 		List<Reminders> reminders = new ArrayList<>();
 
 		// Searching for reminders that match the project
-		for (Projects project : projects) {
+		for (BlogPost blogPost : blogPosts) {
 
-			Reminders reminder = remindersRepository.findByProject(project);
+			Reminders reminder = remindersRepository.findByProject(blogPost);
 
 			// If the reminder exists add it to the list
 			if (reminder != null) {
@@ -88,25 +94,6 @@ public class RemindersController {
 		return reminders;
 	}
 
-	/**
-	 *
-	 * getProjects Method. <br>
-	 * This method is used to pull a list of all the unpublished projects.
-	 *
-	 * @return A List<Projects> of individual Projects with their due date,
-	 *         Id and project topic using a Get command with
-	 *         extra mapping of "/project".
-	 * 
-	 * @since version 1.00
-	 */
-	@GetMapping(value = "/project", produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<Projects> getProjects() {
-
-		// Finding all projects that have not been published
-		List<Projects> projects = projectsRepository.findByPublished(false);
-
-		return projects;
-	}
 
 	/**
 	 *
@@ -118,6 +105,8 @@ public class RemindersController {
 	 * 
 	 * @since version 1.00
 	 */
+	
+	@ApiOperation(value = "Changes the reminder status to acknowledged so it won't display", nickname = "Acknowledge reminder")	
 	@PutMapping
 	public void acknowledgeReminder(@RequestBody int reminderId) {
 
@@ -128,25 +117,6 @@ public class RemindersController {
 		remindersRepository.save(reminder);
 	}
 
-	/**
-	 *
-	 * publishProject Method. <br>
-	 * This method is to change the publish value of a project to true using a Put
-	 * command with extra mapping of "/project".
-	 *
-	 * @param projectId Integer representing the unique Id of the project.
-	 * 
-	 * @since version 1.00
-	 */
-	// Method to set the project to published
-	@PutMapping("/project")
-	public void publishProject(@RequestBody int projectId) {
-
-		Projects project = projectsRepository.findById(projectId);
-
-		project.setPublished(true);
-
-		projectsRepository.save(project);
-	}
+	
 
 }

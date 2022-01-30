@@ -1,4 +1,4 @@
-package com.ProjTeam.Doc2Blog.Reminders;
+package com.ProjTeam.Doc2Blog.blogPosts;
 
 
 import java.util.List;
@@ -16,13 +16,13 @@ import org.springframework.stereotype.Repository;
  */
 // Creating an extension of the CrudRepository than can manage our Reminders model
 @Repository
-public interface ProjectCrudRep extends CrudRepository<Projects, Integer>{
+public interface BlogPostRepository extends CrudRepository<BlogPost, Integer>{
 	
 	//Method to find a list of all projects based on their published status
-	public List<Projects> findByPublished(boolean published);
+	public List<BlogPost> findByPublished(boolean published);
 	
 	//Method to find individual projects based on their Id
-	public Projects findById(int projId);
+	public BlogPost findById(int projId);
 	
 
 }

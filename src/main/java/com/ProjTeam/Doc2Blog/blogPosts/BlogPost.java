@@ -1,4 +1,4 @@
-package com.ProjTeam.Doc2Blog.Reminders;
+package com.ProjTeam.Doc2Blog.blogPosts;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -6,8 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+
 
 /**
  * Projects Class<br>
@@ -18,10 +17,8 @@ import lombok.NoArgsConstructor;
  */
 
 @Entity
-@Table(name = "Projects")
-//@NoArgsConstructor
-@AllArgsConstructor
-public class Projects {
+@Table(name = "Blog_Post")
+public class BlogPost {
 
 	//Attributes
 	
@@ -47,11 +44,11 @@ public class Projects {
 	//Constructor
 	
 	//
-	public Projects() {
+	public BlogPost() {
 		
 	}
 	
-	public Projects(String topic, String postDate, String remPeriod) {
+	public BlogPost(String topic, String postDate, String remPeriod) {
 		
 		
 		this.topic = topic;

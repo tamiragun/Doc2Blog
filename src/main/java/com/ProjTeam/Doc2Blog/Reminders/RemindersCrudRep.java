@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 //import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import com.ProjTeam.Doc2Blog.blogPosts.BlogPost;
+
 /**
  * RemindersCrudRep interface Class<br>
  * This interface manages the CRUD repository for the Reminderss class and it's interaction with mysql.
@@ -21,7 +23,7 @@ public interface RemindersCrudRep extends JpaRepository<Reminders, Integer>{
 	public List<Reminders> findByAcknowledged(boolean acknowledged);
 	
 	//Method to find individual reminder objects using the project they are linked to.
-	public Reminders findByProject(Projects project);
+	public Reminders findByProject(BlogPost project);
 	
 	//Method to find individual reminder objects using their reminderId.
 	public Reminders findByReminderId(int reminderId);

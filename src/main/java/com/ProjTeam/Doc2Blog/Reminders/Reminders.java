@@ -9,6 +9,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.ProjTeam.Doc2Blog.blogPosts.BlogPost;
+
 /**
  * Reminders Class<br>
  * This class manages the reminder object and its placement in the SQL table.
@@ -34,13 +36,13 @@ public class Reminders {
 
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "proj_id", referencedColumnName = "id")
-	private Projects project;
+	private BlogPost project;
 
 	//NoArgsConstuctor
 	public Reminders() {
 	}
 	//ArgsConstructor
-	public Reminders(Projects project) {
+	public Reminders(BlogPost project) {
 
 		this.reminder = String.format("Your blog on %s is due on %s", project.getTopic(), project.getPostDate());
 		this.acknowledged = false;
