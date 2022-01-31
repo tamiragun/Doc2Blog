@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import DeadlineForm from "./DeadlineForm";
+import Button from "react-bootstrap/Button";
+import Table from "react-bootstrap/Table";
 
 const Deadlines = () => {
   const [addingDeadline, setAddingDeadline] = useState(false);
   const [deadlines, setDeadlines] = useState([]);
-
   const toggleAddingDeadline = () => {
     setAddingDeadline(!addingDeadline);
   };
@@ -45,7 +46,7 @@ const Deadlines = () => {
   // When the user clicks "mark as complete" on one of the deadlines
   const markPublished = async (event) => {
     const id = event.target.name;
-    const url = "/blog";
+    const url = "/reminders/project";
     try {
       const response = await fetch(url, {
         method: "PUT",
@@ -77,9 +78,14 @@ const Deadlines = () => {
         <td>{deadline.topic}</td>
         <td>{deadline.postDate}</td>
         <td>
-          <button className="button" name={deadline.id} onClick={markPublished}>
+          <Button
+            variant="primary"
+            className="button"
+            name={deadline.id}
+            onClick={markPublished}
+          >
             Mark as published
-          </button>
+          </Button>
         </td>
       </tr>
     );
@@ -92,23 +98,32 @@ const Deadlines = () => {
         !deadlines ? (
           "loading..."
         ) : (
-          <table>
-            <thead>
-              <tr>
-                <th>Topic</th>
-                <th>Due date</th>
-                <th>Publish</th>
-              </tr>
-            </thead>
-            <tbody>{deadlineList}</tbody>
-          </table>
+          <div>
+            <Table striped bordered hover size="sm" responsive="sm">
+              <thead>
+                <tr>
+                  <th>Topic</th>
+                  <th>Due date</th>
+                  <th>Publish</th>
+                </tr>
+              </thead>
+              <tbody>{deadlineList}</tbody>
+            </Table>
+          </div>
         )
       }
       {!addingDeadline && (
-        <button onClick={() => toggleAddingDeadline()}>Add new deadline</button>
+        <Button variant="primary" onClick={() => toggleAddingDeadline()}>
+          Add new deadline
+        </Button>
       )}
       {addingDeadline && (
-        <DeadlineForm onComplete={toggleAddingDeadline}></DeadlineForm>
+        <DeadlineForm
+          onComplete={() => {
+            getDeadlines();
+            toggleAddingDeadline();
+          }}
+        ></DeadlineForm>
       )}
     </div>
   );

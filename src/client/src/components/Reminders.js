@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Alert from "react-bootstrap/Alert";
 
 const Reminders = () => {
   const [reminders, setReminders] = useState([]);
@@ -37,8 +38,7 @@ const Reminders = () => {
   }, []);
 
   // When the user acknowledges one of the reminders
-  const markAcknowledged = async (event) => {
-    const id = event.target.name;
+  const markAcknowledged = async (id) => {
     const url = "/reminders";
     try {
       const response = await fetch(url, {
@@ -67,18 +67,15 @@ const Reminders = () => {
   // Once reminders are set by the useEfect hook, generate a JSX list of those reminders with buttons each.
   const reminderList = reminders.map((reminder) => {
     return (
-      <tr key={reminder.reminderId}>
-        <td>{reminder.reminder}</td>
-        <td>
-          <button
-            className="button"
-            name={reminder.reminderId}
-            onClick={markAcknowledged}
-          >
-            OK, got it
-          </button>
-        </td>
-      </tr>
+      <Alert
+        key={reminder.reminderId}
+        variant="warning"
+        onClose={() => markAcknowledged(reminder.reminderId)}
+        dismissible
+      >
+        <Alert.Heading>Upcoming deadline!</Alert.Heading>
+        <p>{reminder.reminder}</p>
+      </Alert>
     );
   });
 
@@ -86,19 +83,7 @@ const Reminders = () => {
     <div>
       {
         /* If the reminders haven't updated yet, display a holding message. */
-        !reminders ? (
-          "loading..."
-        ) : (
-          <table>
-            <thead>
-              <tr>
-                <th>Reminder</th>
-                <th>Acknowledge</th>
-              </tr>
-            </thead>
-            <tbody>{reminderList}</tbody>
-          </table>
-        )
+        !reminders ? "loading..." : <div>{reminderList}</div>
       }
     </div>
   );

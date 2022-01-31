@@ -1,4 +1,5 @@
 import React from "react";
+import Form from "react-bootstrap/Form";
 
 export const FileUpload = ({ onFileSelectError, onFileSelectSuccess }) => {
   // The programme can currently handle Word and open source documents
@@ -24,7 +25,7 @@ export const FileUpload = ({ onFileSelectError, onFileSelectSuccess }) => {
 
   return (
     <div className="file-uploader">
-      <input type="file" onChange={handleFileInput}></input>
+      <Form.Control type="file" onChange={handleFileInput} />
     </div>
   );
 };

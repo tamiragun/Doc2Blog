@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import FileUpload from "./FileUpload";
 import PublishSuccess from "./PublishSuccess";
 import UploadSuccess from "./UploadSuccess";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
 
 const BlogPost = () => {
   // Keep track of the uploaded file
@@ -62,18 +64,23 @@ const BlogPost = () => {
   };
 
   return (
-    <div className="App">
+    <div>
       {/* Only display form when no doc is uploaded or published*/}
       {!uploaded && !published && (
-        <form>
-          <label htmlFor="my-file">Select a file:</label>
-          <FileUpload
-            id="my-file"
-            onFileSelectSuccess={setFileAndName}
-            onFileSelectError={({ error }) => alert(error)}
-          ></FileUpload>
-          <button onClick={submitForm}>Upload</button>
-        </form>
+        <Form>
+          <Form.Group className="mb-3" controlId="formUploadFile">
+            <Form.Label>Select a file:</Form.Label>
+            <FileUpload
+              id="my-file"
+              onFileSelectSuccess={setFileAndName}
+              onFileSelectError={({ error }) => alert(error)}
+            ></FileUpload>
+          </Form.Group>
+
+          <Button variant="primary" onClick={submitForm}>
+            Upload
+          </Button>
+        </Form>
       )}
 
       {/* Only display link to draft once uploaded */}
