@@ -11,7 +11,7 @@ const Deadlines = () => {
 
   // Helper function to get the deadlines from the server and set the state accordingly
   const getDeadlines = async () => {
-    const url = "/reminders/project";
+    const url = "/blog";
     try {
       const response = await fetch(url, {
         method: "GET",
@@ -45,7 +45,7 @@ const Deadlines = () => {
   // When the user clicks "mark as complete" on one of the deadlines
   const markPublished = async (event) => {
     const id = event.target.name;
-    const url = "/reminders/project";
+    const url = "/blog";
     try {
       const response = await fetch(url, {
         method: "PUT",

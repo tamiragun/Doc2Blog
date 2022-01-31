@@ -10,7 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
-import com.ProjTeam.Doc2Blog.Reminders.RemindersController;
+import com.ProjTeam.Doc2Blog.reminders.ReminderController;
 
 @ExtendWith(SpringExtension.class)
 class RemindersControllerTest {
@@ -19,7 +19,7 @@ class RemindersControllerTest {
 
 	@BeforeAll
 	static void init() {
-		mockMvc = MockMvcBuilders.standaloneSetup(RemindersController.class).build();
+		mockMvc = MockMvcBuilders.standaloneSetup(ReminderController.class).build();
 	}
 
 	/*

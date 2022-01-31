@@ -1,4 +1,4 @@
-package com.ProjTeam.Doc2Blog.Reminders;
+package com.ProjTeam.Doc2Blog.reminders;
 
 import java.util.List;
 
@@ -17,15 +17,15 @@ import com.ProjTeam.Doc2Blog.blogPosts.BlogPost;
  */
 // Creating an extension of the CrudRepository than can manage our Reminders model
 @Repository
-public interface RemindersCrudRep extends JpaRepository<Reminders, Integer>{
+public interface ReminderCrudRep extends JpaRepository<Reminder, Integer>{
 	
 	//Method to find a list of reminders objects based in their acknowledged status.
-	public List<Reminders> findByAcknowledged(boolean acknowledged);
+	public List<Reminder> findByAcknowledged(boolean acknowledged);
 	
 	//Method to find individual reminder objects using the project they are linked to.
-	public Reminders findByBlogPost(BlogPost project);
+	public Reminder findByBlogPost(BlogPost project);
 	
 	//Method to find individual reminder objects using their reminderId.
-	public Reminders findByReminderId(int reminderId);
+	public Reminder findByReminderId(int reminderId);
 
 }

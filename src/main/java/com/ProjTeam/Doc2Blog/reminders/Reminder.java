@@ -1,4 +1,4 @@
-package com.ProjTeam.Doc2Blog.Reminders;
+package com.ProjTeam.Doc2Blog.reminders;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -12,7 +12,7 @@ import javax.persistence.Table;
 import com.ProjTeam.Doc2Blog.blogPosts.BlogPost;
 
 /**
- * Reminders Class<br>
+ * Reminder Class<br>
  * This class manages the reminder object and its placement in the SQL table.
  *
  * @author Warren Bradley
@@ -21,7 +21,7 @@ import com.ProjTeam.Doc2Blog.blogPosts.BlogPost;
 
 @Entity
 @Table(name = "Reminders")
-public class Reminders {
+public class Reminder {
 
 	//Attributes
 	@Id
@@ -39,10 +39,10 @@ public class Reminders {
 	private BlogPost blogPost;
 
 	//NoArgsConstuctor
-	public Reminders() {
+	public Reminder() {
 	}
 	//ArgsConstructor
-	public Reminders(BlogPost blogPost) {
+	public Reminder(BlogPost blogPost) {
 
 		this.reminder = String.format("Your blog on %s is due on %s", blogPost.getTopic(), blogPost.getPostDate());
 		this.acknowledged = false;

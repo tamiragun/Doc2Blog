@@ -1,4 +1,4 @@
-package com.ProjTeam.Doc2Blog.Reminders;
+package com.ProjTeam.Doc2Blog.reminders;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,34 +28,14 @@ import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping("/reminders")
-public class RemindersController {
+public class ReminderController {
 
 	@Autowired
-	private RemindersCrudRep remindersRepository;
+	private ReminderCrudRep remindersRepository;
 
 	@Autowired
 	private BlogPostRepository blogPostRepository;
 
-	/**
-	 *
-	 * saveProject Method. <br>
-	 * This method is to save a new project to the database using a Post command
-	 *
-	 * @param body     Object representing the topic of the blog to be posted, the
-	 *                 date the blog post is due, and how often the user wants to be
-	 *                 reminded.
-	 * 
-	 * @since version 1.00
-	 */
-	
-	@PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public void saveProject(@RequestBody BlogPost body) {
-		
-		//BlogPost blogPost = new BlogPost(body.getTopic(), body.getPostDate(), body.getRemPeriod());
-		Reminders reminder = new Reminders(body);
-
-		remindersRepository.save(reminder);
-	}
 
 	/**
 	 *
@@ -71,17 +51,17 @@ public class RemindersController {
 	
 	@ApiOperation(value = "Provides a list of all the reminders that need to be displayed", nickname = "Request reminders")	
 	@GetMapping
-	public List<Reminders> getReminders() {
+	public List<Reminder> getReminders() {
 
 		// Finding all projects that have not been published
 		List<BlogPost> blogPosts = blogPostRepository.findByPublished(false);
 
-		List<Reminders> reminders = new ArrayList<>();
+		List<Reminder> reminders = new ArrayList<>();
 
 		// Searching for reminders that match the project
 		for (BlogPost blogPost : blogPosts) {
 
-			Reminders reminder = remindersRepository.findByBlogPost(blogPost);
+			Reminder reminder = remindersRepository.findByBlogPost(blogPost);
 
 			// If the reminder exists add it to the list
 			if (reminder != null) {
@@ -110,7 +90,7 @@ public class RemindersController {
 	@PutMapping
 	public void acknowledgeReminder(@RequestBody int reminderId) {
 
-		Reminders reminder = remindersRepository.findByReminderId(reminderId);
+		Reminder reminder = remindersRepository.findByReminderId(reminderId);
 
 		reminder.setAcknowledged(true);
 

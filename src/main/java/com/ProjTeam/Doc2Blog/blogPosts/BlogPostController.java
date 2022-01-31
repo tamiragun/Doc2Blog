@@ -2,12 +2,11 @@ package com.ProjTeam.Doc2Blog.blogPosts;
 
 import java.util.List;
 
+import com.ProjTeam.Doc2Blog.reminders.Reminder;
+import com.ProjTeam.Doc2Blog.reminders.ReminderCrudRep;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -17,15 +16,17 @@ public class BlogPostController {
 	
 	@Autowired
 	private BlogPostRepository blogPostRepository;
+
+	@Autowired
+	private ReminderCrudRep remindersRepository;
 	
 	/**
 	 *
 	 * getBlogPosts Method. <br>
 	 * This method is used to pull a list of all the unpublished projects.
 	 *
-	 * @return A List<Projects> of individual Projects with their due date,
-	 *         Id and project topic using a Get command with
-	 *         extra mapping of "/project".
+	 * @return A List<BlogPost> of individual BlogPosts with their due date,
+	 *         Id and project topic using a Get command with mapping of "/blog".
 	 * 
 	 * @since version 1.00
 	 */
@@ -39,12 +40,33 @@ public class BlogPostController {
 
 		return blogPost;
 	}
+
+	/**
+	 *
+	 * saveBlogPost Method. <br>
+	 * This method is to save a new blogpost to the database using a Post command
+	 *
+	 * @param body     Object representing the topic of the blog to be posted, the
+	 *                 date the blog post is due, and how often the user wants to be
+	 *                 reminded.
+	 *
+	 * @since version 1.00
+	 */
+
+	@PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+	public void saveBlogPost(@RequestBody BlogPost body) {
+
+		//BlogPost blogPost = new BlogPost(body.getTopic(), body.getPostDate(), body.getRemPeriod());
+		Reminder reminder = new Reminder(body);
+
+		remindersRepository.save(reminder);
+	}
 	
 	/**
 	 *
-	 * publishProject Method. <br>
-	 * This method is to change the publish value of a project to true using a Put
-	 * command with extra mapping of "/project".
+	 * publishBlogPost Method. <br>
+	 * This method is to change the publish value of a blogpost to true using a Put
+	 * command with mapping of "/blog".
 	 *
 	 * @param projectId Integer representing the unique Id of the project.
 	 * 
