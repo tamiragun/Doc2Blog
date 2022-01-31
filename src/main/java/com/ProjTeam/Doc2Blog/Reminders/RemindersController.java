@@ -51,8 +51,8 @@ public class RemindersController {
 	@PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public void saveProject(@RequestBody BlogPost body) {
 		
-		BlogPost blogPost = new BlogPost(body.getTopic(), body.getPostDate(), body.getRemPeriod());
-		Reminders reminder = new Reminders(blogPost);
+		//BlogPost blogPost = new BlogPost(body.getTopic(), body.getPostDate(), body.getRemPeriod());
+		Reminders reminder = new Reminders(body);
 
 		remindersRepository.save(reminder);
 	}
@@ -81,7 +81,7 @@ public class RemindersController {
 		// Searching for reminders that match the project
 		for (BlogPost blogPost : blogPosts) {
 
-			Reminders reminder = remindersRepository.findByProject(blogPost);
+			Reminders reminder = remindersRepository.findByBlogPost(blogPost);
 
 			// If the reminder exists add it to the list
 			if (reminder != null) {

@@ -23,7 +23,7 @@ public interface RemindersCrudRep extends JpaRepository<Reminders, Integer>{
 	public List<Reminders> findByAcknowledged(boolean acknowledged);
 	
 	//Method to find individual reminder objects using the project they are linked to.
-	public Reminders findByProject(BlogPost project);
+	public Reminders findByBlogPost(BlogPost project);
 	
 	//Method to find individual reminder objects using their reminderId.
 	public Reminders findByReminderId(int reminderId);

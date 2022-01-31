@@ -35,18 +35,18 @@ public class Reminders {
 	private boolean acknowledged = false;
 
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "proj_id", referencedColumnName = "id")
-	private BlogPost project;
+	@JoinColumn(name = "post_id", referencedColumnName = "id")
+	private BlogPost blogPost;
 
 	//NoArgsConstuctor
 	public Reminders() {
 	}
 	//ArgsConstructor
-	public Reminders(BlogPost project) {
+	public Reminders(BlogPost blogPost) {
 
-		this.reminder = String.format("Your blog on %s is due on %s", project.getTopic(), project.getPostDate());
+		this.reminder = String.format("Your blog on %s is due on %s", blogPost.getTopic(), blogPost.getPostDate());
 		this.acknowledged = false;
-		this.project = project;
+		this.blogPost = blogPost;
 	}
 
 	// Getters
