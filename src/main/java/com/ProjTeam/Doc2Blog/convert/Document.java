@@ -2,6 +2,14 @@ package com.ProjTeam.Doc2Blog.convert;
 
 import java.util.ArrayList;
 
+
+/**
+ * Document <br>
+ * This class manages the attributes of the full document and produces the document html format for the site
+ *
+ * @author Warren Bradley
+ * @version 1.00, 05 Dec 2021
+ */
 public class Document {
 
 	// Attributes
