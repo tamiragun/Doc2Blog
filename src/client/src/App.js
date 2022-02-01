@@ -8,11 +8,13 @@ import Reminders from "./components/Reminders";
 import HomePage from "./components/HomePage";
 import Login from "./components/Login";
 import Register from "./components/Register";
+import Header from "./components/Header";
 import "./App.css";
 
 function App() {
   return (
     <div>
+      <Header />
       <Router>
         <Routes>
           <Route exact path="/login" element={<Login />}></Route>
