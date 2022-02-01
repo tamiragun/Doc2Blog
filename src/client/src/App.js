@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import BlogPost from "./components/BlogPost";
 import Deadlines from "./components/Deadlines";
 import Reminders from "./components/Reminders";
+import HomePage from "./components/HomePage";
 import "./App.css";
 
 function App() {
@@ -27,7 +28,7 @@ function App() {
           ></Route>
           {/* <Route path="/blogPost/add"></Route> */}
           <Route exact path="/blogPost" element={<BlogPost />}></Route>
-          {/* <Route path="/"></Route> */}
+          <Route exact path="/" element={<HomePage />}></Route>
         </Routes>
       </Router>
     </div>
