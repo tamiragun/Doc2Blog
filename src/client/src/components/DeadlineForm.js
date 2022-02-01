@@ -19,7 +19,7 @@ const DeadlineForm = (props) => {
         postDate: dueDate,
         remPeriod: reminderTime,
       };
-      const url = "/reminders";
+      const url = "/blog";
       try {
         const response = await fetch(url, {
           method: "POST",

@@ -46,7 +46,7 @@ const Deadlines = () => {
   // When the user clicks "mark as complete" on one of the deadlines
   const markPublished = async (event) => {
     const id = event.target.name;
-    const url = "/reminders/project";
+    const url = "/blog";
     try {
       const response = await fetch(url, {
         method: "PUT",
