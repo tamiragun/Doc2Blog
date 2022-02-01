@@ -86,9 +86,8 @@ export const Login = (props) => {
           <div className="form-card">
             <Form onSubmit={handleSubmit}>
               <div className="form-fields">
-                <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Group className="mb-3" controlId="formLoginEmail">
                   <Form.Label>Email:</Form.Label>
-
                   <Form.Control
                     type="text"
                     name="email"
@@ -97,7 +96,8 @@ export const Login = (props) => {
                     required
                   ></Form.Control>
                 </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicPassword">
+
+                <Form.Group className="mb-3" controlId="formLoginPassword">
                   <Form.Label>Password:</Form.Label>
 
                   <Form.Control
@@ -117,11 +117,7 @@ export const Login = (props) => {
           </div>
           {/*Allow the user to switch to the registration page instead */}
           <p>Not a user yet? Register here:</p>
-          <Button
-            className="button nav-button"
-            variant="secondary"
-            onClick={() => navigate("/register")}
-          >
+          <Button variant="secondary" onClick={() => navigate("/register")}>
             Register
           </Button>
         </div>
