@@ -6,6 +6,7 @@ import BlogPost from "./components/BlogPost";
 import Deadlines from "./components/Deadlines";
 import Reminders from "./components/Reminders";
 import HomePage from "./components/HomePage";
+import Login from "./components/Login";
 import "./App.css";
 
 function App() {
@@ -13,8 +14,8 @@ function App() {
     <div>
       <Router>
         <Routes>
-          {/* <Route path="/login"></Route>
-          <Route path="/register"></Route>
+          <Route exact path="/login" element={<Login />}></Route>
+          {/* <Route path="/register"></Route>
           <Route path="/deadlines/add"></Route> */}
           <Route
             exact

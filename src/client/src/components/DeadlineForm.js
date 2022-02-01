@@ -65,7 +65,6 @@ const DeadlineForm = (props) => {
         <Form.Label>Topic</Form.Label>
         <Form.Control
           type="text"
-          //id="topic"
           name="topic"
           required
           onChange={handleChange}
@@ -76,7 +75,6 @@ const DeadlineForm = (props) => {
         <Form.Label>DueDate</Form.Label>
         <Form.Control
           type="date"
-          //id="due-date"
           name="due-date"
           required
           onChange={handleChange}
