@@ -5,13 +5,16 @@ import Container from "react-bootstrap/Container";
 
 export const Header = (props) => {
   return (
-    <div className="publish-success">
+    <header className="header-with-navbar">
       <Navbar bg="light" expand="lg" fixed="top">
         <Container>
           <Navbar.Brand href="/">Doc2Blog</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto">
+          <Navbar.Collapse
+            id="basic-navbar-nav"
+            className="justify-content-end"
+          >
+            <Nav>
               <Nav.Link href="/">Home</Nav.Link>
               <Nav.Link href="/blogpost">Publish</Nav.Link>
               <Nav.Link href="/register">Register</Nav.Link>
@@ -20,7 +23,7 @@ export const Header = (props) => {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-    </div>
+    </header>
   );
 };
 

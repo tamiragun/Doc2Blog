@@ -72,7 +72,7 @@ export const HomePage = (props) => {
           {/*If the user is not logged in, display the login/registration options */}
           {!loggedIn && (
             <div>
-              <h2>Register or log in to access your division's credentials:</h2>
+              <h2>Register or log in to access your blogposts:</h2>
               <Button variant="primary" onClick={() => navigate("/login")}>
                 Login
               </Button>

@@ -67,20 +67,23 @@ const BlogPost = () => {
     <div>
       {/* Only display form when no doc is uploaded or published*/}
       {!uploaded && !published && (
-        <Form>
-          <Form.Group className="mb-3" controlId="formUploadFile">
-            <Form.Label>Select a file:</Form.Label>
-            <FileUpload
-              id="my-file"
-              onFileSelectSuccess={setFileAndName}
-              onFileSelectError={({ error }) => alert(error)}
-            ></FileUpload>
-          </Form.Group>
+        <div>
+          <h2>Upload your blogpost to spellcheck it:</h2>
+          <Form>
+            <Form.Group className="mb-3" controlId="formUploadFile">
+              <Form.Label>Select a file:</Form.Label>
+              <FileUpload
+                id="my-file"
+                onFileSelectSuccess={setFileAndName}
+                onFileSelectError={({ error }) => alert(error)}
+              ></FileUpload>
+            </Form.Group>
 
-          <Button variant="primary" onClick={submitForm}>
-            Upload
-          </Button>
-        </Form>
+            <Button variant="primary" onClick={submitForm}>
+              Upload
+            </Button>
+          </Form>
+        </div>
       )}
 
       {/* Only display link to draft once uploaded */}
