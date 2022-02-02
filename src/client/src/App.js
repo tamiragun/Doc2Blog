@@ -41,6 +41,7 @@ function App() {
           </Router>
         </Container>
       </main>
+      <footer></footer>
     </div>
   );
 }

@@ -9,7 +9,7 @@ import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
 
 export const HomePage = (props) => {
-  // Use history to be able to link to other Routes.
+  // Use navigate to be able to link to other Routes.
   const navigate = useNavigate();
   // Error toggle to capture any API call failures and display a user-friendly
   // error message.
