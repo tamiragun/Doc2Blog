@@ -1,0 +1,10 @@
+.homepage-authentication-buttons {
+  margin-top: 50px;
+  /* display: flex;
+  flex-direction: row;
+  justify-content: space-between; */
+}
+
+.homepage-authentication-buttons Button {
+  margin: 0 20px;
+}

@@ -7,6 +7,8 @@ import Deadlines from "./Deadlines";
 import Reminders from "./Reminders";
 import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
+import Card from "react-bootstrap/Card";
+import "./HomePage.css";
 
 export const HomePage = (props) => {
   // Use navigate to be able to link to other Routes.
@@ -72,13 +74,39 @@ export const HomePage = (props) => {
           {/*If the user is not logged in, display the login/registration options */}
           {!loggedIn && (
             <div>
-              <h2>Register or log in to access your blogposts:</h2>
-              <Button variant="primary" onClick={() => navigate("/login")}>
-                Login
-              </Button>
-              <Button variant="primary" onClick={() => navigate("/register")}>
-                Register
-              </Button>
+              <h2>Welcome to Doc2Blog!</h2>
+              <p>
+                Doc2Blog is a blog management tool that allows you to manage
+                your blogpost deadlines with handy reminders. It also lets you
+                upload your posts in Microsoft Word or Open Source doc format.
+                We perform a basic spellcheck for you and when you are happy
+                with the version to publish, we convert it to HTML and publish
+                it for you. Easy!
+              </p>
+              <div className="homepage-authentication-buttons text-center">
+                <Card
+                  className="mx-auto"
+                  style={{ "max-width": "30rem", padding: "20px" }}
+                >
+                  <Card.Title>
+                    Register or log in to access your blogposts:
+                  </Card.Title>
+                  <Card.Body>
+                    <Button
+                      variant="primary"
+                      onClick={() => navigate("/login")}
+                    >
+                      Login
+                    </Button>
+                    <Button
+                      variant="primary"
+                      onClick={() => navigate("/register")}
+                    >
+                      Register
+                    </Button>
+                  </Card.Body>
+                </Card>
+              </div>
             </div>
           )}
           {/*If the user is logged in, display the list of affiliations te user belongs to */}
