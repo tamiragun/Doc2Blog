@@ -84,7 +84,7 @@ export const Login = (props) => {
       ) : (
         // Otherwise, display the login form
         <div>
-          <Card className="mx-auto" style={{ "max-width": "30rem" }}>
+          <Card className="mx-auto" style={{ maxWidth: "30rem" }}>
             <Card.Header className="text-center">
               <h2>Log in</h2>
             </Card.Header>
@@ -95,7 +95,7 @@ export const Login = (props) => {
                     <Form.Group className="mb-3" controlId="formLoginEmail">
                       <Form.Label>Email:</Form.Label>
                       <Form.Control
-                        type="text"
+                        type="email"
                         name="email"
                         value={email}
                         onChange={handleChange}

@@ -96,7 +96,7 @@ export const Register = (props) => {
       ) : (
         // Otherwise, display the registration form
         <div>
-          <Card className="mx-auto" style={{ "max-width": "30rem" }}>
+          <Card className="mx-auto" style={{ maxWidth: "30rem" }}>
             <Card.Header className="text-center">
               <h2>Register</h2>
             </Card.Header>

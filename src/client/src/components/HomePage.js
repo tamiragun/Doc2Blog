@@ -8,6 +8,8 @@ import Reminders from "./Reminders";
 import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
 import Card from "react-bootstrap/Card";
+import Typewriter from "../images/typewriter.svg";
+import Image from "react-bootstrap/Image";
 import "./HomePage.css";
 
 export const HomePage = (props) => {
@@ -43,7 +45,7 @@ export const HomePage = (props) => {
   //             body: null,
   //           });
   //           const jsonResponse = await response.json();
-  //           // If there has been an error, set the error state hook to the arror
+  //           // If there has been an error, set the error state hook to the error
   //           // message, which will then be displayed on the page.
   //           if (jsonResponse.error) {
   //             console.log(jsonResponse.error);
@@ -74,19 +76,34 @@ export const HomePage = (props) => {
           {/*If the user is not logged in, display the login/registration options */}
           {!loggedIn && (
             <div>
-              <h2>Welcome to Doc2Blog!</h2>
-              <p>
-                Doc2Blog is a blog management tool that allows you to manage
-                your blogpost deadlines with handy reminders. It also lets you
-                upload your posts in Microsoft Word or Open Source doc format.
-                We perform a basic spellcheck for you and when you are happy
-                with the version to publish, we convert it to HTML and publish
-                it for you. Easy!
-              </p>
+              <div
+                className="homepage-intro text-center mx-auto"
+                style={{ maxWidth: "60rem" }}
+              >
+                <h2>Welcome to Doc2Blog!</h2>
+                <figure>
+                  <Image
+                    fluid
+                    src={Typewriter}
+                    alt="Typewriter"
+                    style={{ width: "100%", height: "auto" }}
+                    className="img-fluid"
+                  ></Image>
+                </figure>
+                <p>
+                  Doc2Blog is a blog management tool that allows you to manage
+                  your blogpost deadlines with handy reminders. It also lets you
+                  upload your posts in Microsoft Word or Open Source doc format.
+                  We perform a basic spellcheck for you and when you are happy
+                  with the version to publish, we convert it to HTML and publish
+                  it for you. Easy!
+                </p>
+              </div>
+
               <div className="homepage-authentication-buttons text-center">
                 <Card
                   className="mx-auto"
-                  style={{ "max-width": "30rem", padding: "20px" }}
+                  style={{ maxWidth: "30rem", padding: "20px" }}
                 >
                   <Card.Title>
                     Register or log in to access your blogposts:

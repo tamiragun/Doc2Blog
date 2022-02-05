@@ -5,3 +5,8 @@
 .homepage-authentication-buttons Button {
   margin: 0 20px;
 }
+
+figure {
+  margin: 30px auto;
+  max-width: 300px;
+}
