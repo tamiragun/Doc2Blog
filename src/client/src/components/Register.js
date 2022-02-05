@@ -4,7 +4,9 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
 import Alert from "react-bootstrap/Alert";
+import "./Register.css";
 
 export const Register = (props) => {
   // Use navigate to be able to link to other Routes.
@@ -94,54 +96,65 @@ export const Register = (props) => {
       ) : (
         // Otherwise, display the registration form
         <div>
-          <h2>Register</h2>
-          <div className="form-card">
-            <Form onSubmit={handleSubmit}>
-              <div className="form-fields">
-                <Form.Group className="mb-3" controlId="formRegisterName">
-                  <Form.Label>Name:</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="name"
-                    value={name}
-                    onChange={handleChange}
-                    required
-                  ></Form.Control>
-                </Form.Group>
+          <Card className="mx-auto" style={{ "max-width": "30rem" }}>
+            <Card.Header className="text-center">
+              <h2>Register</h2>
+            </Card.Header>
+            <Card.Body>
+              <div className="form-card">
+                <Form onSubmit={handleSubmit}>
+                  <div className="form-fields">
+                    <Form.Group className="mb-3" controlId="formRegisterName">
+                      <Form.Label>Name:</Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="name"
+                        value={name}
+                        onChange={handleChange}
+                        required
+                      ></Form.Control>
+                    </Form.Group>
 
-                <Form.Group className="mb-3" controlId="formRegisterEmail">
-                  <Form.Label>Email:</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="email"
-                    value={email}
-                    onChange={handleChange}
-                    required
-                  ></Form.Control>
-                </Form.Group>
+                    <Form.Group className="mb-3" controlId="formRegisterEmail">
+                      <Form.Label>Email:</Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="email"
+                        value={email}
+                        onChange={handleChange}
+                        required
+                      ></Form.Control>
+                    </Form.Group>
 
-                <Form.Group className="mb-3" controlId="formRegisterPassword">
-                  <Form.Label>Password:</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="password"
-                    value={password}
-                    onChange={handleChange}
-                    required
-                  ></Form.Control>
-                </Form.Group>
+                    <Form.Group
+                      className="mb-3"
+                      controlId="formRegisterPassword"
+                    >
+                      <Form.Label>Password:</Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="password"
+                        value={password}
+                        onChange={handleChange}
+                        required
+                      ></Form.Control>
+                    </Form.Group>
 
-                <Button type="submit" variant="primary" value="Register">
-                  Submit
-                </Button>
+                    <Button type="submit" variant="primary" value="Register">
+                      Submit
+                    </Button>
+                  </div>
+                </Form>
               </div>
-            </Form>
-          </div>
+            </Card.Body>
+          </Card>
           {/*Allow the user to switch to the login page instead */}
-          <p>Already a user? Log in here:</p>
-          <Button variant="secondary" onClick={() => navigate("/login")}>
-            Login
-          </Button>
+          <div className="switch-login text-center">
+            <p>Already a user? Log in here:</p>
+            <Button variant="secondary" onClick={() => navigate("/login")}>
+              Login
+            </Button>
+          </div>
         </div>
       )}
     </div>

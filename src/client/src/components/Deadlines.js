@@ -3,7 +3,7 @@ import DeadlineForm from "./DeadlineForm";
 import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 import { useNavigate } from "react-router";
-import MaterialIcon from "react-google-material-icons";
+//import MaterialIcon from "react-google-material-icons";
 import "./Deadlines.css";
 
 const Deadlines = () => {
@@ -95,7 +95,7 @@ const Deadlines = () => {
           >
             Upload draft
           </Button>
-          <MaterialIcon icon="file_upload" size={36} />
+          {/* <MaterialIcon icon="file_upload" size={36} /> */}
         </td>
         <td style={{ width: 140 }} className="text-center">
           <Button
