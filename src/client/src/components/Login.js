@@ -43,7 +43,7 @@ export const Login = (props) => {
     //         body: JSON.stringify({ email: email, password: password }),
     //       });
     //       const jsonResponse = await response.json();
-    //       // If there has been an error, set the error state hook to the arror
+    //       // If there has been an error, set the error state hook to the error
     //       // message, which will then be displayed on the page.
     //       if (jsonResponse.error) {
     //         console.log(jsonResponse.error);

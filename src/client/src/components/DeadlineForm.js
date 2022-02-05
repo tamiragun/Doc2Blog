@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import "./DeadlineForm.css";
 
 const DeadlineForm = (props) => {
   const [topic, setTopic] = useState("");
@@ -72,7 +73,7 @@ const DeadlineForm = (props) => {
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formBasicDueDate">
-        <Form.Label>DueDate</Form.Label>
+        <Form.Label>Due date</Form.Label>
         <Form.Control
           type="date"
           name="due-date"
@@ -82,9 +83,11 @@ const DeadlineForm = (props) => {
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formBasicReminderTime">
+        <Form.Label>
+          How many days ahead would you like to be reminded?
+        </Form.Label>
         <Form.Control
           type="number"
-          //id="reminder-time"
           name="reminder-time"
           required
           min="1"
@@ -97,8 +100,12 @@ const DeadlineForm = (props) => {
         Submit
       </Button>
 
-      <Button variant="secondary" onClick={props.onComplete}>
-        Back
+      <Button
+        className="cancel-button"
+        variant="secondary"
+        onClick={props.onComplete}
+      >
+        Cancel
       </Button>
     </Form>
   );
