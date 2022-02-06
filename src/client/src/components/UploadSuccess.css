@@ -1,0 +1,22 @@
+.upload-or-publish-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+/* Media query so that the upload/continue 
+buttons are stacked vertically on smaller screens */
+
+@media only screen and (max-width: 768px) {
+  .upload-or-publish-buttons {
+    flex-direction: column;
+  }
+
+  .upload-or-publish-buttons Button {
+    width: 218px;
+  }
+
+  .continue-publishing-button {
+    margin-top: 10px;
+  }
+}

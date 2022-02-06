@@ -7,12 +7,17 @@ export const PublishSuccess = (fileName) => {
   const blogUrl = `http://localhost:8080/convert?fileName=${fileName.fileName}`;
 
   return (
-    <div className="publish-success">
-      <Card>
+    <div className="upload-blogpost-card">
+      <Card className="mx-auto" style={{ maxWidth: "30rem" }}>
+        <Card.Header>
+          <h3>Step 5: Admire</h3>
+        </Card.Header>
         <Card.Body>
-          <Card.Title>
-            You have successfully published your blog post!
-          </Card.Title>
+          <Card.Title>And you're done!</Card.Title>
+          <Card.Text>
+            You have successfully published your blog post. Clicking on this
+            link will open your published blog post in another tab.
+          </Card.Text>
           <Card.Link
             href={blogUrl}
             rel="noreferrer"

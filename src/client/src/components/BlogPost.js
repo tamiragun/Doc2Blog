@@ -4,6 +4,8 @@ import PublishSuccess from "./PublishSuccess";
 import UploadSuccess from "./UploadSuccess";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
+import "./Blogpost.css";
 
 const BlogPost = () => {
   // Keep track of the uploaded file
@@ -66,39 +68,103 @@ const BlogPost = () => {
   return (
     <div>
       {/* Only display form when no doc is uploaded or published*/}
-      {!uploaded && !published && (
-        <div>
-          <h2>Upload your blogpost to spellcheck it:</h2>
-          <Form>
-            <Form.Group className="mb-3" controlId="formUploadFile">
-              <Form.Label>Select a file:</Form.Label>
-              <FileUpload
-                id="my-file"
-                onFileSelectSuccess={setFileAndName}
-                onFileSelectError={({ error }) => alert(error)}
-              ></FileUpload>
-            </Form.Group>
+      {/* {!uploaded && !published && ( */}
+      <div className="upload-blogpost-card">
+        <Card className="mx-auto" style={{ maxWidth: "30rem" }}>
+          <Card.Header>
+            <h3>Step 1: Upload document</h3>
+          </Card.Header>
 
-            <Button variant="primary" onClick={submitForm}>
-              Upload
-            </Button>
-          </Form>
-        </div>
-      )}
+          <Card.Body>
+            <Card.Title>Upload your draft blogpost</Card.Title>
+            <Card.Text>
+              Make sure your file is either a Microsoft Word document (ending in
+              ".doc" or ".docx") or in OpenDocument Format (ending in ".odt").
+            </Card.Text>
+            <Form>
+              <Form.Group className="mb-3" controlId="formUploadFile">
+                <Form.Label>Select a file:</Form.Label>
+                <FileUpload
+                  id="my-file"
+                  onFileSelectSuccess={setFileAndName}
+                  onFileSelectError={({ error }) => alert(error)}
+                ></FileUpload>
+              </Form.Group>
+
+              <Button variant="primary" onClick={submitForm}>
+                Upload
+              </Button>
+            </Form>
+          </Card.Body>
+        </Card>
+      </div>
+      {/* )} */}
 
       {/* Only display link to draft once uploaded */}
-      {uploaded && (
-        <UploadSuccess
-          fileName={selectedFileName}
-          onUploadNew={uploadNewFile}
-          onPublish={publishBlog}
-        ></UploadSuccess>
-      )}
+      {/* {uploaded && ( */}
+      <UploadSuccess
+        fileName={selectedFileName}
+        onUploadNew={uploadNewFile}
+        onPublish={publishBlog}
+      ></UploadSuccess>
+      {/* )} */}
+      <div classname="upload-blogpost-card">
+        <Card className="mx-auto" style={{ maxWidth: "30rem" }}>
+          <Card.Header>
+            <h3>Step 4: Choose style</h3>
+          </Card.Header>
 
+          <Card.Body>
+            <Card.Title>Select your preferred stylesheet</Card.Title>
+            <Card.Text>
+              Make sure your document is conform with our styleguide (INSERT
+              LINK). You can choose which stylsheet you'd like to publish your
+              blogpost with:
+            </Card.Text>
+            <Form>
+              <Form.Group className="mb-3" controlId="formSelectStylesheet">
+                <Form.Label>Select a stylesheet:</Form.Label>
+
+                <div className="mb-3">
+                  <Form.Check
+                    type="radio"
+                    label="Basic"
+                    id="basic-stylesheet"
+                    name="stylesheet"
+                  />
+
+                  <Form.Check
+                    type="radio"
+                    label="Bold"
+                    id="bold-stylesheet"
+                    name="stylesheet"
+                  />
+
+                  <Form.Check
+                    type="radio"
+                    label="Sleek"
+                    id="sleek-stylesheet"
+                    name="stylesheet"
+                  />
+                </div>
+              </Form.Group>
+
+              <Button
+                variant="primary"
+                onClick={() => {
+                  console.log("placeholder");
+                }}
+              >
+                Publish
+              </Button>
+            </Form>
+          </Card.Body>
+        </Card>
+      </div>
       {/* Only display link to blog once published */}
-      {published && (
-        <PublishSuccess fileName={selectedFileName}></PublishSuccess>
-      )}
+      {/* {published && ( */}
+      <PublishSuccess fileName={selectedFileName}></PublishSuccess>
+      {/* )} */}
     </div>
   );
 };
