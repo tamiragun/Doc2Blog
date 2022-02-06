@@ -3,7 +3,6 @@ import DeadlineForm from "./DeadlineForm";
 import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 import { useNavigate } from "react-router";
-//import MaterialIcon from "react-google-material-icons";
 import "./Deadlines.css";
 
 const Deadlines = () => {
@@ -84,10 +83,11 @@ const Deadlines = () => {
         <td style={{ width: 100 }} className="text-center">
           {deadline.postDate}
         </td>
-        <td style={{ width: 120 }} className="text-center">
+        <td className="text-center mw-100 upload-column">
           <Button
             variant="primary"
             size="sm"
+            className="d-none d-md-block"
             name="link-to-upload"
             onClick={() => {
               navigate("/blogPost");
@@ -95,17 +95,29 @@ const Deadlines = () => {
           >
             Upload draft
           </Button>
-          {/* <MaterialIcon icon="file_upload" size={36} /> */}
+          <i
+            className="bi-upload d-md-none"
+            name="link-to-upload"
+            onClick={() => {
+              navigate("/blogPost");
+            }}
+          ></i>
         </td>
-        <td style={{ width: 140 }} className="text-center">
+        <td className="text-center mw-100 publish-column">
           <Button
             variant="primary"
             size="sm"
+            className="d-none d-md-block"
             name={deadline.id}
             onClick={markPublished}
           >
             Mark published
           </Button>
+          <i
+            className="bi-check2-circle d-md-none"
+            name={deadline.id}
+            onClick={markPublished}
+          ></i>
         </td>
       </tr>
     );
@@ -119,14 +131,8 @@ const Deadlines = () => {
         !deadlines ? (
           "loading..."
         ) : (
-          <div>
-            <Table
-              striped
-              bordered
-              hover
-              responsive="sm"
-              className="deadlines-table"
-            >
+          <div className="deadlines-table">
+            <Table responsive striped bordered hover>
               <thead>
                 <tr>
                   <th>Topic</th>
