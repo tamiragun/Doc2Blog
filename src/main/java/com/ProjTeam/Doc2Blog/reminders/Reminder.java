@@ -32,7 +32,7 @@ public class Reminder {
 	private String reminder = "Your project is due";
 
 	@Column(name = "AKNOWLEDGED")
-	private boolean acknowledged = false;
+	private boolean acknowledged ;
 
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "post_id", referencedColumnName = "id")
