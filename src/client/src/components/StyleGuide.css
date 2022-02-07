@@ -1,0 +1,35 @@
+.supported-styles-lists {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  margin-bottom: 40px;
+}
+
+.supported-styles-list,
+.unsupported-styles-list {
+  width: 400px;
+}
+
+.unsupported-styles-list {
+  margin-left: 20px;
+}
+
+.style-examples {
+  margin-bottom: 40px;
+}
+
+@media only screen and (max-width: 768px) {
+  .supported-styles-lists {
+    flex-direction: column;
+  }
+
+  .supported-styles-list,
+  .unsupported-styles-list {
+    width: auto;
+  }
+
+  .unsupported-styles-list {
+    margin-left: 0;
+    margin-top: 20px;
+  }
+}

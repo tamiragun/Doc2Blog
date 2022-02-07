@@ -3,20 +3,3 @@
   flex-direction: row;
   justify-content: space-between;
 }
-
-/* Media query so that the upload/continue 
-  buttons are stacked vertically on smaller screens */
-
-/* @media only screen and (max-width: 768px) {
-  .back-or-next-buttons {
-    flex-direction: column;
-  }
-
-  .back-or-next-buttons Button {
-    width: 218px;
-  }
-
-  .next-button {
-    margin-top: 10px;
-  }
-} */
