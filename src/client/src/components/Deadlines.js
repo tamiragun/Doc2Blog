@@ -17,12 +17,13 @@ const Deadlines = () => {
   // Helper function to get the deadlines from the server and set the state accordingly
   const getDeadlines = async () => {
     const url = "/blog";
+    const token = sessionStorage.getItem("token");
     try {
       const response = await fetch(url, {
         method: "GET",
         headers: {
           "Content-type": "application/json",
-          //Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
         body: null,
       });
@@ -125,7 +126,7 @@ const Deadlines = () => {
 
   return (
     <div>
-      <h2>Your future blogpost topics</h2>
+      <h2>Your future blog post topics</h2>
       {
         /* If the deadlines haven't updated yet, display a holding message. */
         !deadlines ? (

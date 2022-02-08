@@ -17,15 +17,15 @@ export const Login = (props) => {
   const [isError, setIsError] = useState(false);
 
   // Declare states purely to control the form elements.
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   // Single handler for all controlled form elements, updates the corresponding
   // state depending on which field was typed in.
   const handleChange = (event) => {
     const currentValue = event.target.value;
-    if (event.target.name === "email") {
-      setEmail(currentValue);
+    if (event.target.name === "username") {
+      setUsername(currentValue);
     } else if (event.target.name === "password") {
       setPassword(currentValue);
     }
@@ -33,39 +33,44 @@ export const Login = (props) => {
 
   // Handler for when the final form is submitted.
   const handleSubmit = async (event) => {
-    //     setIsError(false);
-    //     // Prevent the browser from re-loading the page
-    //     event.preventDefault();
-    //     // Call the server with the different states as arguments.
-    //     const url = "/authentication/login";
-    //     try {
-    //       const response = await fetch(url, {
-    //         method: "POST",
-    //         headers: { "Content-type": "application/json" },
-    //         body: JSON.stringify({ email: email, password: password }),
-    //       });
-    //       const jsonResponse = await response.json();
-    //       // If there has been an error, set the error state hook to the error
-    //       // message, which will then be displayed on the page.
-    //       if (jsonResponse.error) {
-    //         console.log(jsonResponse.error);
-    //         setIsError(jsonResponse.message);
-    //         // If instead the token was set successfully, store that in session storage
-    //         // do that the token can be checked throughout the user's session across the app
-    //       } else if (jsonResponse.token) {
-    //         sessionStorage.setItem("token", jsonResponse.token);
-    //         // Reset the states back to empty, so that the form looks blank again.
-    //         setEmail("");
-    //         setPassword("");
-    //         // Redirect the user to the next page.
-    //         navigate("/");
-    //       } else {
-    //         setIsError("Your login and/or password didn't match");
-    //       }
-    //     } catch (error) {
-    //       console.log(error);
-    //       setIsError(error);
-    //     }
+    setIsError(false);
+    // Prevent the browser from re-loading the page
+    event.preventDefault();
+    // Call the server with the different states as arguments.
+    const url = "/login";
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-type": "application/x-www-form-urlencoded;charset=UTF-8",
+        },
+        body: new URLSearchParams({
+          username: username,
+          password: password,
+        }),
+      });
+      const jsonResponse = await response.json();
+      // If there has been an error, set the error state hook to the error
+      // message, which will then be displayed on the page.
+      if (jsonResponse.error) {
+        console.log(jsonResponse.error);
+        //setIsError(jsonResponse.message);
+        // If instead the token was set successfully, store that in session storage
+        // do that the token can be checked throughout the user's session across the app
+      } else if (jsonResponse.access_token) {
+        sessionStorage.setItem("token", jsonResponse.access_token);
+        // Reset the states back to empty, so that the form looks blank again.
+        setUsername("");
+        setPassword("");
+        // Redirect the user to the next page.
+        navigate("/");
+      } else {
+        setIsError("Your login and/or password didn't match");
+      }
+    } catch (error) {
+      console.log(error);
+      setIsError(error);
+    }
   };
 
   return (
@@ -75,7 +80,7 @@ export const Login = (props) => {
         <div>
           <Alert variant="danger">
             <Alert.Heading>Sorry!</Alert.Heading>
-            <p>There was an eror performing this action: {isError}</p>
+            <p>There was an error performing this action: {isError}</p>
             <Button onClick={() => setIsError(false)} variant="outline-danger">
               Try again
             </Button>
@@ -92,12 +97,12 @@ export const Login = (props) => {
               <div className="form-card">
                 <Form onSubmit={handleSubmit}>
                   <div className="form-fields">
-                    <Form.Group className="mb-3" controlId="formLoginEmail">
-                      <Form.Label>Email:</Form.Label>
+                    <Form.Group className="mb-3" controlId="formLoginUsername">
+                      <Form.Label>Username:</Form.Label>
                       <Form.Control
-                        type="email"
-                        name="email"
-                        value={email}
+                        type="text"
+                        name="username"
+                        value={username}
                         onChange={handleChange}
                         required
                       ></Form.Control>
