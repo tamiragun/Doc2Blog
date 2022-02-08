@@ -18,6 +18,7 @@ export const Register = (props) => {
 
   // Declare states purely to control the form elements.
   const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -29,6 +30,8 @@ export const Register = (props) => {
     const currentValue = event.target.value;
     if (event.target.name === "name") {
       setName(currentValue);
+    } else if (event.target.name === "username") {
+      setUsername(currentValue);
     } else if (event.target.name === "email") {
       setEmail(currentValue);
     } else if (event.target.name === "password") {
@@ -38,46 +41,49 @@ export const Register = (props) => {
 
   // Handler for when the final form is submitted.
   const handleSubmit = async (event) => {
-    // setIsError(false);
-    // // Prevent the browser from re-loading the page
-    // event.preventDefault();
-    // // Call the server with the different state hooks in the body.
-    // const url = "/authentication/register";
-    // try {
-    //   const response = await fetch(url, {
-    //     method: "POST",
-    //     headers: { "Content-type": "application/json" },
-    //     body: JSON.stringify({
-    //       name: name,
-    //       email: email,
-    //       password: password,
-    //     }),
-    //   });
-    //   const jsonResponse = await response.json();
-    //   // If there has been an error, set the error state hook to the arror
-    //   // message, which will then be displayed on the page.
-    //   if (jsonResponse.error) {
-    //     console.log(jsonResponse.error);
-    //     setIsError(jsonResponse.message);
-    //     // If instead the token was set successfully, store that in session storage
-    //     // do that the token can be checked throughout the user's session across the app
-    //   } else if (jsonResponse.token) {
-    //     sessionStorage.setItem("token", jsonResponse.token);
-    //     // Reset the states back to empty, so that the form looks blank again.
-    //     setName("");
-    //     setEmail("");
-    //     setPassword("");
-    //     // Redirect the user to the next page.
-    //     navigate("/");
-    //   } else {
-    //     setIsError(
-    //       "There was an error with your registration. Please contact an admin for support."
-    //     );
-    //   }
-    // } catch (error) {
-    //   console.log(error);
-    //   setIsError(error);
-    // }
+    setIsError(false);
+    // Prevent the browser from re-loading the page
+    event.preventDefault();
+    // Call the server with the different state hooks in the body.
+    const url = "/auth/user/register";
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify({
+          name: name,
+          username: username,
+          email: email,
+          password: password,
+        }),
+      });
+      navigate("/login");
+      const jsonResponse = await response.json();
+      console.log("Successfully registered user " + jsonResponse.name);
+      // // If there has been an error, set the error state hook to the error
+      // // message, which will then be displayed on the page.
+      // if (jsonResponse.error) {
+      //   console.log(jsonResponse.error);
+      //   setIsError(jsonResponse.message);
+      //   // If instead the token was set successfully, store that in session storage
+      //   // do that the token can be checked throughout the user's session across the app
+      // } else if (jsonResponse.token) {
+      //   sessionStorage.setItem("token", jsonResponse.token);
+      //   // Reset the states back to empty, so that the form looks blank again.
+      //   setName("");
+      //   setEmail("");
+      //   setPassword("");
+      //   // Redirect the user to the next page.
+      //   navigate("/");
+      // } else {
+      //   setIsError(
+      //     "There was an error with your registration. Please contact an admin for support."
+      //   );
+      // }
+    } catch (error) {
+      console.log(error);
+      setIsError(error);
+    }
   };
 
   return (
@@ -110,6 +116,20 @@ export const Register = (props) => {
                         type="text"
                         name="name"
                         value={name}
+                        onChange={handleChange}
+                        required
+                      ></Form.Control>
+                    </Form.Group>
+
+                    <Form.Group
+                      className="mb-3"
+                      controlId="formRegisterUserName"
+                    >
+                      <Form.Label>Username:</Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="username"
+                        value={username}
                         onChange={handleChange}
                         required
                       ></Form.Control>
