@@ -1,5 +1,8 @@
 package com.ProjTeam.Doc2Blog.blogPosts;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -50,12 +53,15 @@ public class BlogPost {
 	
 	public BlogPost(String topic, String postDate, String remPeriod) {
 		
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		Date dateNow = new Date();
+		
 		
 		this.topic = topic;
 		this.postDate = postDate;
 		this.remPeriod = remPeriod;
 		this.published = false;
-		this.lastRem = "none";
+		this.lastRem = dateFormat.format(dateNow);
 	}	
 		
 	//Getters	

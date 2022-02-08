@@ -56,8 +56,8 @@ public class BlogPostController {
 	@PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public void saveBlogPost(@RequestBody BlogPost body) {
 
-		//BlogPost blogPost = new BlogPost(body.getTopic(), body.getPostDate(), body.getRemPeriod());
-		Reminder reminder = new Reminder(body);
+		BlogPost blogPost = new BlogPost(body.getTopic(), body.getPostDate(), body.getRemPeriod());
+		Reminder reminder = new Reminder(blogPost);
 
 		remindersRepository.save(reminder);
 	}

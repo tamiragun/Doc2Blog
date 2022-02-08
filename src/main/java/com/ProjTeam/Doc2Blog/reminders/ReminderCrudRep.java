@@ -10,7 +10,7 @@ import com.ProjTeam.Doc2Blog.blogPosts.BlogPost;
 
 /**
  * RemindersCrudRep interface Class<br>
- * This interface manages the CRUD repository for the Reminderss class and it's interaction with mysql.
+ * This interface manages the CRUD repository for the Reminder class and it's interaction with mysql.
  *
  * @author Warren Bradley
  * @version 1.00, 21 Jan 2022

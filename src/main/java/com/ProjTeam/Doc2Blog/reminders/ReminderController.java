@@ -1,12 +1,14 @@
 package com.ProjTeam.Doc2Blog.reminders;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,13 +47,14 @@ public class ReminderController {
 	 *
 	 * @return reminders A List<Reminders> of individual Reminders with their
 	 *         reminderId and the actual reminder text in string format.
+	 * @throws ParseException 
 	 * 
 	 * @since version 1.00
 	 */
 	
 	@ApiOperation(value = "Provides a list of all the reminders that need to be displayed", nickname = "Request reminders")	
 	@GetMapping
-	public List<Reminder> getReminders() {
+	public List<Reminder> getReminders() throws ParseException {
 
 		// Finding all projects that have not been published
 		List<BlogPost> blogPosts = blogPostRepository.findByPublished(false);
@@ -65,6 +68,23 @@ public class ReminderController {
 
 			// If the reminder exists add it to the list
 			if (reminder != null) {
+				
+				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/mm/dd");
+				Date dateNow = new Date();
+				Date lastRem = dateFormat.parse(blogPost.getLastRem());
+				
+				long diffInMillies = Math.abs(dateNow.getTime() - lastRem.getTime());
+			    long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+			    
+			    if (blogPost.getRemPeriod().contains("d") && diff > 1) {
+			    	reminder.setAcknowledged(false);
+			    }
+			    else if(blogPost.getRemPeriod().contains("w") && diff > 7) {
+			    	reminder.setAcknowledged(false);
+			    }
+			    else if(blogPost.getRemPeriod().contains("m") && diff > 30) {
+			    	reminder.setAcknowledged(false);
+			    }
 
 				if (reminder.isAcknowledged() == false) {
 					reminders.add(reminder);
