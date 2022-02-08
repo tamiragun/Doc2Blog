@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.HttpClientErrorException;
 
 @Service
 @Transactional
@@ -44,13 +45,26 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
 	@Override
 	public AppUser registerUser(AppUser appUser) {
+		
+		AppUser appUserCheck = userRepo.findByUsername(appUser.getUsername());
+		AppUser appUserCheck2 = userRepo.findByEmail(appUser.getEmail());
+		
+		AppUser user = new AppUser();
+		
+		if(appUserCheck == null && appUserCheck2 == null) {
+			appUser.setPassword(passwordEncoder.encode(appUser.getPassword()));
 
-		appUser.setPassword(passwordEncoder.encode(appUser.getPassword()));
+			user = userRepo.save(appUser);
+			Role role = roleRepo.findByName("Role_User");
 
-		AppUser user = userRepo.save(appUser);
-		Role role = roleRepo.findByName("Role_User");
+			user.getRoles().add(role);			
+		}else {
+			
+			System.out.println("Username or email already exists!");
+			throw new HttpClientErrorException(null, "Username or email already exists!");
+		}
 
-		user.getRoles().add(role);
+		
 
 		return user;
 	}
