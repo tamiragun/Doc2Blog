@@ -49,25 +49,24 @@ export const Login = (props) => {
           password: password,
         }),
       });
-      console.log(response);
-      //const jsonResponse = await response.json();
+      const jsonResponse = await response.json();
       // If there has been an error, set the error state hook to the error
       // message, which will then be displayed on the page.
-      // if (jsonResponse.error) {
-      //   console.log(jsonResponse.error);
-      //   setIsError(jsonResponse.message);
-      //   // If instead the token was set successfully, store that in session storage
-      //   // do that the token can be checked throughout the user's session across the app
-      // } else if (jsonResponse.token) {
-      //   sessionStorage.setItem("token", jsonResponse.token);
-      //   // Reset the states back to empty, so that the form looks blank again.
-      //   setEmail("");
-      //   setPassword("");
-      //   // Redirect the user to the next page.
-      //   navigate("/");
-      // } else {
-      //   setIsError("Your login and/or password didn't match");
-      // }
+      if (jsonResponse.error) {
+        console.log(jsonResponse.error);
+        //setIsError(jsonResponse.message);
+        // If instead the token was set successfully, store that in session storage
+        // do that the token can be checked throughout the user's session across the app
+      } else if (jsonResponse.access_token) {
+        sessionStorage.setItem("token", jsonResponse.access_token);
+        // Reset the states back to empty, so that the form looks blank again.
+        setUsername("");
+        setPassword("");
+        // Redirect the user to the next page.
+        navigate("/");
+      } else {
+        setIsError("Your login and/or password didn't match");
+      }
     } catch (error) {
       console.log(error);
       setIsError(error);
@@ -81,7 +80,7 @@ export const Login = (props) => {
         <div>
           <Alert variant="danger">
             <Alert.Heading>Sorry!</Alert.Heading>
-            <p>There was an eror performing this action: {isError}</p>
+            <p>There was an error performing this action: {isError}</p>
             <Button onClick={() => setIsError(false)} variant="outline-danger">
               Try again
             </Button>
@@ -102,7 +101,7 @@ export const Login = (props) => {
                       <Form.Label>Username:</Form.Label>
                       <Form.Control
                         type="text"
-                        name="email"
+                        name="username"
                         value={username}
                         onChange={handleChange}
                         required

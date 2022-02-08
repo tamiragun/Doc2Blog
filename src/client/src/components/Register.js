@@ -57,29 +57,30 @@ export const Register = (props) => {
           password: password,
         }),
       });
-      navigate("/login");
+      //navigate("/login");
       const jsonResponse = await response.json();
       console.log("Successfully registered user " + jsonResponse.name);
       // // If there has been an error, set the error state hook to the error
       // // message, which will then be displayed on the page.
-      // if (jsonResponse.error) {
-      //   console.log(jsonResponse.error);
-      //   setIsError(jsonResponse.message);
-      //   // If instead the token was set successfully, store that in session storage
-      //   // do that the token can be checked throughout the user's session across the app
-      // } else if (jsonResponse.token) {
-      //   sessionStorage.setItem("token", jsonResponse.token);
-      //   // Reset the states back to empty, so that the form looks blank again.
-      //   setName("");
-      //   setEmail("");
-      //   setPassword("");
-      //   // Redirect the user to the next page.
-      //   navigate("/");
-      // } else {
-      //   setIsError(
-      //     "There was an error with your registration. Please contact an admin for support."
-      //   );
-      // }
+      if (jsonResponse.error) {
+        console.log(jsonResponse.error);
+        //setIsError(jsonResponse.message);
+        // If instead the token was set successfully, store that in session storage
+        // do that the token can be checked throughout the user's session across the app
+      } else if (jsonResponse.name) {
+        sessionStorage.setItem("name", jsonResponse.name);
+        // Reset the states back to empty, so that the form looks blank again.
+        setName("");
+        setUsername("");
+        setEmail("");
+        setPassword("");
+        // Redirect the user to the next page.
+        navigate("/login");
+      } else {
+        setIsError(
+          "There was an error with your registration. Please contact an admin for support."
+        );
+      }
     } catch (error) {
       console.log(error);
       setIsError(error);
@@ -93,7 +94,7 @@ export const Register = (props) => {
         <div>
           <Alert variant="danger">
             <Alert.Heading>Sorry!</Alert.Heading>
-            <p>There was an eror performing this action: {isError}</p>
+            <p>There was an error performing this action: {isError}</p>
             <Button onClick={() => setIsError(false)} variant="outline-danger">
               Try again
             </Button>
