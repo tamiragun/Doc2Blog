@@ -1,31 +1,20 @@
 import React from "react";
+import Card from "react-bootstrap/Card";
 
-export const UploadSuccess = ({ fileName, onUploadNew, onPublish }) => {
+export const UploadSuccess = ({ fileName }) => {
   // TODO generate button using routes instead of anchor link
 
   const blogUrl = `http://localhost:8080/check?fileName=${fileName}`;
 
-  const handleUploadClick = () => {
-    onUploadNew();
-  };
-
-  const handlePublishClick = () => {
-    onPublish();
-  };
-
   return (
-    <div className="upload-success">
-      <h3>
-        Preview your blogpost and check for any spelling or grammar mistakes:
-      </h3>
-      <a href={blogUrl} rel="noreferrer" target="_blank">
-        Check spelling and grammar
-      </a>
-      <br></br>
-      <br></br>
-      <button onClick={handleUploadClick}>Upload a new version</button>
-      <button onClick={handlePublishClick}>Publish current version</button>
-    </div>
+    <Card.Link
+      href={blogUrl}
+      rel="noreferrer"
+      target="_blank"
+      className="btn btn-primary"
+    >
+      Preview spell checked post
+    </Card.Link>
   );
 };
 

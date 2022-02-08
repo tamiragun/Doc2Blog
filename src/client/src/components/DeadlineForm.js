@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import "./DeadlineForm.css";
 
 const DeadlineForm = (props) => {
   const [topic, setTopic] = useState("");
@@ -58,40 +61,53 @@ const DeadlineForm = (props) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="topic">Topic:</label>
-      <input
-        type="text"
-        id="topic"
-        name="topic"
-        required
-        onChange={handleChange}
-      ></input>
-      <br></br>
-      <label htmlFor="due-date">Due date:</label>
-      <input
-        type="date"
-        id="due-date"
-        name="due-date"
-        required
-        onChange={handleChange}
-      ></input>
-      <br></br>
-      <label htmlFor="reminder-time">
-        How many days before the deadline would you like a reminder:
-      </label>
-      <input
-        type="number"
-        id="reminder-time"
-        name="reminder-time"
-        required
-        min="1"
-        max="60"
-        onChange={handleChange}
-      ></input>
-      <br></br>
-      <button>Add deadline</button>
-    </form>
+    <Form onSubmit={handleSubmit}>
+      <Form.Group className="mb-3" controlId="formBasicTopic">
+        <Form.Label>Topic</Form.Label>
+        <Form.Control
+          type="text"
+          name="topic"
+          required
+          onChange={handleChange}
+        />
+      </Form.Group>
+
+      <Form.Group className="mb-3" controlId="formBasicDueDate">
+        <Form.Label>Due date</Form.Label>
+        <Form.Control
+          type="date"
+          name="due-date"
+          required
+          onChange={handleChange}
+        />
+      </Form.Group>
+
+      <Form.Group className="mb-3" controlId="formBasicReminderTime">
+        <Form.Label>
+          How many days ahead would you like to be reminded?
+        </Form.Label>
+        <Form.Control
+          type="number"
+          name="reminder-time"
+          required
+          min="1"
+          max="60"
+          onChange={handleChange}
+        />
+      </Form.Group>
+
+      <Button type="submit" variant="primary">
+        Submit
+      </Button>
+
+      <Button
+        className="cancel-button"
+        variant="secondary"
+        onClick={props.onComplete}
+      >
+        Cancel
+      </Button>
+    </Form>
   );
 };
 

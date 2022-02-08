@@ -1,17 +1,20 @@
 import React from "react";
+import Card from "react-bootstrap/Card";
 
-export const PublishSuccess = (fileName) => {
+export const PublishSuccess = ({ fileName }) => {
   // TODO generate button using routes instead of anchor link
 
-  const blogUrl = `http://localhost:8080/convert?fileName=${fileName.fileName}`;
+  const blogUrl = `http://localhost:8080/convert?fileName=${fileName}`;
 
   return (
-    <div className="publish-success">
-      <h3>You have successfully published your blog post!</h3>
-      <a href={blogUrl} rel="noreferrer" target="_blank">
-        View your blog post live
-      </a>
-    </div>
+    <Card.Link
+      href={blogUrl}
+      rel="noreferrer"
+      target="_blank"
+      className="btn btn-primary"
+    >
+      View your blog post live
+    </Card.Link>
   );
 };
 
