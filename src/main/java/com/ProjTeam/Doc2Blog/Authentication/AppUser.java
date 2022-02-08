@@ -11,8 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-
-
 @Entity
 @Table(name = "User")
 public class AppUser {
@@ -24,6 +22,9 @@ public class AppUser {
 
 	@Column(name = "Name")
 	private String name;
+
+	@Column(name = "Username")
+	private String username;
 
 	@Column(name = "Email")
 	private String email;
@@ -39,15 +40,20 @@ public class AppUser {
 	}
 
 	// AllArgsCOnstructor
-	public AppUser(String name, String email, String password) {
+	public AppUser(String name, String username, String email, String password) {
 
 		this.name = name;
+		this.username = username;
 		this.email = email;
 		this.password = password;
-		
+
 	}
 
 	// Getters
+
+	public String getUsername() {
+		return username;
+	}
 
 	public Integer getUserId() {
 		return userId;
@@ -73,6 +79,10 @@ public class AppUser {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public void setEmail(String email) {
