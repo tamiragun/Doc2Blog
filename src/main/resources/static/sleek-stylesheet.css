@@ -1,0 +1,55 @@
+h1 {
+  font-family: Garamond, Baskerville, "Baskerville Old Face", "Hoefler Text",
+    "Times New Roman", serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: darkslategray;
+}
+
+h2 {
+  font-family: Garamond, Baskerville, "Baskerville Old Face", "Hoefler Text",
+    "Times New Roman", serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: darkslategray;
+}
+
+h3 {
+  font-family: Garamond, Baskerville, "Baskerville Old Face", "Hoefler Text",
+    "Times New Roman", serif;
+  font-size: 18.72px;
+  font-weight: 700;
+  color: darkslategray;
+}
+
+h4 {
+  font-family: Garamond, Baskerville, "Baskerville Old Face", "Hoefler Text",
+    "Times New Roman", serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: darkslategray;
+}
+
+h5 {
+  font-family: Garamond, Baskerville, "Baskerville Old Face", "Hoefler Text",
+    "Times New Roman", serif;
+  font-size: 13.28px;
+  font-weight: 700;
+  color: darkslategray;
+}
+
+h6 {
+  font-family: Garamond, Baskerville, "Baskerville Old Face", "Hoefler Text",
+    "Times New Roman", serif;
+  font-size: 10.72px;
+  font-weight: 700;
+  color: darkslategray;
+}
+
+p {
+  font-family: Garamond, Baskerville, "Baskerville Old Face", "Hoefler Text",
+    "Times New Roman", serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: darkslategray;
+}

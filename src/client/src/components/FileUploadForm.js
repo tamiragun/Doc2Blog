@@ -1,6 +1,7 @@
 import React from "react";
+import Form from "react-bootstrap/Form";
 
-export const FileUpload = ({ onFileSelectError, onFileSelectSuccess }) => {
+export const FileUploadForm = ({ onFileSelectSuccess, onFileSelectError }) => {
   // The programme can currently handle Word and open source documents
   const supportedFileTypes = [
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
@@ -12,21 +13,24 @@ export const FileUpload = ({ onFileSelectError, onFileSelectSuccess }) => {
   const handleFileInput = (e) => {
     const file = e.target.files[0];
     if (!file) {
-      onFileSelectError({ error: "Please upload a .doc, .docx, or .odt file" });
+      onFileSelectError("Please upload a .doc, .docx, or .odt file");
     } else if (file.size > 1024000) {
-      onFileSelectError({ error: "File size cannot exceed 1MB" });
+      onFileSelectError("File size cannot exceed 1MB");
     } else if (!supportedFileTypes.includes(file.type)) {
-      onFileSelectError({ error: "File type should be .doc, .docx, or .odt" });
+      onFileSelectError("File type should be .doc, .docx, or .odt");
     } else {
       onFileSelectSuccess(file);
     }
   };
 
   return (
-    <div className="file-uploader">
-      <input type="file" onChange={handleFileInput}></input>
-    </div>
+    <Form>
+      <Form.Group className="mb-3" controlId="formUploadFile">
+        <Form.Label>Select a file:</Form.Label>
+        <Form.Control type="file" required onChange={handleFileInput} />
+      </Form.Group>
+    </Form>
   );
 };
 
-export default FileUpload;
+export default FileUploadForm;

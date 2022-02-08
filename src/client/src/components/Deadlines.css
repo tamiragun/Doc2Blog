@@ -1,0 +1,25 @@
+.deadlines-table {
+  margin: 40px 0;
+}
+
+.bi-check2-circle,
+.bi-upload {
+  cursor: pointer;
+}
+
+.deadlines-table Button {
+  margin: 0 auto;
+}
+
+/* Override Bootstrap styling on larger screens so 
+that the button columns have a fixed size */
+
+@media only screen and (min-width: 768px) {
+  .publish-column {
+    width: 140px;
+  }
+
+  .upload-column {
+    width: 140px;
+  }
+}
