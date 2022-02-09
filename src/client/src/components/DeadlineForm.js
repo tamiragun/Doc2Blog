@@ -7,6 +7,7 @@ const DeadlineForm = (props) => {
   const [topic, setTopic] = useState("");
   const [dueDate, setDueDate] = useState("");
   const [reminderTime, setReminderTime] = useState("");
+  const [postRecurrence, setPostRecurrence] = useState("never");
 
   // Handler for when the final form is submitted.
   const handleSubmit = (event) => {
@@ -19,6 +20,7 @@ const DeadlineForm = (props) => {
         topic: topic,
         postDate: dueDate,
         remPeriod: reminderTime,
+        postRecurrence: postRecurrence,
       };
       const url = "/blog";
       const token = sessionStorage.getItem("token");
@@ -60,6 +62,8 @@ const DeadlineForm = (props) => {
       setDueDate(currentValue);
     } else if (event.target.name === "reminder-time") {
       setReminderTime(currentValue);
+    } else if (event.target.name === "post-recurrence") {
+      setPostRecurrence(event.target.id);
     }
   };
 
@@ -83,6 +87,33 @@ const DeadlineForm = (props) => {
           required
           onChange={handleChange}
         />
+      </Form.Group>
+
+      <Form.Group className="mb-3" controlId="formBasicRecurring">
+        <Form.Label>How often does this deadline recur?</Form.Label>
+        <div className="mb-3" onChange={handleChange} required>
+          <Form.Check
+            type="radio"
+            label="Never"
+            id="never"
+            name="post-recurrence"
+            defaultChecked
+          />
+
+          <Form.Check
+            type="radio"
+            label="Weekly"
+            id="weekly"
+            name="post-recurrence"
+          />
+
+          <Form.Check
+            type="radio"
+            label="Monthly"
+            id="monthly"
+            name="post-recurrence"
+          />
+        </div>
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formBasicReminderTime">
