@@ -68,6 +68,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
 
 				} catch (Exception exception) {
 
+					System.out.println("User does not have the permission to do that.");
 					// Responding with the error message
 					response.setHeader("error", exception.getMessage());
 					response.setStatus(FORBIDDEN.value());

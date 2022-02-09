@@ -1,6 +1,14 @@
 package com.ProjTeam.Doc2Blog.blogPosts;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 import com.ProjTeam.Doc2Blog.reminders.Reminder;
 import com.ProjTeam.Doc2Blog.reminders.ReminderCrudRep;
@@ -37,10 +45,43 @@ public class BlogPostController {
 	public List<BlogPost> getBlogPosts() {
 
 		// Finding all projects that have not been published
-		List<BlogPost> blogPost = blogPostRepository.findByPublished(false);
-		System.out.println(tokenHolder.getUsername());
-
-		return blogPost;
+		List<BlogPost> blogPosts = blogPostRepository.findByPublished(false);
+		ArrayList<BlogPost> userPosts = new ArrayList<BlogPost>();
+		String postUser = tokenHolder.getUsername();
+		
+		if (blogPosts != null) {
+			
+			for (BlogPost blogPost : blogPosts) {
+				
+				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/mm/dd");				
+				LocalDateTime ldt = LocalDateTime.now();
+				Date dueDate;
+				
+				try {
+					Date dateNow = dateFormat.parse(DateTimeFormatter.ofPattern("yyyy/mm/dd", Locale.ENGLISH).format(ldt));
+					dueDate = dateFormat.parse(blogPost.getPostDate());
+					
+					long diffInMillies = ( dueDate.getTime() - dateNow.getTime());
+				    long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+				    
+				   
+				    
+				    if(diff < 0) {
+				    	blogPost.setOverdue(true);
+				    }
+				} catch (ParseException e) {
+					
+					e.printStackTrace();
+				}
+				
+				if(blogPost.getPostUser().equalsIgnoreCase(postUser)) {
+					userPosts.add(blogPost);
+				}
+			}
+			
+		}
+		
+		return userPosts;
 	}
 
 	/**
@@ -58,7 +99,9 @@ public class BlogPostController {
 	@PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public void saveBlogPost(@RequestBody BlogPost body) {
 
-		BlogPost blogPost = new BlogPost(body.getTopic(), body.getPostDate(), body.getRemPeriod());
+		String postUser = tokenHolder.getUsername();
+		
+		BlogPost blogPost = new BlogPost(body.getTopic(), body.getPostDate(), body.getRemPeriod(), postUser);
 		Reminder reminder = new Reminder(blogPost);
 
 		remindersRepository.save(reminder);

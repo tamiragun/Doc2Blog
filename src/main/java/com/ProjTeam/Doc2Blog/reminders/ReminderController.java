@@ -3,9 +3,15 @@ package com.ProjTeam.Doc2Blog.reminders;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
+
+import static com.ProjTeam.Doc2Blog.Doc2BlogWebAppApplication.tokenHolder;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,7 +49,7 @@ public class ReminderController {
 	 *
 	 * getReminders Method. <br>
 	 * This method is used to pull a list of all the unacknowledged reminders for
-	 * all the unpublished projects using a Get command.
+	 * all the unpublished blogPosts using a Get command.
 	 *
 	 * @return reminders A List<Reminders> of individual Reminders with their
 	 *         reminderId and the actual reminder text in string format.
@@ -58,37 +64,46 @@ public class ReminderController {
 
 		// Finding all projects that have not been published
 		List<BlogPost> blogPosts = blogPostRepository.findByPublished(false);
-
+		String postUser = tokenHolder.getUsername();
 		List<Reminder> reminders = new ArrayList<>();
 
-		// Searching for reminders that match the project
+		// Searching for reminders that match the blogPost
 		for (BlogPost blogPost : blogPosts) {
 
-			Reminder reminder = remindersRepository.findByBlogPost(blogPost);
-
-			// If the reminder exists add it to the list
-			if (reminder != null) {
+			if (blogPost.getPostUser().equalsIgnoreCase(postUser)) {
 				
-				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/mm/dd");
-				Date dateNow = new Date();
-				Date lastRem = dateFormat.parse(blogPost.getLastRem());
+				Reminder reminder = remindersRepository.findByBlogPost(blogPost);
 				
-				long diffInMillies = Math.abs(dateNow.getTime() - lastRem.getTime());
-			    long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
-			    
-			    if (blogPost.getRemPeriod().contains("d") && diff > 1) {
-			    	reminder.setAcknowledged(false);
-			    }
-			    else if(blogPost.getRemPeriod().contains("w") && diff > 7) {
-			    	reminder.setAcknowledged(false);
-			    }
-			    else if(blogPost.getRemPeriod().contains("m") && diff > 30) {
-			    	reminder.setAcknowledged(false);
-			    }
+				
+				// If the reminder exists add it to the list
+				if (reminder != null) {
+					
+					SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/mm/dd");
+					LocalDateTime ldt = LocalDateTime.now();
+					Date lastRem = dateFormat.parse(blogPost.getLastRem());
+					
+					Date dateNow = dateFormat.parse(DateTimeFormatter.ofPattern("yyyy/mm/dd", Locale.ENGLISH).format(ldt));
+					
+					
+					long diffInMillies = ( lastRem.getTime() - dateNow.getTime());
+				    long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+					
+								    
+				    if (blogPost.getRemPeriod().contains("d") && diff < -1) {
+				    	reminder.setAcknowledged(false);
+				    }
+				    else if(blogPost.getRemPeriod().contains("w") && diff < -7) {
+				    	reminder.setAcknowledged(false);
+				    }
+				    else if(blogPost.getRemPeriod().contains("m") && diff < -30) {
+				    	reminder.setAcknowledged(false);
+				    }
 
-				if (reminder.isAcknowledged() == false) {
-					reminders.add(reminder);
-				}
+					if (reminder.isAcknowledged() == false) {
+						reminders.add(reminder);
+					}
+			}
+			
 			}
 		}
 		return reminders;

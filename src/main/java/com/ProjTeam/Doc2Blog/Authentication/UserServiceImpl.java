@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 			authorities.add(new SimpleGrantedAuthority(role.getName()));
 		}
 
-		return new User(appUser.getName(), appUser.getPassword(), authorities);
+		return new User(appUser.getUsername(), appUser.getPassword(), authorities);
 	}
 
 	@Override
