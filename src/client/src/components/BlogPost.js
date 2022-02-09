@@ -163,7 +163,10 @@ const BlogPost = () => {
               blog post with:"
           component={
             <ChooseStyling
-              selectStyle={(style) => setStyleSheet(style)}
+              selectStyle={(style) => {
+                setStyleSheet(style);
+                console.log(styleSheet);
+              }}
             ></ChooseStyling>
           }
           handleBackClick={() => {

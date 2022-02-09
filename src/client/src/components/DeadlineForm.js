@@ -38,7 +38,8 @@ const DeadlineForm = (props) => {
           console.log(response.statusText);
           //setIsError(jsonResponse.error_message);
         } else {
-          // If successful, print message and make the form disappear
+          // If successful, print message, reload deadlines and reminders,
+          // and make the form disappear
           console.log("Successfully added deadline");
           props.onComplete();
         }
@@ -105,7 +106,7 @@ const DeadlineForm = (props) => {
       <Button
         className="cancel-button"
         variant="secondary"
-        onClick={props.onComplete}
+        onClick={props.onCancel}
       >
         Cancel
       </Button>

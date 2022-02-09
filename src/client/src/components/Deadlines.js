@@ -1,52 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import DeadlineForm from "./DeadlineForm";
 import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 import { useNavigate } from "react-router";
 import "./Deadlines.css";
 
-const Deadlines = () => {
+const Deadlines = ({ deadlines, refreshDeadlinesAndReminders }) => {
   const [addingDeadline, setAddingDeadline] = useState(false);
-  const [deadlines, setDeadlines] = useState([]);
   const toggleAddingDeadline = () => {
     setAddingDeadline(!addingDeadline);
   };
   // Use navigate to be able to link to other Routes.
   const navigate = useNavigate();
-
-  // Helper function to get the deadlines from the server and set the state accordingly
-  const getDeadlines = async () => {
-    const url = "/blog";
-    const token = sessionStorage.getItem("token");
-    try {
-      const response = await fetch(url, {
-        method: "GET",
-        headers: {
-          "Content-type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: null,
-      });
-      // If there has been an error, set the error state hook to the error
-      // message, which will then be displayed on the page.
-      if (response.status !== 200) {
-        console.log(response.statusText);
-        //setIsError(jsonResponse.message);
-      } else {
-        // If successful, update the state with the list of deadlines
-        const jsonResponse = await response.json();
-        setDeadlines(jsonResponse);
-      }
-    } catch (error) {
-      console.log(error);
-      //setIsError(error);
-    }
-  };
-
-  // Upon first render, call the helper functions to obtain the deadlines
-  useEffect(() => {
-    getDeadlines();
-  }, []);
 
   // When the user clicks "mark as complete" on one of the deadlines
   const markPublished = async (event) => {
@@ -69,8 +34,8 @@ const Deadlines = () => {
         console.log(response.statusText);
         //setIsError(jsonResponse.error_message);
       } else {
-        // If successful, reload list of deadlines
-        getDeadlines();
+        // If successful, reload list of deadlines and reminders
+        refreshDeadlinesAndReminders();
       }
     } catch (error) {
       console.log(error);
@@ -156,8 +121,12 @@ const Deadlines = () => {
       )}
       {addingDeadline && (
         <DeadlineForm
+          refreshDeadlinesAndReminders={refreshDeadlinesAndReminders}
+          onCancel={() => {
+            toggleAddingDeadline();
+          }}
           onComplete={() => {
-            getDeadlines();
+            refreshDeadlinesAndReminders();
             toggleAddingDeadline();
           }}
         ></DeadlineForm>
