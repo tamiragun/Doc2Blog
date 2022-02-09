@@ -24,44 +24,13 @@ export const HomePage = (props) => {
   // The array of affiliations to display if a user is logged in
 
   // Upon first render, check if the user is logged in (i.e. if a token is set)
-  //   useEffect(() => {
-  //     setIsError(false);
-  //     const token = sessionStorage.getItem("token");
-  //     // Async IIFE to call the server with this token:
-  //     (async () => {
-  //       // If a token is set, toggle the state to logged in and call the server
-  //       if (token) {
-  //         setLoggedIn(true);
-  //         const url = "/authentication/home";
-  //         // Call the server to check the token and obtain the role and affiliation
-  //         // based on its payload
-  //         try {
-  //           const response = await fetch(url, {
-  //             method: "POST",
-  //             headers: {
-  //               "Content-type": "application/json",
-  //               Authorization: `Bearer ${token}`,
-  //             },
-  //             body: null,
-  //           });
-  //           const jsonResponse = await response.json();
-  //           // If there has been an error, set the error state hook to the error
-  //           // message, which will then be displayed on the page.
-  //           if (jsonResponse.error) {
-  //             console.log(jsonResponse.error);
-  //             setIsError(jsonResponse.message);
-  //           } else {
-  //             // If successful, store the user's role and affiliation in the component's state
-  //             setRole(jsonResponse.role);
-  //             setAffiliation(jsonResponse.affiliation);
-  //           }
-  //         } catch (error) {
-  //           console.log(error);
-  //           setIsError(error);
-  //         }
-  //       }
-  //     })();
-  //   }, []);
+  useEffect(() => {
+    setIsError(false);
+    const token = sessionStorage.getItem("token");
+    if (token) {
+      setLoggedIn(true);
+    }
+  }, []);
 
   return (
     <div className="home-page">
@@ -92,11 +61,11 @@ export const HomePage = (props) => {
                 </figure>
                 <p>
                   Doc2Blog is a blog management tool that allows you to manage
-                  your blogpost deadlines with handy reminders. It also lets you
-                  upload your posts in Microsoft Word or Open Source doc format.
-                  We perform a basic spellcheck for you and when you are happy
-                  with the version to publish, we convert it to HTML and publish
-                  it for you. Easy!
+                  your blog post deadlines with handy reminders. It also lets
+                  you upload your posts in Microsoft Word or Open Source doc
+                  format. We perform a basic spellcheck for you and when you are
+                  happy with the version to publish, we convert it to HTML and
+                  publish it for you. Easy!
                 </p>
               </div>
 

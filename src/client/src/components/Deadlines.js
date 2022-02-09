@@ -52,20 +52,22 @@ const Deadlines = () => {
   const markPublished = async (event) => {
     const id = event.target.name;
     const url = "/blog";
+    const token = sessionStorage.getItem("token");
     try {
       const response = await fetch(url, {
         method: "PUT",
         headers: {
           "Content-type": "application/json",
-          //Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
         body: id,
       });
+      //const jsonResponse = await response.json();
       // If there has been an error, set the error state hook to the error
       // message, which will then be displayed on the page.
       if (response.status !== 200) {
         console.log(response.statusText);
-        //setIsError(jsonResponse.message);
+        //setIsError(jsonResponse.error_message);
       } else {
         // If successful, reload list of deadlines
         getDeadlines();
@@ -76,7 +78,7 @@ const Deadlines = () => {
     }
   };
 
-  // Once deadlines are set by the useEfect hook, generate a JSX list of those deadlines with buttons each.
+  // Once deadlines are set by the useEffect hook, generate a JSX list of those deadlines with buttons each.
   const deadlineList = deadlines.map((deadline) => {
     return (
       <tr key={deadline.id}>

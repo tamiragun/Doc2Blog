@@ -13,7 +13,7 @@ const DeadlineForm = (props) => {
     // Prevent the browser from re-loading the page
     event.preventDefault();
 
-    // API IIFE call to server to save the project
+    // API IIFE call to server to save the deadline
     (async () => {
       let requestedFields = {
         topic: topic,
@@ -21,23 +21,25 @@ const DeadlineForm = (props) => {
         remPeriod: reminderTime,
       };
       const url = "/blog";
+      const token = sessionStorage.getItem("token");
       try {
         const response = await fetch(url, {
           method: "POST",
           headers: {
             "Content-type": "application/json",
-            //Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(requestedFields),
         });
-        // If there has been an error, set the error state hook to the arror
+        //const jsonResponse = await response.json();
+        // If there has been an error, set the error state hook to the error
         // message, which will then be displayed on the page.
         if (response.status !== 200) {
           console.log(response.statusText);
-          //setIsError(jsonResponse.message);
+          //setIsError(jsonResponse.error_message);
         } else {
           // If successful, print message and make the form disappear
-          console.log("Successfully added project");
+          console.log("Successfully added deadline");
           props.onComplete();
         }
       } catch (error) {
