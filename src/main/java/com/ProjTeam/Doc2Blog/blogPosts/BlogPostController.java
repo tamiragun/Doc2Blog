@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import io.swagger.annotations.ApiOperation;
+import static com.ProjTeam.Doc2Blog.Doc2BlogWebAppApplication.tokenHolder;
 
 @RestController
 @RequestMapping("/blog")
@@ -37,6 +38,7 @@ public class BlogPostController {
 
 		// Finding all projects that have not been published
 		List<BlogPost> blogPost = blogPostRepository.findByPublished(false);
+		System.out.println(tokenHolder.getUsername());
 
 		return blogPost;
 	}

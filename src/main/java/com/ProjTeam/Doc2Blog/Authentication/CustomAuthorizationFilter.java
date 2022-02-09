@@ -1,5 +1,5 @@
 package com.ProjTeam.Doc2Blog.Authentication;
-
+import static com.ProjTeam.Doc2Blog.Doc2BlogWebAppApplication.tokenHolder;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -33,7 +33,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
 			throws ServletException, IOException {
 
 		// Checking if it is the login path or register path
-		if (request.getServletPath().equals("/login") || request.getServletPath().equals("/auth/user.register") ) {
+		if (request.getServletPath().equals("/login") || request.getServletPath().equals("/auth/user/register") ) {
 			filterChain.doFilter(request, response);
 		} else {
 
@@ -46,15 +46,16 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
 				// Decoding the JWT
 				try {
 					// This is redundant. Remove redundancy in future
-					Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
-					
-					
+					Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());					
+				
 					JWTVerifier verifier = JWT.require(algorithm).build();
 					DecodedJWT decodedJWT = verifier.verify(token);
 					String username = decodedJWT.getSubject();
 					String[] roles = decodedJWT.getClaim("roles").asArray(String.class);
 					Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-
+					
+					tokenHolder.setUsername(username);
+					
 					for (String role : roles) {
 						authorities.add(new SimpleGrantedAuthority(role));
 					}
