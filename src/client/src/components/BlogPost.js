@@ -18,26 +18,39 @@ const BlogPost = () => {
   const navigate = useNavigate();
 
   // Handler for when the next step on file upload is clicked
-  const submitUpload = (e) => {
+  const submitUpload = async (event) => {
     // Prevent the browser form reloading
-    e.preventDefault();
+    event.preventDefault();
     // Some extra validation
     if (validateFileUpload(selectedFile)) {
       // Add the file from the component's state into the request body
       const formData = new FormData();
       formData.append("file", selectedFile);
+      const token = sessionStorage.getItem("token");
 
       // Send the POST request to the server
-      fetch("/convert", {
-        method: "POST",
-        body: formData,
-      })
-        .then(() => {
-          nextStep();
-        })
-        .catch((error) => {
-          console.error(error);
+      try {
+        const response = await fetch("/convert", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: formData,
         });
+        //const jsonResponse = await response.json();
+        // If there has been an error, set the error state hook to the error
+        // message, which will then be displayed on the page.
+        if (response.status !== 200) {
+          console.log(response.statusText);
+          //setIsError(jsonResponse.error_message);
+        } else {
+          // If successful, move on to the next step
+          nextStep();
+        }
+      } catch (error) {
+        console.log(error);
+        //setIsError(error);
+      }
     }
   };
 
@@ -150,7 +163,10 @@ const BlogPost = () => {
               blog post with:"
           component={
             <ChooseStyling
-              selectStyle={(style) => setStyleSheet(style)}
+              selectStyle={(style) => {
+                setStyleSheet(style);
+                console.log(styleSheet);
+              }}
             ></ChooseStyling>
           }
           handleBackClick={() => {
