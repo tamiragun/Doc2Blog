@@ -69,7 +69,7 @@ export const Login = (props) => {
       }
     } catch (error) {
       console.log(error);
-      setIsError(error);
+      setIsError(error.message);
     }
   };
 

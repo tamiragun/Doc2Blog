@@ -39,7 +39,7 @@ const Deadlines = ({ deadlines, refreshDeadlinesAndReminders }) => {
       }
     } catch (error) {
       console.log(error);
-      //setIsError(error);
+      //setIsError(error.message);
     }
   };
 

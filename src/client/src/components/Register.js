@@ -82,8 +82,7 @@ export const Register = (props) => {
         );
       }
     } catch (error) {
-      console.log(error);
-      setIsError(error);
+      setIsError(error.message);
     }
   };
 

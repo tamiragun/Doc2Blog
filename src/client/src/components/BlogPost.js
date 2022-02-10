@@ -49,7 +49,7 @@ const BlogPost = () => {
         }
       } catch (error) {
         console.log(error);
-        //setIsError(error);
+        //setIsError(error.message);
       }
     }
   };

@@ -68,7 +68,7 @@ export const HomePage = (props) => {
       }
     } catch (error) {
       console.log(error);
-      //setIsError(error);
+      //setIsError(error.message);
     }
   };
 
@@ -97,7 +97,7 @@ export const HomePage = (props) => {
       }
     } catch (error) {
       console.log(error);
-      //setIsError(error);
+      //setIsError(error.message);
     }
   };
 

@@ -46,8 +46,8 @@ const DeadlineForm = (props) => {
           props.onComplete();
         }
       } catch (error) {
-        console.log(error);
-        //setIsError(error);
+        console.log(error.message);
+        //setIsError(error.message);
       }
     })();
   };
