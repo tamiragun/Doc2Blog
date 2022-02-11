@@ -11,7 +11,7 @@ const BlogPost = ({ loggedIn }) => {
   // Keep track of the uploaded file, style, and step
   const [selectedFile, setSelectedFile] = useState(null);
   const [selectedFileName, setSelectedFileName] = useState(null);
-  const [styleSheet, setStyleSheet] = useState("basic-stylesheet");
+  const [styleSheet, setStyleSheet] = useState("basic");
   const [step, setStep] = useState(1);
 
   // Use navigate to be able to link to other Routes.
@@ -25,7 +25,11 @@ const BlogPost = ({ loggedIn }) => {
     if (validateFileUpload(selectedFile)) {
       // Add the file from the component's state into the request body
       const formData = new FormData();
-      formData.append("file", selectedFile);
+      formData.set("style", styleSheet);
+      formData.set("file", selectedFile);
+      for (var pair of formData.entries()) {
+        console.log(pair[0] + ", " + pair[1]);
+      }
       const token = sessionStorage.getItem("token");
 
       // Send the POST request to the server
@@ -133,38 +137,17 @@ const BlogPost = ({ loggedIn }) => {
               handleBackClick={() => {
                 navigate("/");
               }}
-              handleNextClick={submitUpload}
-            ></BlogPublishStep>
-          )}
-          {/* Only display step 2 when step 1 is active*/}
-          {step === 2 && (
-            <BlogPublishStep
-              header="Step 2: Review draft"
-              title="Check your spelling and grammar"
-              text="We've uploaded a preview of your html document, with any spelling
-              issues highlighted. Clicking on this link will open the preview in
-              a new tab. Once you are done reviewing your preview, close that
-              tab and come back to this one to proceed.
-              
-              Clicking back will let you upload a new version, clicking next will let you publish the current version (the highlights will disappear)."
-              component={
-                <UploadSuccess fileName={selectedFileName}></UploadSuccess>
-              }
-              handleBackClick={() => {
-                setSelectedFile(null);
-                setSelectedFileName(null);
-                setStep(step - 1);
-              }}
               handleNextClick={nextStep}
             ></BlogPublishStep>
           )}
-          {/* Only display step 3 when step 3 is active*/}
-          {step === 3 && (
+
+          {/* Only display step 2 when step 2 is active*/}
+          {step === 2 && (
             <BlogPublishStep
-              header="Step 3: Choose style"
+              header="Step 2: Choose style"
               title="Select your preferred stylesheet"
-              text="Make sure your document is conform with our style guide (INSERT
-              LINK). You can choose which style sheet you'd like to publish your
+              text="Make sure your document is conform with our style guide. 
+              You can choose which style sheet you'd like to publish your
               blog post with:"
               component={
                 <ChooseStyling
@@ -175,13 +158,34 @@ const BlogPost = ({ loggedIn }) => {
                 ></ChooseStyling>
               }
               handleBackClick={() => {
-                setStyleSheet("basic-stylesheet");
+                setSelectedFile(null);
+                setSelectedFileName(null);
                 prevStep();
               }}
               // TODO add in state for selected stylesheet!
-              handleNextClick={() => {
-                nextStep();
+              handleNextClick={submitUpload}
+            ></BlogPublishStep>
+          )}
+          {/* Only display step 3 when step 3 is active*/}
+          {step === 3 && (
+            <BlogPublishStep
+              header="Step 3: Review draft"
+              title="Check your spelling and grammar"
+              text="We've uploaded a preview of your html document, with any spelling
+              issues highlighted. Clicking on this link will open the preview in
+              a new tab. Once you are done reviewing your preview, close that
+              tab and come back to this one to proceed.
+              
+              Clicking back will let you upload a new version, clicking next will 
+              let you publish the current version (the highlights will disappear)."
+              component={
+                <UploadSuccess fileName={selectedFileName}></UploadSuccess>
+              }
+              handleBackClick={() => {
+                setStyleSheet("basic");
+                setStep(step - 1);
               }}
+              handleNextClick={nextStep}
             ></BlogPublishStep>
           )}
           {/* Only display step 4 when step 4 is active*/}

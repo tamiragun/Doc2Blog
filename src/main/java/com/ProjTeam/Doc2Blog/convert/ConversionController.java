@@ -11,11 +11,7 @@ import java.util.Scanner;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
@@ -43,11 +39,15 @@ public class ConversionController {
 
 	@ApiOperation(value = "Takes a file in the request body, converts it to HTML, and saves it to the file directory.", nickname = "Upload document to convert")
 	@PostMapping
-	public void uploadFile(@RequestPart("file") MultipartFile file) {
+	public void uploadFile(@RequestPart("file") MultipartFile file, @RequestParam("style") String requestStyle) {
 		/*Return a bad request if the file is null
 		 if (null == file.getOriginalFilename()) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}*/
+
+		//Extracting the selected style:
+		String style = requestStyle.substring(0,5);
+		System.out.println("Selected style: " + style);
 
 		try {
 			//Storing the file in a byte array
@@ -57,21 +57,20 @@ public class ConversionController {
 			Path path = Paths.get(file.getOriginalFilename());
 			Files.write(path, bytes);			
 			
-			System.out.println(path.getFileName());
+			System.out.println("Uploaded file: " + path.getFileName());
 			
 			//Extracting the document title from the file name
 			String title = path.toString().substring(0,path.toString().length()-5);
 			
 			//Creating the document class object
-			Document doc = new Document(title);		
+			Document doc = new Document(title, style);
 			
 			//Setting the document object with the information stored in the uploaded document
 			doc.setDoc(path.toString());
 			
 			try (PrintWriter out = new PrintWriter(String.format("src/main/resources/static/%s.txt", doc.getTitle()) )) {
 			    out.println(doc);
-			    System.out.println(doc.getTitle());
-			    System.out.println("Doc saved");
+			    System.out.println("Doc saved: " + doc.getTitle());
 			}
 			
 		} catch (IOException e) {

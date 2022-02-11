@@ -16,12 +16,14 @@ public class Document {
 
 	ArrayList<Paragraph> paragraphs;
 	String title;
+	String style;
 
 	// Constructor
 
-	public Document(String title) {
+	public Document(String title, String style) {
 
 		this.title = title;
+		this.style = style;
 		this.paragraphs = new ArrayList<Paragraph>();
 		
 	}
@@ -43,6 +45,9 @@ public class Document {
 	public String getTitle() {
 		return this.title;
 	}
+	public String getStyle() {
+		return this.style;
+	}
 
 	// To string
 	public String toString() {
@@ -52,7 +57,12 @@ public class Document {
 		output += "<html lang='en'>\n";
 		output += "<head>\n";
 		output += " <title>" + this.title + "</title>\n";
-		output += " <meta name=\"description\" content=\"Blog post published on Doc2Blog\"\n";
+		output += " <meta name=\"description\" content=\"Blog post published on Doc2Blog\">\n";
+		if (this.style.equals("boldx")) {
+			output += " <link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3\" crossorigin=\"anonymous\">\n";
+		} else if (this.style.equals("sleek")) {
+			output += " <link href=\"./sleek-stylesheet.css\" rel=\"stylesheet\">\n";
+		}
 		output += "</head>\n\n";
 		output += "<body>\n";		
 
