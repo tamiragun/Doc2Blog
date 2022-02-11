@@ -5,9 +5,9 @@ import UploadSuccess from "./UploadSuccess";
 import BlogPublishStep from "./BlogPublishStep";
 import ChooseStyling from "./ChooseStyling.js";
 import { useNavigate } from "react-router";
-import "./Blogpost.css";
+import LoggedOutCard from "./LoggedOutCard.js";
 
-const BlogPost = () => {
+const BlogPost = ({ loggedIn }) => {
   // Keep track of the uploaded file, style, and step
   const [selectedFile, setSelectedFile] = useState(null);
   const [selectedFileName, setSelectedFileName] = useState(null);
@@ -104,98 +104,104 @@ const BlogPost = () => {
 
   return (
     <div>
-      <h2>Publish your blog post</h2>
-      <p>
-        Now that you have finished writing about your upcoming topic, it's time
-        to share it with the world! Follow these steps to upload, spellcheck,
-        style, and publish your post.
-      </p>
-      {/* Only display step 1 when step 1 is active*/}
-      {step === 1 && (
-        <BlogPublishStep
-          header="Step 1: Upload document"
-          title="Upload your draft blog post"
-          text="Make sure your file is either a Microsoft Word document (ending in
-              '.doc' or '.docx') or in OpenDocument Format (ending in '.odt')."
-          component={
-            <FileUploadForm
-              onFileSelectSuccess={setFileAndName}
-              onFileUploadValidate={validateFileUpload}
-            ></FileUploadForm>
-          }
-          handleBackClick={() => {
-            navigate("/");
-          }}
-          handleNextClick={submitUpload}
-        ></BlogPublishStep>
+      {/*If the user is not logged in, display the login/registration options */}
+      {!loggedIn && (
+        <LoggedOutCard logoutText="Register or log in to upload a blog post:"></LoggedOutCard>
       )}
-
-      {/* Only display step 2 when step 1 is active*/}
-      {step === 2 && (
-        <BlogPublishStep
-          header="Step 2: Review draft"
-          title="Check your spelling and grammar"
-          text="We've uploaded a preview of your html document, with any spelling
+      {/*If the user is logged in, display the form upload stepper */}
+      {loggedIn && (
+        <div>
+          <h2>Publish your blog post</h2>
+          <p>
+            Now that you have finished writing about your upcoming topic, it's
+            time to share it with the world! Follow these steps to upload,
+            spellcheck, style, and publish your post.
+          </p>
+          {/* Only display step 1 when step 1 is active*/}
+          {step === 1 && (
+            <BlogPublishStep
+              header="Step 1: Upload document"
+              title="Upload your draft blog post"
+              text="Make sure your file is either a Microsoft Word document (ending in
+              '.doc' or '.docx') or in OpenDocument Format (ending in '.odt')."
+              component={
+                <FileUploadForm
+                  onFileSelectSuccess={setFileAndName}
+                  onFileUploadValidate={validateFileUpload}
+                ></FileUploadForm>
+              }
+              handleBackClick={() => {
+                navigate("/");
+              }}
+              handleNextClick={submitUpload}
+            ></BlogPublishStep>
+          )}
+          {/* Only display step 2 when step 1 is active*/}
+          {step === 2 && (
+            <BlogPublishStep
+              header="Step 2: Review draft"
+              title="Check your spelling and grammar"
+              text="We've uploaded a preview of your html document, with any spelling
               issues highlighted. Clicking on this link will open the preview in
               a new tab. Once you are done reviewing your preview, close that
               tab and come back to this one to proceed.
               
               Clicking back will let you upload a new version, clicking next will let you publish the current version (the highlights will disappear)."
-          component={
-            <UploadSuccess fileName={selectedFileName}></UploadSuccess>
-          }
-          handleBackClick={() => {
-            setSelectedFile(null);
-            setSelectedFileName(null);
-            setStep(step - 1);
-          }}
-          handleNextClick={nextStep}
-        ></BlogPublishStep>
-      )}
-
-      {/* Only display step 3 when step 3 is active*/}
-      {step === 3 && (
-        <BlogPublishStep
-          header="Step 3: Choose style"
-          title="Select your preferred stylesheet"
-          text="Make sure your document is conform with our style guide (INSERT
+              component={
+                <UploadSuccess fileName={selectedFileName}></UploadSuccess>
+              }
+              handleBackClick={() => {
+                setSelectedFile(null);
+                setSelectedFileName(null);
+                setStep(step - 1);
+              }}
+              handleNextClick={nextStep}
+            ></BlogPublishStep>
+          )}
+          {/* Only display step 3 when step 3 is active*/}
+          {step === 3 && (
+            <BlogPublishStep
+              header="Step 3: Choose style"
+              title="Select your preferred stylesheet"
+              text="Make sure your document is conform with our style guide (INSERT
               LINK). You can choose which style sheet you'd like to publish your
               blog post with:"
-          component={
-            <ChooseStyling
-              selectStyle={(style) => {
-                setStyleSheet(style);
-                console.log(styleSheet);
+              component={
+                <ChooseStyling
+                  selectStyle={(style) => {
+                    setStyleSheet(style);
+                    console.log(styleSheet);
+                  }}
+                ></ChooseStyling>
+              }
+              handleBackClick={() => {
+                setStyleSheet("basic-stylesheet");
+                prevStep();
               }}
-            ></ChooseStyling>
-          }
-          handleBackClick={() => {
-            setStyleSheet("basic-stylesheet");
-            prevStep();
-          }}
-          // TODO add in state for selected stylesheet!
-          handleNextClick={() => {
-            nextStep();
-          }}
-        ></BlogPublishStep>
-      )}
-
-      {/* Only display step 4 when step 4 is active*/}
-      {step === 4 && (
-        <BlogPublishStep
-          header="Step 4: Admire"
-          title="And you're done!"
-          text="You have successfully published your blog post. Clicking on this
+              // TODO add in state for selected stylesheet!
+              handleNextClick={() => {
+                nextStep();
+              }}
+            ></BlogPublishStep>
+          )}
+          {/* Only display step 4 when step 4 is active*/}
+          {step === 4 && (
+            <BlogPublishStep
+              header="Step 4: Admire"
+              title="And you're done!"
+              text="You have successfully published your blog post. Clicking on this
             link will open your published blog post in another tab.
             Don't forget to mark your deadline as complete :)"
-          component={
-            <PublishSuccess fileName={selectedFileName}></PublishSuccess>
-          }
-          handleBackClick={prevStep}
-          handleNextClick={() => {
-            navigate("/");
-          }}
-        ></BlogPublishStep>
+              component={
+                <PublishSuccess fileName={selectedFileName}></PublishSuccess>
+              }
+              handleBackClick={prevStep}
+              handleNextClick={() => {
+                navigate("/");
+              }}
+            ></BlogPublishStep>
+          )}
+        </div>
       )}
     </div>
   );

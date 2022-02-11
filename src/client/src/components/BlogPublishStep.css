@@ -3,3 +3,7 @@
   flex-direction: row;
   justify-content: space-between;
 }
+
+.upload-blogpost-card {
+  margin: 20px 0;
+}

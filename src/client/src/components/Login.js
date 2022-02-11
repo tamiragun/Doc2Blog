@@ -8,7 +8,7 @@ import Alert from "react-bootstrap/Alert";
 import Card from "react-bootstrap/Card";
 import "./Login.css";
 
-export const Login = (props) => {
+export const Login = ({ toggleLogin }) => {
   // Use navigate to be able to link to other Routes.
   const navigate = useNavigate();
 
@@ -63,7 +63,8 @@ export const Login = (props) => {
         setUsername("");
         setPassword("");
         // Redirect the user to the next page.
-        navigate("/");
+        toggleLogin();
+        navigate(-1);
       } else {
         setIsError("Your login and/or password didn't match");
       }
