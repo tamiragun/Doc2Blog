@@ -53,12 +53,12 @@ public class BlogPostController {
 			
 			for (BlogPost blogPost : blogPosts) {
 				
-				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/mm/dd");				
+				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
 				LocalDateTime ldt = LocalDateTime.now();
 				Date dueDate;
 				
 				try {
-					Date dateNow = dateFormat.parse(DateTimeFormatter.ofPattern("yyyy/mm/dd", Locale.ENGLISH).format(ldt));
+					Date dateNow = dateFormat.parse(DateTimeFormatter.ofPattern("yyyy-mm-dd", Locale.ENGLISH).format(ldt));
 					dueDate = dateFormat.parse(blogPost.getPostDate());
 					
 					long diffInMillies = ( dueDate.getTime() - dateNow.getTime());
