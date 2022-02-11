@@ -16,24 +16,14 @@ export const ChooseStyling = ({ selectStyle }) => {
           <Form.Check
             type="radio"
             label="Basic"
-            id="basic-stylesheet"
+            id="basic"
             name="stylesheet"
             defaultChecked
           />
 
-          <Form.Check
-            type="radio"
-            label="Bold"
-            id="bold-stylesheet"
-            name="stylesheet"
-          />
+          <Form.Check type="radio" label="Bold" id="boldx" name="stylesheet" />
 
-          <Form.Check
-            type="radio"
-            label="Sleek"
-            id="sleek-stylesheet"
-            name="stylesheet"
-          />
+          <Form.Check type="radio" label="Sleek" id="sleek" name="stylesheet" />
         </div>
       </Form.Group>
     </Form>

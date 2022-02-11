@@ -42,10 +42,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().antMatchers(HttpMethod.GET,"/reminders/**").hasAnyAuthority("Role_User");
 		http.authorizeRequests().antMatchers(HttpMethod.POST,"/reminders/**").hasAnyAuthority("Role_User");
 		http.authorizeRequests().antMatchers(HttpMethod.PUT,"/reminders/**").hasAnyAuthority("Role_User");
-		http.authorizeRequests().antMatchers(HttpMethod.GET,"/convert/**").hasAnyAuthority("Role_User");
+		http.authorizeRequests().antMatchers(HttpMethod.GET,"/convert/**").permitAll();
 		http.authorizeRequests().antMatchers(HttpMethod.POST,"/convert/**").hasAnyAuthority("Role_User");
 		http.authorizeRequests().antMatchers(HttpMethod.PUT,"/convert/**").hasAnyAuthority("Role_User");
-		http.authorizeRequests().antMatchers("/check/**").hasAnyAuthority("Role_User");
+		// Is there any reason to protect anything in the spellCheck class? There is only a GET endpoint, which needs to be accessible without token for now
+		// http.authorizeRequests().antMatchers("/check/**").hasAnyAuthority("Role_User");
+		http.authorizeRequests().antMatchers(HttpMethod.GET,"/check/**").permitAll();
 		http.authorizeRequests().anyRequest().authenticated();
 		http.addFilter(new CustomAuthenticationFilter(authenticationManagerBean()));
 		http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
