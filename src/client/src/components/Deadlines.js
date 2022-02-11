@@ -47,46 +47,100 @@ const Deadlines = ({ deadlines, refreshDeadlinesAndReminders }) => {
   const deadlineList = deadlines.map((deadline) => {
     return (
       <tr key={deadline.id}>
-        <td>{deadline.topic}</td>
-        <td style={{ width: 100 }} className="text-center">
-          {deadline.postDate}
-        </td>
-        <td className="text-center mw-100 upload-column">
-          <Button
-            variant="primary"
-            size="sm"
-            className="d-none d-md-block"
-            name="link-to-upload"
-            onClick={() => {
-              navigate("/blogPost");
-            }}
-          >
-            Upload draft
-          </Button>
-          <i
-            className="bi-upload d-md-none"
-            name="link-to-upload"
-            onClick={() => {
-              navigate("/blogPost");
-            }}
-          ></i>
-        </td>
-        <td className="text-center mw-100 publish-column">
-          <Button
-            variant="primary"
-            size="sm"
-            className="d-none d-md-block"
-            name={deadline.id}
-            onClick={markPublished}
-          >
-            Mark published
-          </Button>
-          <i
-            className="bi-check2-circle d-md-none"
-            name={deadline.id}
-            onClick={markPublished}
-          ></i>
-        </td>
+        {!deadline.overdue && <td>{deadline.topic}</td>}
+        {deadline.overdue && <td className="text-danger">{deadline.topic}</td>}
+        {!deadline.overdue && (
+          <td style={{ width: 100 }} className="text-center">
+            {deadline.postDate}
+          </td>
+        )}
+        {deadline.overdue && (
+          <td style={{ width: 100 }} className="text-center text-danger">
+            {deadline.postDate}
+          </td>
+        )}
+        {!deadline.overdue && (
+          <td className="text-center mw-100 upload-column">
+            <Button
+              variant="primary"
+              size="sm"
+              className="d-none d-md-block"
+              name="link-to-upload"
+              onClick={() => {
+                navigate("/blogPost");
+              }}
+            >
+              Upload draft
+            </Button>
+
+            <i
+              className="bi-upload d-md-none"
+              name="link-to-upload"
+              onClick={() => {
+                navigate("/blogPost");
+              }}
+            ></i>
+          </td>
+        )}
+        {deadline.overdue && (
+          <td className="text-center mw-100 upload-column">
+            <Button
+              variant="danger"
+              size="sm"
+              className="d-none d-md-block"
+              name="link-to-upload"
+              onClick={() => {
+                navigate("/blogPost");
+              }}
+            >
+              Upload draft
+            </Button>
+
+            <i
+              className="bi-upload d-md-none text-danger"
+              name="link-to-upload"
+              onClick={() => {
+                navigate("/blogPost");
+              }}
+            ></i>
+          </td>
+        )}
+        {!deadline.overdue && (
+          <td className="text-center mw-100 publish-column">
+            <Button
+              variant="primary"
+              size="sm"
+              className="d-none d-md-block"
+              name={deadline.id}
+              onClick={markPublished}
+            >
+              Mark published
+            </Button>
+            <i
+              className="bi-check2-circle d-md-none"
+              name={deadline.id}
+              onClick={markPublished}
+            ></i>
+          </td>
+        )}
+        {deadline.overdue && (
+          <td className="text-center mw-100 publish-column">
+            <Button
+              variant="danger"
+              size="sm"
+              className="d-none d-md-block"
+              name={deadline.id}
+              onClick={markPublished}
+            >
+              Mark published
+            </Button>
+            <i
+              className="bi-check2-circle d-md-none text-danger"
+              name={deadline.id}
+              onClick={markPublished}
+            ></i>
+          </td>
+        )}
       </tr>
     );
   });
