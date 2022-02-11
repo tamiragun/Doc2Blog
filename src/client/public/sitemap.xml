@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+   <url>
+      <loc>http://www.doc2blog.com/</loc>
+      <lastmod>2022-02-11</lastmod>
+      <changefreq>monthly</changefreq>
+      <priority>1</priority>
+   </url>
+
+   <url>
+      <loc>http://www.doc2blog.com/register</loc>
+      <lastmod>2022-02-11</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.8</priority>
+   </url>
+
+   <url>
+      <loc>http://www.doc2blog.com/login</loc>
+      <lastmod>2022-02-11</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.5</priority>
+   </url>
+
+   <url>
+      <loc>http://www.doc2blog.com/blogpost</loc>
+      <lastmod>2022-02-11</lastmod>
+      <priority>0.5</priority>
+   </url>
+
+   <url>
+      <loc>http://www.doc2blog.com/styleguide</loc>
+      <lastmod>2022-02-11</lastmod>
+      <priority>0.2</priority>
+   </url>
+
+</urlset>

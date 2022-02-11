@@ -52,10 +52,11 @@ public class Document {
 		output += "<html lang='en'>\n";
 		output += "<head>\n";
 		output += " <title>" + this.title + "</title>\n";
+		output += " <meta name=\"description\" content=\"Blog post published on Doc2Blog\"\n";
 		output += "</head>\n\n";
 		output += "<body>\n";		
 
-		//Looping through pragraphs
+		//Looping through paragraphs
 		for (Paragraph paragraph : this.paragraphs) {
 			output += "<" + paragraph.getStyle() + ">";
 			output += paragraph.getText();

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<rss version="2.0"> 
+<channel> 
+    <title>Doc2Blog</title>
+    <description>A RSS news feed containing the latest Doc2Blog blogs.</description>
+    <link>http://www.doc2blog.com/</link>
+    <language>en-us</language>
+    
+        <item> 
+            <title><!-- ISNERT BLOG TITLE HERE --></title>
+            <link><!-- ISNERT BLOG LINK HERE --></link>
+            <description><!-- ISNERT BLOG DESCRIPTION HERE --></description>
+            <pubDate><!-- ISNERT BLOG DATE HERE --></pubDate>
+        </item>
+
+</channel>
+</rss>
