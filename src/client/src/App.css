@@ -1,11 +1,25 @@
-main {
-  padding-top: 65px;
+/* Make footer's parent div flexbox so the footer can always be at the bottom */
+.page-body {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-footer {
-  height: 60px;
+/* Make push the main content down so the sticky header doesn't cover it */
+main {
+  padding-top: 65px;
+  padding-bottom: 65px;
 }
 
 h2 {
   margin: 20px 0;
+}
+
+/* Remove bottom margin on smaller screens so 
+that footer shows on mobile */
+
+@media only screen and (max-width: 768px) {
+  main {
+    padding-bottom: 10px;
+  }
 }

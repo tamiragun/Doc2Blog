@@ -1,0 +1,10 @@
+.sticky-footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.copyright {
+  padding: 8px 16px;
+}
