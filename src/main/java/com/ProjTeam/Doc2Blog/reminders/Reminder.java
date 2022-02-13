@@ -33,7 +33,8 @@ public class Reminder {
 
 	@Column(name = "AKNOWLEDGED")
 	private boolean acknowledged ;
-
+	
+	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "post_id", referencedColumnName = "id")
 	private BlogPost blogPost;
@@ -45,7 +46,7 @@ public class Reminder {
 	public Reminder(BlogPost blogPost) {
 
 		this.reminder = String.format("Your blog on %s is due on %s", blogPost.getTopic(), blogPost.getPostDate());
-		this.acknowledged = false;
+		this.acknowledged = true;
 		this.blogPost = blogPost;
 	}
 
@@ -62,9 +63,12 @@ public class Reminder {
 	public boolean isAcknowledged() {
 		return acknowledged;
 	}
-
+	
+	
+	
 	// Setters
-
+	
+	
 	public void setReminder(String reminder) {
 		this.reminder = reminder;
 	}

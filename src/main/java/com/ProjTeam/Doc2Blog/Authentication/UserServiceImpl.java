@@ -94,5 +94,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
 		user.getRoles().add(role);
 	}
+	
+	
 
 }

@@ -15,15 +15,19 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class Doc2BlogWebAppApplication {
 
+
 	public static void main(String[] args) {
 		SpringApplication.run(Doc2BlogWebAppApplication.class, args);
+		
 	}
 	
+	
+
 	@Bean
 	PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-	
+
 	@Autowired
 	public static TokenHolder tokenHolder = new TokenHolder();
 

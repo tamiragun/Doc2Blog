@@ -50,14 +50,24 @@ public class BlogPost {
 	@Column(name = "POST_USER")
 	private String postUser;
 
-	// Constructor
+	@Column(name = "DAYS_BEFORE")
+	private int daysBefore = 0;
 
-	//
+	@Column(name = "POST_RECURRENCE")
+	private String postRec = "none";
+
+	@Column(name = "RECURRED")
+	private boolean recurred = false;
+
+	// Constructors
+
+	// NoArgsConstructor
 	public BlogPost() {
 
 	}
 
-	public BlogPost(String topic, String postDate, String remPeriod, String postUser) {
+	// ArgsConstructor
+	public BlogPost(String topic, String postDate, String remPeriod, String postUser, int daysBefore, String postRec) {
 
 		LocalDateTime ldt = LocalDateTime.now();
 
@@ -65,7 +75,9 @@ public class BlogPost {
 		this.postDate = postDate;
 		this.remPeriod = remPeriod;
 		this.postUser = postUser;
-		this.lastRem = DateTimeFormatter.ofPattern("yyyy/mm/dd", Locale.ENGLISH).format(ldt);
+		this.lastRem = DateTimeFormatter.ofPattern("yyyy/MM/dd", Locale.ENGLISH).format(ldt);
+		this.daysBefore = daysBefore;
+		this.postRec = postRec;
 	}
 
 	// Getters
@@ -103,7 +115,27 @@ public class BlogPost {
 		return postUser;
 	}
 
+	public int getDaysBefore() {
+		return daysBefore;
+	}
+
+	public String getPostRec() {
+		return postRec;
+	}
+
+	public boolean isRecurred() {
+		return recurred;
+	}
+
 	// Setters
+
+	public void setRecurred(boolean recurred) {
+		this.recurred = recurred;
+	}
+
+	public void setPostRec(String postRec) {
+		this.postRec = postRec;
+	}
 
 	public void setOverdue(boolean isOverdue) {
 		this.isOverdue = isOverdue;
@@ -127,6 +159,10 @@ public class BlogPost {
 
 	public void setLastRem(String lastRem) {
 		this.lastRem = lastRem;
+	}
+
+	public void setDaysBefore(int daysBefore) {
+		this.daysBefore = daysBefore;
 	}
 
 	// ToString

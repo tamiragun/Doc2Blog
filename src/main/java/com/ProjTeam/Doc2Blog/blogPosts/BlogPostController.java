@@ -1,15 +1,12 @@
 package com.ProjTeam.Doc2Blog.blogPosts;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-import java.util.concurrent.TimeUnit;
 
+import javax.transaction.Transactional;
+
+import com.ProjTeam.Doc2Blog.Dates;
 import com.ProjTeam.Doc2Blog.reminders.Reminder;
 import com.ProjTeam.Doc2Blog.reminders.ReminderCrudRep;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,65 +19,70 @@ import static com.ProjTeam.Doc2Blog.Doc2BlogWebAppApplication.tokenHolder;
 @RestController
 @RequestMapping("/blog")
 public class BlogPostController {
-	
+
 	@Autowired
 	private BlogPostRepository blogPostRepository;
 
 	@Autowired
 	private ReminderCrudRep remindersRepository;
-	
+
 	/**
 	 *
 	 * getBlogPosts Method. <br>
 	 * This method is used to pull a list of all the unpublished projects.
 	 *
-	 * @return A List<BlogPost> of individual BlogPosts with their due date,
-	 *         Id and project topic using a Get command with mapping of "/blog".
+	 * @return A List<BlogPost> of individual BlogPosts with their due date, Id and
+	 *         project topic using a Get command with mapping of "/blog".
+	 * @throws ParseException
 	 * 
 	 * @since version 1.00
 	 */
-	
-	@ApiOperation(value = "Provides a list of all the blog posts that need to be displayed", nickname = "Request Blog Posts")	
+
+	@ApiOperation(value = "Provides a list of all the blog posts that need to be displayed", nickname = "Request Blog Posts")
+	@Transactional
 	@GetMapping
-	public List<BlogPost> getBlogPosts() {
+	public List<BlogPost> getBlogPosts() throws ParseException {
 
 		// Finding all projects that have not been published
 		List<BlogPost> blogPosts = blogPostRepository.findByPublished(false);
+		// List to store the blogPosts to be displayed
 		ArrayList<BlogPost> userPosts = new ArrayList<BlogPost>();
+		// The active user that is logged in
 		String postUser = tokenHolder.getUsername();
-		
+
 		if (blogPosts != null) {
-			
+
 			for (BlogPost blogPost : blogPosts) {
-				
-				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
-				LocalDateTime ldt = LocalDateTime.now();
-				Date dueDate;
-				
-				try {
-					Date dateNow = dateFormat.parse(DateTimeFormatter.ofPattern("yyyy-mm-dd", Locale.ENGLISH).format(ldt));
-					dueDate = dateFormat.parse(blogPost.getPostDate());
-					
-					long diffInMillies = ( dueDate.getTime() - dateNow.getTime());
-				    long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
-				    
-				   
-				    
-				    if(diff < 0) {
-				    	blogPost.setOverdue(true);
-				    }
-				} catch (ParseException e) {
-					
-					e.printStackTrace();
-				}
-				
-				if(blogPost.getPostUser().equalsIgnoreCase(postUser)) {
+
+				if (blogPost.getPostUser().equalsIgnoreCase(postUser)) {
+
+					// Getting the dueDate of the blogPost
+					String dueDate = blogPost.getPostDate();
+
+					// Checking to see if the post is overdue
+					long diff = Dates.compareToCurrentDate(dueDate);
+
+					if (diff < 0) {
+						blogPost.setOverdue(true);
+
+						String postRec = blogPost.getPostRec();
+
+						boolean recurred = blogPost.isRecurred();
+
+						if (recurred == false) {
+
+							recBlogPost(blogPost, postRec);
+
+						}
+
+					}
+
 					userPosts.add(blogPost);
 				}
+
 			}
-			
+
 		}
-		
 		return userPosts;
 	}
 
@@ -89,9 +91,9 @@ public class BlogPostController {
 	 * saveBlogPost Method. <br>
 	 * This method is to save a new blogpost to the database using a Post command
 	 *
-	 * @param body     Object representing the topic of the blog to be posted, the
-	 *                 date the blog post is due, and how often the user wants to be
-	 *                 reminded.
+	 * @param body Object representing the topic of the blog to be posted, the date
+	 *             the blog post is due, and how often the user wants to be
+	 *             reminded.
 	 *
 	 * @since version 1.00
 	 */
@@ -100,13 +102,14 @@ public class BlogPostController {
 	public void saveBlogPost(@RequestBody BlogPost body) {
 
 		String postUser = tokenHolder.getUsername();
-		
-		BlogPost blogPost = new BlogPost(body.getTopic(), body.getPostDate(), body.getRemPeriod(), postUser);
+
+		BlogPost blogPost = new BlogPost(body.getTopic(), body.getPostDate(), body.getRemPeriod(), postUser,
+				body.getDaysBefore(), body.getPostRec());
 		Reminder reminder = new Reminder(blogPost);
 
 		remindersRepository.save(reminder);
 	}
-	
+
 	/**
 	 *
 	 * publishBlogPost Method. <br>
@@ -117,9 +120,8 @@ public class BlogPostController {
 	 * 
 	 * @since version 1.00
 	 */
-	
-	
-	@ApiOperation(value = "Changes the blog post status to published so it won't be displayed anymore", nickname = "Publish blog post")	
+
+	@ApiOperation(value = "Changes the blog post status to published so it won't be displayed anymore", nickname = "Publish blog post")
 	@PutMapping
 	public void publishBlogPost(@RequestBody int projectId) {
 
@@ -128,6 +130,20 @@ public class BlogPostController {
 		project.setPublished(true);
 
 		blogPostRepository.save(project);
+	}
+
+	public void recBlogPost(BlogPost body, String postRec) {
+
+		String postUser = tokenHolder.getUsername();
+
+		String newDate = Dates.addingWeekOrMonth(postRec);
+		body.setRecurred(true);
+
+		BlogPost blogPostNew = new BlogPost(body.getTopic(), newDate, body.getRemPeriod(), postUser,
+				body.getDaysBefore(), body.getPostRec());
+		Reminder reminderNew = new Reminder(blogPostNew);
+
+		remindersRepository.save(reminderNew);
 	}
 
 }
