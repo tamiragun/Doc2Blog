@@ -8,6 +8,7 @@ import StyleGuide from "./components/StyleGuide";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 import Container from "react-bootstrap/Container";
 
 import "./App.css";
@@ -33,7 +34,7 @@ function App() {
   };
 
   return (
-    <div>
+    <div className="page-body">
       <Header loggedIn={loggedIn} toggleLogin={toggleLogin} />
       <main>
         <Container>
@@ -60,7 +61,11 @@ function App() {
           </Router>
         </Container>
       </main>
-      <footer></footer>
+      <footer className="mt-auto py-3 bg-light">
+        <Container>
+          <Footer />
+        </Container>
+      </footer>
     </div>
   );
 }
