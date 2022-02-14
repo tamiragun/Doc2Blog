@@ -1,17 +1,14 @@
 package com.ProjTeam.Doc2Blog.reminders;
 
 import java.util.ArrayList;
-import java.util.Date;
+
 import java.util.List;
-import java.util.Locale;
-import java.util.concurrent.TimeUnit;
+
+import javax.transaction.Transactional;
 
 import static com.ProjTeam.Doc2Blog.Doc2BlogWebAppApplication.tokenHolder;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ProjTeam.Doc2Blog.Dates;
 import com.ProjTeam.Doc2Blog.blogPosts.BlogPost;
 import com.ProjTeam.Doc2Blog.blogPosts.BlogPostRepository;
 
@@ -35,6 +33,7 @@ import io.swagger.annotations.ApiOperation;
  */
 
 @RestController
+@Transactional
 @RequestMapping("/reminders")
 public class ReminderController {
 
@@ -44,7 +43,6 @@ public class ReminderController {
 	@Autowired
 	private BlogPostRepository blogPostRepository;
 
-
 	/**
 	 *
 	 * getReminders Method. <br>
@@ -53,12 +51,12 @@ public class ReminderController {
 	 *
 	 * @return reminders A List<Reminders> of individual Reminders with their
 	 *         reminderId and the actual reminder text in string format.
-	 * @throws ParseException 
+	 * @throws ParseException
 	 * 
 	 * @since version 1.00
 	 */
-	
-	@ApiOperation(value = "Provides a list of all the reminders that need to be displayed", nickname = "Request reminders")	
+
+	@ApiOperation(value = "Provides a list of all the reminders that need to be displayed", nickname = "Request reminders")
 	@GetMapping
 	public List<Reminder> getReminders() throws ParseException {
 
@@ -71,44 +69,47 @@ public class ReminderController {
 		for (BlogPost blogPost : blogPosts) {
 
 			if (blogPost.getPostUser().equalsIgnoreCase(postUser)) {
-				
+
 				Reminder reminder = remindersRepository.findByBlogPost(blogPost);
-				
-				
+
 				// If the reminder exists add it to the list
 				if (reminder != null) {
-					
-					SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/mm/dd");
-					LocalDateTime ldt = LocalDateTime.now();
-					Date lastRem = dateFormat.parse(blogPost.getLastRem());
-					
-					Date dateNow = dateFormat.parse(DateTimeFormatter.ofPattern("yyyy/mm/dd", Locale.ENGLISH).format(ldt));
-					
-					
-					long diffInMillies = ( lastRem.getTime() - dateNow.getTime());
-				    long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
-					
-								    
-				    if (blogPost.getRemPeriod().contains("d") && diff < -1) {
-				    	reminder.setAcknowledged(false);
-				    }
-				    else if(blogPost.getRemPeriod().contains("w") && diff < -7) {
-				    	reminder.setAcknowledged(false);
-				    }
-				    else if(blogPost.getRemPeriod().contains("m") && diff < -30) {
-				    	reminder.setAcknowledged(false);
-				    }
 
-					if (reminder.isAcknowledged() == false) {
-						reminders.add(reminder);
+					// Getting the number of days before the post to start reminders
+					int daysBefore = blogPost.getDaysBefore();
+					// Comparing the current date against the last reminder date
+					long diff = Dates.compareToCurrentDate(blogPost.getLastRem());
+					// Comparing the Due Date against the current date
+					long diffDueDate = Dates.compareToCurrentDate(blogPost.getPostDate());
+
+					// Checking if the reminder has reached the appropriate time before the post
+					// date
+					if (diffDueDate <= daysBefore || daysBefore == 0) {
+
+						// Checking if the blog has reach its repeat period
+						if (blogPost.getRemPeriod().contains("d") && diff < -1) {
+
+							reminder.setAcknowledged(false);
+						} else if (blogPost.getRemPeriod().contains("w") && diff < -7) {
+
+							reminder.setAcknowledged(false);
+						} else if (blogPost.getRemPeriod().contains("m") && diff < -30) {
+
+							reminder.setAcknowledged(false);
+						}
+
+						// Adding this reminder to reminders list if it is now no longer acknowledged
+						if (reminder.isAcknowledged() == false) {
+							reminders.add(reminder);
+						}
 					}
-			}
-			
+
+				}
+
 			}
 		}
 		return reminders;
 	}
-
 
 	/**
 	 *
@@ -120,8 +121,8 @@ public class ReminderController {
 	 * 
 	 * @since version 1.00
 	 */
-	
-	@ApiOperation(value = "Changes the reminder status to acknowledged so it won't display", nickname = "Acknowledge reminder")	
+
+	@ApiOperation(value = "Changes the reminder status to acknowledged so it won't display", nickname = "Acknowledge reminder")
 	@PutMapping
 	public void acknowledgeReminder(@RequestBody int reminderId) {
 
@@ -131,7 +132,5 @@ public class ReminderController {
 
 		remindersRepository.save(reminder);
 	}
-
-	
 
 }
