@@ -3,7 +3,7 @@ import Card from "react-bootstrap/Card";
 
 export const PublishSuccess = ({ fileName }) => {
   // Set the url based on the current environment
-  let blogUrl;
+  let blogUrl = "";
   if (process.env.NODE_ENV === "development") {
     blogUrl += `http://localhost:8080`;
   }
