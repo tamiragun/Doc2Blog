@@ -1,6 +1,7 @@
 package com.ProjTeam.Doc2Blog.Authentication;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -45,11 +46,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().antMatchers(HttpMethod.GET,"/convert/**").permitAll();
 		http.authorizeRequests().antMatchers(HttpMethod.POST,"/convert/**").hasAnyAuthority("Role_User");
 		http.authorizeRequests().antMatchers(HttpMethod.PUT,"/convert/**").hasAnyAuthority("Role_User");
-		// Is there any reason to protect anything in the spellCheck class? There is only a GET endpoint, which needs to be accessible without token for now
-		// http.authorizeRequests().antMatchers("/check/**").hasAnyAuthority("Role_User");
 		http.authorizeRequests().antMatchers(HttpMethod.GET,"/check/**").permitAll();
-		// http.authorizeRequests().anyRequest().authenticated();
+		//http.authorizeRequests().requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll();
+		//http.authorizeRequests().antMatchers("/","/public/", "/resources/","/resources/public/**").permitAll();
+		//http.authorizeRequests().anyRequest().authenticated();
 		http.authorizeRequests().anyRequest().permitAll();
+
 		http.addFilter(new CustomAuthenticationFilter(authenticationManagerBean()));
 		http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
 	}
