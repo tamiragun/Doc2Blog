@@ -75,7 +75,7 @@ public class BlogPost {
 		this.postDate = postDate;
 		this.remPeriod = remPeriod;
 		this.postUser = postUser;
-		this.lastRem = DateTimeFormatter.ofPattern("yyyy/MM/dd", Locale.ENGLISH).format(ldt);
+		this.lastRem = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH).format(ldt);
 		this.daysBefore = daysBefore;
 		this.postRec = postRec;
 	}

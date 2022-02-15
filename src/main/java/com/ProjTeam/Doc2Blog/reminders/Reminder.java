@@ -45,7 +45,7 @@ public class Reminder {
 	//ArgsConstructor
 	public Reminder(BlogPost blogPost) {
 
-		this.reminder = String.format("Your blog on %s is due on %s", blogPost.getTopic(), blogPost.getPostDate());
+		this.reminder = String.format("Your blog on \"%s\" is due on %s.", blogPost.getTopic(), blogPost.getPostDate());
 		this.acknowledged = true;
 		this.blogPost = blogPost;
 	}

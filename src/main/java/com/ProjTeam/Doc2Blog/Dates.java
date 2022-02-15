@@ -14,7 +14,7 @@ public interface Dates {
 	public static long compareToCurrentDate(String dateStr) throws ParseException {
 		
 		// Getting current date
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		LocalDateTime ldt = LocalDateTime.now();
 
 		// Getting the last date the reminder was set
@@ -22,7 +22,7 @@ public interface Dates {
 		
 		// Formating the current date
 		Date dateNow = dateFormat
-				.parse(DateTimeFormatter.ofPattern("yyyy/MM/dd", Locale.ENGLISH).format(ldt));
+				.parse(DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH).format(ldt));
 
 		// Comparing the current date to date variable
 		long diffInMillies = (date.getTime() - dateNow.getTime());
@@ -67,7 +67,7 @@ public interface Dates {
 	    }
 	    
 	    //Setting as one string for output
-	    String newDate = String.format("%s/%S/%S",year, month ,day);
+	    String newDate = String.format("%s-%S-%S",year, month ,day);
 		
 		return newDate;
 	}

@@ -6,8 +6,9 @@ import "./DeadlineForm.css";
 const DeadlineForm = (props) => {
   const [topic, setTopic] = useState("");
   const [dueDate, setDueDate] = useState("");
-  const [reminderTime, setReminderTime] = useState("");
   const [postRecurrence, setPostRecurrence] = useState("never");
+  const [daysBefore, setDaysBefore] = useState("");
+  const [remPeriod, setRemPeriod] = useState("daily");
 
   // Handler for when the final form is submitted.
   const handleSubmit = (event) => {
@@ -19,8 +20,9 @@ const DeadlineForm = (props) => {
       let requestedFields = {
         topic: topic,
         postDate: dueDate,
-        remPeriod: reminderTime,
-        postRecurrence: postRecurrence,
+        remPeriod: remPeriod,
+        daysBefore: daysBefore,
+        postRec: postRecurrence,
       };
       const url = "/blog";
       const token = sessionStorage.getItem("token");
@@ -60,10 +62,12 @@ const DeadlineForm = (props) => {
       setTopic(currentValue);
     } else if (event.target.name === "due-date") {
       setDueDate(currentValue);
-    } else if (event.target.name === "reminder-time") {
-      setReminderTime(currentValue);
+    } else if (event.target.name === "first-reminder") {
+      setDaysBefore(currentValue);
     } else if (event.target.name === "post-recurrence") {
       setPostRecurrence(event.target.id);
+    } else if (event.target.name === "reminder-recurrence") {
+      setRemPeriod(event.target.id);
     }
   };
 
@@ -89,7 +93,7 @@ const DeadlineForm = (props) => {
         />
       </Form.Group>
 
-      <Form.Group className="mb-3" controlId="formBasicRecurring">
+      <Form.Group className="mb-3" controlId="formBasicRecurringPost">
         <Form.Label>How often does this deadline recur?</Form.Label>
         <div className="mb-3" onChange={handleChange} required>
           <Form.Check
@@ -122,12 +126,39 @@ const DeadlineForm = (props) => {
         </Form.Label>
         <Form.Control
           type="number"
-          name="reminder-time"
+          name="first-reminder"
           required
           min="1"
           max="60"
           onChange={handleChange}
         />
+      </Form.Group>
+
+      <Form.Group className="mb-3" controlId="formBasicRecurringReminder">
+        <Form.Label>How often would you like to be reminded?</Form.Label>
+        <div className="mb-3" onChange={handleChange} required>
+          <Form.Check
+            type="radio"
+            label="Daily"
+            id="daily"
+            name="reminder-recurrence"
+            defaultChecked
+          />
+
+          <Form.Check
+            type="radio"
+            label="Weekly"
+            id="weekly"
+            name="reminder-recurrence"
+          />
+
+          <Form.Check
+            type="radio"
+            label="Monthly"
+            id="monthly"
+            name="reminder-recurrence"
+          />
+        </div>
       </Form.Group>
 
       <Button type="submit" variant="primary">
