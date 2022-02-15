@@ -2,8 +2,12 @@ import React from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Container from "react-bootstrap/Container";
+import { useNavigate } from "react-router-dom";
 
 export const Header = ({ loggedIn, toggleLogin }) => {
+  // Use navigate to be able to link to other Routes.
+  const navigate = useNavigate();
+
   const handleClick = () => {
     sessionStorage.removeItem("token");
     toggleLogin();
@@ -19,11 +23,45 @@ export const Header = ({ loggedIn, toggleLogin }) => {
             className="justify-content-end"
           >
             <Nav>
-              <Nav.Link href="/">Blog posts</Nav.Link>
-              <Nav.Link href="/blogpost">Publish post</Nav.Link>
-              <Nav.Link href="/style-guide">Style guide</Nav.Link>
-              {!loggedIn && <Nav.Link href="/register">Register</Nav.Link>}
-              {!loggedIn && <Nav.Link href="/login">Login</Nav.Link>}
+              <Nav.Link
+                onClick={() => {
+                  navigate("/");
+                }}
+              >
+                Blog posts
+              </Nav.Link>
+              <Nav.Link
+                onClick={() => {
+                  navigate("/blogpost");
+                }}
+              >
+                Publish post
+              </Nav.Link>
+              <Nav.Link
+                onClick={() => {
+                  navigate("/style-guide");
+                }}
+              >
+                Style guide
+              </Nav.Link>
+              {!loggedIn && (
+                <Nav.Link
+                  onClick={() => {
+                    navigate("/register");
+                  }}
+                >
+                  Register
+                </Nav.Link>
+              )}
+              {!loggedIn && (
+                <Nav.Link
+                  onClick={() => {
+                    navigate("/login");
+                  }}
+                >
+                  Login
+                </Nav.Link>
+              )}
               {loggedIn && <Nav.Link onClick={handleClick}>Logout</Nav.Link>}
             </Nav>
           </Navbar.Collapse>
