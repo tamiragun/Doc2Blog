@@ -35,10 +35,10 @@ function App() {
 
   return (
     <div className="page-body">
-      <Header loggedIn={loggedIn} toggleLogin={toggleLogin} />
       <main>
         <Container>
           <Router>
+            <Header loggedIn={loggedIn} toggleLogin={toggleLogin} />
             <Routes>
               <Route
                 exact

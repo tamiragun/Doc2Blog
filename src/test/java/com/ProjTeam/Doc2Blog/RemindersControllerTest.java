@@ -17,26 +17,26 @@ class RemindersControllerTest {
 
 	private static MockMvc mockMvc;
 
-	@BeforeAll
+	/*@BeforeAll
 	static void init() {
 		mockMvc = MockMvcBuilders.standaloneSetup(ReminderController.class).build();
 	}
 
-	/*
+	*//*
 	 * @Test void test() {
 	 * 
 	 * Projects body = new Projects("Test Topic", "10 Feb 2022", "d");
 	 * fail("Not yet implemented");
 	 * 
 	 * RemindersController.saveProject(body); }
-	 */
+	 *//*
 	@Test
 	void testGetReminders() throws Exception {
 
 		mockMvc.perform(get("/reminders"))
 		.andDo(print())
 		.andExpect(status().isOk());
-	}
+	}*/
 	
 
 }

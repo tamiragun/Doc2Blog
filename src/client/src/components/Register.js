@@ -57,9 +57,7 @@ export const Register = (props) => {
           password: password,
         }),
       });
-      //navigate("/login");
       const jsonResponse = await response.json();
-      console.log("Successfully registered user " + jsonResponse.name);
       // // If there has been an error, set the error state hook to the error
       // // message, which will then be displayed on the page.
       if (jsonResponse.error) {

@@ -42,9 +42,8 @@ const DeadlineForm = (props) => {
           console.log(response.statusText);
           //setIsError(jsonResponse.error_message);
         } else {
-          // If successful, print message, reload deadlines and reminders,
+          // If successful, reload deadlines and reminders,
           // and make the form disappear
-          console.log("Successfully added deadline");
           props.onComplete();
         }
       } catch (error) {

@@ -27,9 +27,6 @@ const BlogPost = ({ loggedIn }) => {
       const formData = new FormData();
       formData.set("style", styleSheet);
       formData.set("file", selectedFile);
-      for (var pair of formData.entries()) {
-        console.log(pair[0] + ", " + pair[1]);
-      }
       const token = sessionStorage.getItem("token");
 
       // Send the POST request to the server
@@ -153,7 +150,6 @@ const BlogPost = ({ loggedIn }) => {
                 <ChooseStyling
                   selectStyle={(style) => {
                     setStyleSheet(style);
-                    console.log(styleSheet);
                   }}
                 ></ChooseStyling>
               }

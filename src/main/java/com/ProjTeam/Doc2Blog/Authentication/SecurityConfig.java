@@ -48,7 +48,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		// Is there any reason to protect anything in the spellCheck class? There is only a GET endpoint, which needs to be accessible without token for now
 		// http.authorizeRequests().antMatchers("/check/**").hasAnyAuthority("Role_User");
 		http.authorizeRequests().antMatchers(HttpMethod.GET,"/check/**").permitAll();
-		http.authorizeRequests().anyRequest().authenticated();
+		// http.authorizeRequests().anyRequest().authenticated();
+		http.authorizeRequests().anyRequest().permitAll();
 		http.addFilter(new CustomAuthenticationFilter(authenticationManagerBean()));
 		http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
 	}
