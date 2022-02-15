@@ -4,7 +4,7 @@ import Card from "react-bootstrap/Card";
 export const UploadSuccess = ({ fileName }) => {
   // TODO generate button using routes instead of anchor link
 
-  const blogUrl = `http://localhost:8080/check?fileName=${fileName}`;
+  const blogUrl = `/check?fileName=${fileName}`;
 
   return (
     <Card.Link
