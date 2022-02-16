@@ -7,7 +7,7 @@ As part of the HyperionDev graduate programme, we were asked to work a paired pr
 
 Navigate to https://doc2blog.herokuapp.com/ to see this app in action. Follow the below steps, or watch this video, to see how it works:
 ### Logging in
-* Create a profile by cliking "register".
+* Create a profile by clicking "register".
 * Log in with that profile
 * Navigate to "Blog posts" in the navigation menu.
 
@@ -17,8 +17,8 @@ Navigate to https://doc2blog.herokuapp.com/ to see this app in action. Follow th
 * Set how far in advance you want to be reminded of your deadline, and how often you want those reminders to recur.
 * Upon submit, your blog post deadline will appear in the table.
 * To upload the corresponding post, click "upload draft".
-* Once your draft is uploaded and published, you can click "mark published" next to the corresponing post, which removes that deadline from the table.
-* Closer to the date, reminders will start popping up at the top of the page. Simply acknowledge them and they will vanish.
+* Once your draft is uploaded and published, you can click "mark published" next to the corresponding post, which removes that deadline from the table.
+* Closer to the date, reminders will start popping up at the top of the page. Simply acknowledge them, and they will vanish.
 * If you have set reminders to recur, they will only pop up again at the indicated interval, and if you have acknowledged the previous reminder.
 * If your post is already behind on the due date, it will show up as red in the table.
 
@@ -30,24 +30,24 @@ Navigate to https://doc2blog.herokuapp.com/ to see this app in action. Follow th
 * Close the tab and/or go back to the previous Doc2Bog tab you had open. You can either click "Back" to upload a new version of your blog post without those errors. Or you can click "Next" to proceed with publication.
 * You are now published! Click on "View your blog post live" to see your blog post, styled, and public.
 * CLick "Next" to go back to the overview of your deadlines.
-* Mark yuor topic as published.
+* Mark your topic as published.
 * Write a new blog post!
 
 ## How to install this project
 
-To install and run this programme on your local computer, you will need PostreSQL, JDE and JRE 17, Maven, Git, Npm, and Node.js.
+To install and run this programme on your local computer, you will need PostgreSQL, JDE and JRE 17, Maven, Git, Npm, and Node.js.
 1. Clone the repository to your local computer.
 2. Navigate to the directory where you saved the repository.
 3. Inside the repository, start a terminal window.
 4. Type `mvn install` and wait for the process to run.
 5. Create a database in PostgreSQL.
-6. Add a user to that database and grant it all priviliges on the database.
+6. Add a user to that database and grant it all privileges on the database.
 7. In your project folder, go to the config folder and create a new file called application.properties (no other suffix).
 8. In that file, paste the contents of the application.properties.example file which is located in the same folder.
 9. In your newly created config/application.properties file, adapt the database connections to your new database, username, and password.
 10. Uncomment the line that says `spring.datasource.initialization-mode=always`.
 11. In the terminal window where you ran `mvn install`, now type `git init`. This creates a Git repository.
-12. A file called '.gitignore' will have been created in the root of your project folder. Open it and paste in it `/config/*` and on the next line `!/config/*.example`. This ensures that your database passwords are not published to Github, i.e. the world.
+12. A file called '.gitignore' will have been created in the root of your project folder. Open it and paste in it `/config/*` and on the next line `!/config/*.example`. This ensures that your database passwords are not published to GitHub, i.e. the world.
 13. Run the programme from within your IDE to start up the server.
 14. In the terminal window, navigate to the src/client folder within your project.
 15. Type `npm install` and wait for the process to run.
@@ -58,9 +58,9 @@ To install and run this programme on your local computer, you will need PostreSQ
 
 ## Documentation
 
-* To watch a video demo of our project, click here:
+* To watch a video demo of our project, click here: https://www.loom.com/share/53350d4816ff42b2a15b161a362902c9
 * To see our API documentation, visit this link after starting up the app's server: http://localhost:8080/swagger-ui/#/. You can even test the API endpoints directly on this page.
-* You can have access to the entire reposiry of our project here: https://github.com/tamiragun/Doc2Blog
+* You can have access to the entire repository of our project here: https://github.com/tamiragun/Doc2Blog
 
 ### Resources used
 Several of the technologies and frameworks used in this app were new to us, so we got a little help from our friends over at Stackoverflow and Medium. A few special shout-outs:
