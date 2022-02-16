@@ -87,13 +87,13 @@ public class ReminderController {
 					if (diffDueDate <= daysBefore || daysBefore == 0) {
 
 						// Checking if the blog has reach its repeat period
-						if (blogPost.getRemPeriod().contains("daily") && diff < -1) {
+						if (blogPost.getRemPeriod().contains("daily") && diff <= -1) {
 
 							reminder.setAcknowledged(false);
-						} else if (blogPost.getRemPeriod().contains("weekly") && diff < -7) {
+						} else if (blogPost.getRemPeriod().contains("weekly") && diff <= -7) {
 
 							reminder.setAcknowledged(false);
-						} else if (blogPost.getRemPeriod().contains("monthly") && diff < -30) {
+						} else if (blogPost.getRemPeriod().contains("monthly") && diff <= -30) {
 
 							reminder.setAcknowledged(false);
 						}
