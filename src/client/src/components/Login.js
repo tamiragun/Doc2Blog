@@ -64,7 +64,7 @@ export const Login = ({ toggleLogin }) => {
         setPassword("");
         // Redirect the user to the next page.
         toggleLogin();
-        navigate(-1);
+        navigate("/");
       } else {
         setIsError("Your login and/or password didn't match");
       }

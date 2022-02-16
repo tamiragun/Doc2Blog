@@ -16,6 +16,8 @@ export const Register = (props) => {
   // error message.
   const [isError, setIsError] = useState(false);
 
+  const [registerSuccess, setRegisterSuccess] = useState(false);
+
   // Declare states purely to control the form elements.
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
@@ -72,8 +74,9 @@ export const Register = (props) => {
         setUsername("");
         setEmail("");
         setPassword("");
-        // Redirect the user to the next page.
-        navigate("/login");
+        setRegisterSuccess(true);
+        // Redirect the user to the home page.
+        //navigate("/login");
       } else {
         setIsError(
           "There was an error with your registration. Please contact an admin for support."
@@ -97,7 +100,9 @@ export const Register = (props) => {
             </Button>
           </Alert>
         </div>
-      ) : (
+      ) : //If the user has not yet submitted the form successfully, display the registration form:
+
+      !registerSuccess ? (
         // Otherwise, display the registration form
         <div>
           <Card className="mx-auto" style={{ maxWidth: "30rem" }}>
@@ -173,6 +178,19 @@ export const Register = (props) => {
               Login
             </Button>
           </div>
+        </div>
+      ) : (
+        <div>
+          <Alert variant="success">
+            <Alert.Heading>Success!</Alert.Heading>
+            <p>You can now log in to start using Doc2Blog.</p>
+            <Button
+              onClick={() => navigate("/login")}
+              variant="outline-success"
+            >
+              Log in
+            </Button>
+          </Alert>
         </div>
       )}
     </div>
