@@ -1,3 +1,5 @@
+// Component that renders a step in the file upload stepper, based on props it gets.
+
 import React from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";

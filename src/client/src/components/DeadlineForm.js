@@ -1,3 +1,6 @@
+// Component that renders a form element and sends the result to the
+// server to create a new blog post.
+
 import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -11,46 +14,46 @@ const DeadlineForm = (props) => {
   const [remPeriod, setRemPeriod] = useState("daily");
 
   // Handler for when the final form is submitted.
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     // Prevent the browser from re-loading the page
     event.preventDefault();
+    // Save the form inputs from state into an object
+    let requestedFields = {
+      topic: topic,
+      postDate: dueDate,
+      remPeriod: remPeriod,
+      daysBefore: daysBefore,
+      postRec: postRecurrence,
+    };
+    // Get the Bearer token from session storage
+    const token = sessionStorage.getItem("token");
 
-    // API IIFE call to server to save the deadline
-    (async () => {
-      let requestedFields = {
-        topic: topic,
-        postDate: dueDate,
-        remPeriod: remPeriod,
-        daysBefore: daysBefore,
-        postRec: postRecurrence,
-      };
-      const url = "/blog";
-      const token = sessionStorage.getItem("token");
-      try {
-        const response = await fetch(url, {
-          method: "POST",
-          headers: {
-            "Content-type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(requestedFields),
-        });
-        //const jsonResponse = await response.json();
-        // If there has been an error, set the error state hook to the error
-        // message, which will then be displayed on the page.
-        if (response.status !== 200) {
-          console.log(response.statusText);
-          //setIsError(jsonResponse.error_message);
-        } else {
-          // If successful, reload deadlines and reminders,
-          // and make the form disappear
-          props.onComplete();
-        }
-      } catch (error) {
-        console.log(error.message);
-        //setIsError(error.message);
+    // Call the server to save the blog post:
+    const url = "/blog";
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(requestedFields),
+      });
+      //const jsonResponse = await response.json();
+      // If there has been an error, set the error state hook to the error
+      // message, which will then be displayed on the page.
+      if (response.status !== 200) {
+        console.log(response.statusText);
+        //setIsError(jsonResponse.error_message);
+      } else {
+        // If successful, reload deadlines and reminders,
+        // and make the form disappear
+        props.onComplete();
       }
-    })();
+    } catch (error) {
+      console.log(error.message);
+      //setIsError(error.message);
+    }
   };
 
   // Single handler for all controlled form elements, updates the corresponding
@@ -127,7 +130,7 @@ const DeadlineForm = (props) => {
           type="number"
           name="first-reminder"
           required
-          min="1"
+          min="0"
           max="60"
           onChange={handleChange}
         />

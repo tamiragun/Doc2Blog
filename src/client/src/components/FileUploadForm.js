@@ -1,24 +1,19 @@
+// Component that renders a single form element, to upload a file and
+// handle initial validation.
+
 import React from "react";
 import Form from "react-bootstrap/Form";
 
-export const FileUploadForm = ({ onFileSelectSuccess, onFileSelectError }) => {
-  // The programme can currently handle Word and open source documents
-  const supportedFileTypes = [
-    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-    "application/msword",
-    "application/vnd.oasis.opendocument.text",
-  ];
-
+export const FileUploadForm = ({
+  onFileSelectSuccess,
+  onFileUploadValidate,
+}) => {
   // Validation of the selected file
   const handleFileInput = (e) => {
     const file = e.target.files[0];
-    if (!file) {
-      onFileSelectError("Please upload a .doc, .docx, or .odt file");
-    } else if (file.size > 1024000) {
-      onFileSelectError("File size cannot exceed 1MB");
-    } else if (!supportedFileTypes.includes(file.type)) {
-      onFileSelectError("File type should be .doc, .docx, or .odt");
-    } else {
+    if (onFileUploadValidate(file)) {
+      // Call the parent method (where it gets stored into state and then
+      // sent to the server) with the file as argument.
       onFileSelectSuccess(file);
     }
   };

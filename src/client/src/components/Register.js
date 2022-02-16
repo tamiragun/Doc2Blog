@@ -46,6 +46,7 @@ export const Register = (props) => {
     setIsError(false);
     // Prevent the browser from re-loading the page
     event.preventDefault();
+
     // Call the server with the different state hooks in the body.
     const url = "/auth/user/register";
     try {

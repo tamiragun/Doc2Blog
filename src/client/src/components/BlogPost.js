@@ -1,3 +1,5 @@
+// Component that renders the upload blog post page with a stepper
+
 import React, { useState } from "react";
 import FileUploadForm from "./FileUploadForm";
 import PublishSuccess from "./PublishSuccess";
@@ -17,7 +19,7 @@ const BlogPost = ({ loggedIn }) => {
   // Use navigate to be able to link to other Routes.
   const navigate = useNavigate();
 
-  // Handler for when the next step on file upload is clicked
+  // Handler for when the next step on stylesheet is clicked
   const submitUpload = async (event) => {
     // Prevent the browser form reloading
     event.preventDefault();
@@ -50,7 +52,7 @@ const BlogPost = ({ loggedIn }) => {
         }
       } catch (error) {
         console.log(error);
-        //setIsError(error.message);
+        //setIsError(error.error_message);
       }
     }
   };
@@ -70,12 +72,12 @@ const BlogPost = ({ loggedIn }) => {
     }
   };
 
-  // Function for going to next step by increasing step state by 1
+  // Function for going to the next step by increasing step state by 1
   const nextStep = () => {
     setStep(step + 1);
   };
 
-  // Function for going to previous step by decreasing step state by 1
+  // Function for going to the previous step by decreasing step state by 1
   const prevStep = () => {
     setStep(step - 1);
   };
@@ -125,15 +127,18 @@ const BlogPost = ({ loggedIn }) => {
               title="Upload your draft blog post"
               text="Make sure your file is either a Microsoft Word document (ending in
               '.doc' or '.docx') or in OpenDocument Format (ending in '.odt')."
+              // Render this step's component
               component={
                 <FileUploadForm
                   onFileSelectSuccess={setFileAndName}
                   onFileUploadValidate={validateFileUpload}
                 ></FileUploadForm>
               }
+              // Navigating back goes to the blog post overview page
               handleBackClick={() => {
                 navigate("/");
               }}
+              // Navigating forward goes to the next step in the stepper
               handleNextClick={nextStep}
             ></BlogPublishStep>
           )}
@@ -146,6 +151,7 @@ const BlogPost = ({ loggedIn }) => {
               text="Make sure your document is conform with our style guide. 
               You can choose which style sheet you'd like to publish your
               blog post with:"
+              // Render this step's component
               component={
                 <ChooseStyling
                   selectStyle={(style) => {
@@ -153,12 +159,13 @@ const BlogPost = ({ loggedIn }) => {
                   }}
                 ></ChooseStyling>
               }
+              // Navigating back resets the selected file back to empty
               handleBackClick={() => {
                 setSelectedFile(null);
                 setSelectedFileName(null);
                 prevStep();
               }}
-              // TODO add in state for selected stylesheet!
+              // Navigating forward calls the server with the file
               handleNextClick={submitUpload}
             ></BlogPublishStep>
           )}
@@ -174,13 +181,16 @@ const BlogPost = ({ loggedIn }) => {
               
               Clicking back will let you upload a new version, clicking next will 
               let you publish the current version (the highlights will disappear)."
+              // Render this step's component
               component={
                 <UploadSuccess fileName={selectedFileName}></UploadSuccess>
               }
+              // Navigating back resets the selected stylesheet to basic
               handleBackClick={() => {
                 setStyleSheet("basic");
                 setStep(step - 1);
               }}
+              // Navigating forward goes to the next step in the stepper
               handleNextClick={nextStep}
             ></BlogPublishStep>
           )}
@@ -192,10 +202,13 @@ const BlogPost = ({ loggedIn }) => {
               text="You have successfully published your blog post. Clicking on this
             link will open your published blog post in another tab.
             Don't forget to mark your deadline as complete :)"
+              // Render this step's component
               component={
                 <PublishSuccess fileName={selectedFileName}></PublishSuccess>
               }
+              // Navigating back goes to the previous step in the stepper
               handleBackClick={prevStep}
+              // Navigating forward goes to blogs overview page
               handleNextClick={() => {
                 navigate("/");
               }}

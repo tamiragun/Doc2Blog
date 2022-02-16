@@ -11,18 +11,21 @@ export const HomePage = ({ loggedIn }) => {
   // Error toggle to capture any API call failures and display a user-friendly
   // error message.
   const [isError, setIsError] = useState(false);
+
+  // Store the list of applicable deadlines and reminders retrieved from the server into state
   const [deadlines, setDeadlines] = useState([]);
   const [reminders, setReminders] = useState([]);
 
   // Upon first render, check if the user is logged in (i.e. if a token is set)
   // If so, call the server to populate deadlines and reminders, and set the
-  // state so that they can be rendered
+  // state so that they can be rendered.
   useEffect(() => {
     setIsError(false);
     if (loggedIn) {
       getDeadlines();
       getReminders();
     }
+    // To be repeated if the login state changes.
   }, [loggedIn]);
 
   // Upon any changes, reload deadlines
