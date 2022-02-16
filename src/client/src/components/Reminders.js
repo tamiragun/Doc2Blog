@@ -14,6 +14,7 @@ const Reminders = ({ reminders, refreshDeadlinesAndReminders }) => {
         },
         body: id,
       });
+
       // If there has been an error, set the error state hook to the error
       // message, which will then be displayed on the page.
       if (response.status !== 200) {

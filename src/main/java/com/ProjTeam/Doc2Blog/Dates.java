@@ -72,4 +72,14 @@ public interface Dates {
 		return newDate;
 	}
 
+	public static String giveCurrentDate() throws ParseException {
+
+		// Getting current date
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		LocalDateTime ldt = LocalDateTime.now();
+
+		return DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH).format(ldt);
+
+	}
+
 }

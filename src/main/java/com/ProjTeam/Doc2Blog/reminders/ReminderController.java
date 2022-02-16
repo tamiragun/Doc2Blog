@@ -1,7 +1,11 @@
 package com.ProjTeam.Doc2Blog.reminders;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -9,6 +13,7 @@ import javax.transaction.Transactional;
 import static com.ProjTeam.Doc2Blog.Doc2BlogWebAppApplication.tokenHolder;
 
 import java.text.ParseException;
+import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -124,11 +129,21 @@ public class ReminderController {
 
 	@ApiOperation(value = "Changes the reminder status to acknowledged so it won't display", nickname = "Acknowledge reminder")
 	@PutMapping
-	public void acknowledgeReminder(@RequestBody int reminderId) {
+	public void acknowledgeReminder(@RequestBody int reminderId) throws ParseException {
 
 		Reminder reminder = remindersRepository.findByReminderId(reminderId);
 
 		reminder.setAcknowledged(true);
+
+		LocalDateTime ldt = LocalDateTime.now();
+
+		BlogPost blogPost = reminder.getBlogPost();
+
+		String now = Dates.giveCurrentDate();
+
+		System.out.println(now);
+
+		blogPost.setLastRem(now);
 
 		remindersRepository.save(reminder);
 	}

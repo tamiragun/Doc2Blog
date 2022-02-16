@@ -63,9 +63,11 @@ public class Reminder {
 	public boolean isAcknowledged() {
 		return acknowledged;
 	}
-	
-	
-	
+
+	public BlogPost getBlogPost() {
+		return blogPost;
+	}
+
 	// Setters
 	
 	
