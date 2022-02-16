@@ -3,14 +3,21 @@
 <channel> 
     <title>Doc2Blog</title>
     <description>A RSS news feed containing the latest Doc2Blog blogs.</description>
-    <link>http://www.doc2blog.com/</link>
+    <link>https://doc2blog.herokuapp.com/</link>
     <language>en-us</language>
     
         <item> 
-            <title><!-- ISNERT BLOG TITLE HERE --></title>
-            <link><!-- ISNERT BLOG LINK HERE --></link>
-            <description><!-- ISNERT BLOG DESCRIPTION HERE --></description>
-            <pubDate><!-- ISNERT BLOG DATE HERE --></pubDate>
+            <title>Literature review for strengths calculations</title>
+            <link>https://doc2blog.herokuapp.com/convert?fileName=Testdoc</link>
+            <description>Blogpost by harry123</description>
+            <pubDate>2022-02-16</pubDate>
+        </item>
+
+        <item> 
+            <title><!-- INSERT BLOG TITLE HERE --></title>
+            <link><!-- INSERT BLOG LINK HERE --></link>
+            <description><!-- INSERT BLOG DESCRIPTION HERE --></description>
+            <pubDate><!-- INSERT BLOG DATE HERE --></pubDate>
         </item>
 
 </channel>
