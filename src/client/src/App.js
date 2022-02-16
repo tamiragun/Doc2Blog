@@ -1,5 +1,3 @@
-// See https://www.pluralsight.com/guides/how-to-use-a-simple-form-submit-with-files-in-react
-
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import BlogPost from "./components/BlogPost";
